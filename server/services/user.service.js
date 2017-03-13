@@ -1,18 +1,9 @@
-var mysql  = require("mysql");
 var Q = require('q');
 var config = require('config.json');
 var _ = require('lodash');
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
-
-var pool = mysql.createPool({
-    connectionLimit: 100,
-    host: 'localhost',
-    user:'root',
-    password: 'root',
-    database: 'cop4710', //Replace this to fit DB name
-    port: 3310
-});
+var pool = require('../db').pool;
 
 var service = {};
  
@@ -23,8 +14,6 @@ service._delete = _delete;
 
  
 module.exports = service;
-
-
 
 //Authenticate a user
 function authenticate(username, password) {
@@ -37,9 +26,9 @@ function authenticate(username, password) {
             deferred.reject(err.name + ': ' + err.message);
         }
 
-        connection.query("select * from users WHERE username = ? AND pword = ?", [username, password], function(err, rows) {
+        connection.query("select * from users WHERE username = ?", [username], function(err, rows) {
             connection.release();
-            if(!err && rows.length > 0) {
+            if(!err && rows.length > 0 && bcrypt.compareSync(password, rows[0].hashPass)) {
                 //Found correct user
                 deferred.resolve({
                     _id: rows[0].id,
@@ -91,10 +80,10 @@ function create(userParam) {
         });
 
         function createUser() {
-            //var user = _.omit(userParam, 'password');
-            //user.hash = bcrypt.hashSync(userParam.password, 10);
+            var user = _.omit(userParam, 'password');
+            user.hashPass = bcrypt.hashSync(userParam.password, 10);
 
-            var user = {username: userParam.username, pword: userParam.password, email: userParam.email, phone: userParam.phone, firstName: userParam.firstName, lastName: userParam.lastName};
+            //var user = {username: userParam.username, email: userParam.email, phone: userParam.phone, firstName: userParam.firstName, lastName: userParam.lastName};
 
             connection.query("insert into users set ?", user, function(err, rows) {
                 if(err) {
@@ -127,6 +116,10 @@ function getAll(){
             if(err) {
                 deferred.reject(err.name + ': ' + err.message);
             }
+            
+            rows = _.map(rows, function(row) {
+                return _.omit(row, 'hashPass');
+            });
 
             deferred.resolve(rows);
 
