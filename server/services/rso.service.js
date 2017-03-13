@@ -8,14 +8,13 @@ var pool = require('../db');
 
 var service = {};
  
-//service.authenticate = authenticate;
 service.create = create;
 service.getAll = getAll;
 service._delete = _delete;
 
 module.exports = service;
 
-//Create a user //Modify these
+//Create a rso //Modify these
 function create(rsoParam) {
 
     var deferred = Q.defer();
@@ -36,7 +35,7 @@ function create(rsoParam) {
 
             if(rows.length > 0 )
             {
-                deferred.reject('RSO name "' + userParam.username + '" is already taken');
+                deferred.reject('RSO name "' + rsoParam.name + '" is already taken');
             } else {
                 createRSO();
             }
@@ -45,13 +44,12 @@ function create(rsoParam) {
 
 
         function createRSO() {
-            //var user = _.omit(userParam, 'password');
-            //user.hash = bcrypt.hashSync(userParam.password, 10);
 
-            var rso = {uid: userParam.password, email: userParam.email, phone: userParam.phone, firstName: userParam.firstName, lastName: userParam.lastName};
+            //change these
+            var rso = {rid: rsoParam._id, uid: rsoParam.userId, unid: rsoParam.unid, name:rsoParam.name};
 
             //maybe use a procedure here instead of a sql statement
-            connection.query("insert into rso set ?", rso, function(err, rows) {
+            connection.query("insert into rso set ?", [rso], function(err, rows) {
                 if(err) {
                     deferred.reject(err.name + ': ' + err.message);
                 }
@@ -63,7 +61,7 @@ function create(rsoParam) {
     return deferred.promise;
 }
 
-//Get all users
+//Get all rso's
 function getAll(){
     var deferred = Q.defer();
 
@@ -90,7 +88,7 @@ function getAll(){
     return deferred.promise;
 }
 
-//Delete a user
+//Delete a rso
 function _delete(rsoId){
     var deferred = Q.defer();
 
