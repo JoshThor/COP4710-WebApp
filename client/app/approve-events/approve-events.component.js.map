@@ -1,0 +1,1 @@
+{"version":3,"file":"approve-events.component.js","sourceRoot":"","sources":["approve-events.component.ts"],"names":[],"mappings":";;;;;;;;AAAA,sCAAkD;AAQlD,IAAa,sBAAsB;IAAnC;IAEA,CAAC;IAAD,6BAAC;AAAD,CAAC,AAFD,IAEC;AAFY,sBAAsB;IALlC,gBAAS,CAAC;QACT,QAAQ,EAAE,MAAM,CAAC,EAAE;QACnB,QAAQ,EAAE,gBAAgB;QAC1B,WAAW,EAAE,+BAA+B;KAC7C,CAAC;GACW,sBAAsB,CAElC;AAFY,wDAAsB"}

@@ -28,6 +28,9 @@ var HomeComponent = (function () {
         var _this = this;
         this.userService.getAll().subscribe(function (users) { _this.users = users; });
     };
+    HomeComponent.prototype.switchTab = function (tab) {
+        this.currentTab = tab;
+    };
     return HomeComponent;
 }());
 HomeComponent = __decorate([

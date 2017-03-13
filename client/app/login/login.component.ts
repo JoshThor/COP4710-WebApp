@@ -2,6 +2,7 @@
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { AlertService, AuthenticationService } from '../_services/index';
+declare var module: { id: string; }
 
 @Component({
     moduleId: module.id,

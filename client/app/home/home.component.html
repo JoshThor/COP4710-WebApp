@@ -1,5 +1,32 @@
-﻿<div class="col-md-6 col-md-offset-3">
-    <h1>Hi {{currentUser.firstName}}!</h1>
+﻿<div [ngSwitch]="currentTab">
+  <ul class="jumbotron nav nav-pills nav-justified">
+    <li role="presentation" [ngClass]="{'active': currentTab == ''}">
+      <a (click)="switchTab('')">Home</a>
+    </li>
+    <li role="presentation" [ngClass]="{'active': currentTab == 'find-events'}">
+      <a (click)="switchTab('find-events')">Find Events</a>
+    </li>
+    <li role="presentation" [ngClass]="{'active': currentTab == 'create-events'}">
+      <a (click)="switchTab('create-events')">Create Events</a>
+    </li>
+    <li role="presentation" [ngClass]="{'active': currentTab == 'approve-events'}">
+      <a (click)="switchTab('approve-events')">Approve Events</a>
+    </li>
+    <li role="presentation" [ngClass]="{'active': currentTab == 'create-rso'}">
+      <a (click)="switchTab('create-rso')">Create RSOs</a>
+    </li>
+    <li role="presentation" [ngClass]="{'active': currentTab == 'view-rso'}">
+      <a (click)="switchTab('view-rso')">View RSOs</a>
+    </li>
+  </ul>
+
+  <template [ngSwitchCase]="'find-events'"><find-events></find-events></template>
+  <template [ngSwitchCase]="'create-events'"><create-events></create-events></template>
+  <template [ngSwitchCase]="'approve-events'"><approve-events></approve-events></template>
+  <template [ngSwitchCase]="'create-rso'"><create-rso></create-rso></template>
+  <template [ngSwitchCase]="'view-rso'"><view-rso></view-rso></template>
+  <template [ngSwitchCase]="''">
+    <!-- <h1>Hi {{currentUser.firstName}}!</h1> -->
     <p>You're logged in with Angular 2!!</p>
     <h3>All registered users:</h3>
     <ul>
@@ -9,4 +36,5 @@
         </li>
     </ul>
     <p><a [routerLink]="['/login']">Logout</a></p>
+  </template>
 </div>

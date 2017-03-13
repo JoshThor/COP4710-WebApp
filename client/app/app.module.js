@@ -19,6 +19,12 @@ var index_3 = require("./_services/index");
 var index_4 = require("./home/index");
 var index_5 = require("./login/index");
 var index_6 = require("./register/index");
+/* Pages */
+var find_events_component_1 = require("./find-events/find-events.component");
+var create_events_component_1 = require("./create-events/create-events.component");
+var approve_events_component_1 = require("./approve-events/approve-events.component");
+var create_rso_component_1 = require("./create-rso/create-rso.component");
+var view_rso_component_1 = require("./view-rso/view-rso.component");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -37,7 +43,12 @@ AppModule = __decorate([
             index_1.AlertComponent,
             index_4.HomeComponent,
             index_5.LoginComponent,
-            index_6.RegisterComponent
+            index_6.RegisterComponent,
+            find_events_component_1.FindEventsComponent,
+            create_events_component_1.CreateEventsComponent,
+            approve_events_component_1.ApproveEventsComponent,
+            create_rso_component_1.CreateRSOComponent,
+            view_rso_component_1.ViewRSOComponent
         ],
         providers: [
             app_config_1.AppConfig,
