@@ -64,7 +64,7 @@ function create(userParam) {
        
 
         connection.query("select * from users WHERE username = ?", [userParam.username], function(err, rows) {
-            connection.release();
+            //connection.release();
 
             if(err) {
                 deferred.reject(err.name + ': ' + err.message);
@@ -86,6 +86,7 @@ function create(userParam) {
             //var user = {username: userParam.username, email: userParam.email, phone: userParam.phone, firstName: userParam.firstName, lastName: userParam.lastName};
 
             connection.query("insert into users set ?", user, function(err, rows) {
+                connection.release();
                 if(err) {
                     deferred.reject(err.name + ': ' + err.message);
                 }
