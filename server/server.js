@@ -11,12 +11,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
  
 // use JWT auth to secure the api
-app.use(expressJwt({ secret: config.secret }).unless({ path: ['/users/authenticate', '/users/register', '/rsos/join'] }));
+//app.use(expressJwt({ secret: config.secret }).unless({ path: ['/users/authenticate', '/users/register', '/rsos/join'] }));
  
 // routes
 app.use('/users', require('./controllers/users.controller'));
 app.use('/events', require('./controllers/events.controller'));
 app.use('/rsos', require('./controllers/rsos.controller'));
+app.use('/comments', require('./controllers/comments.controller'));
  
 // start server
 var port = process.env.NODE_ENV === 'production' ? 80 : 4000;

@@ -5,7 +5,8 @@ export class Event {
     timedate: string;
     description: string;    //description of the event
     category: string;       
-    loctation: string;      //location ID
+    latitude: string;
+    longitude: string;
     type: string;           //Type of event ( private, public, RSO ...)
     status: string;         // Approved, not-approved, pending....
 }

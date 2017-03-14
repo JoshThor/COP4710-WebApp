@@ -26,8 +26,6 @@ function create(rsoParam) {
             deferred.reject(err.name + ': ' + err.message);
         }
 
-       console.log(rsoParam);
-
         //rsoParam.name may change
         connection.query("select * from rso WHERE rsoName = ?", [rsoParam.name], function(err, rows) {
 
@@ -46,13 +44,24 @@ function create(rsoParam) {
 
         function makeAdmin() {
 
-            connection.query("select * from admin WHERE uid  = ?", [rsoParam.userId], function(err, rows) {
+            //update role of user to admin
+            connection.query("UPDATE users SET role = ? WHERE uid = ? AND role != ?", ["admin", rsoParam.uid, "superadmin"], function(err, rows) {
+                if(err) {
+                    deferred.reject(err.name +": "+ err.message);
+                }
+
+                if(rows.length > 0)
+                    console.log("Updated user "+ rows[0].uid+" role to admin..");
+
+            });
+
+            connection.query("select * from admin WHERE uid  = ?", [rsoParam.uid], function(err, rows) {
 
                 if(err) {
                     deferred.reject(err.name + ": " + err.message);
-                } else {
+                } else if (rows.length < 1) {
 
-                    var admin = {uid: rsoParam.userId, unid: rsoParam.unid};
+                    var admin = {uid: rsoParam.uid, unid: rsoParam.unid};
 
                     connection.query("insert into admin set ?", [admin], function(err, rows) {
                         if(err){
@@ -60,8 +69,9 @@ function create(rsoParam) {
                         }
                     });
 
-                    createRSO();
+                    
                 }
+                createRSO();
 
             });
 
@@ -81,6 +91,8 @@ function create(rsoParam) {
 
                 deferred.resolve();
             });
+
+            console.log("Created RSO: "+rsoParam.name);
         }
     });
     return deferred.promise;
@@ -151,6 +163,12 @@ function join(rsoId, userId){
                 var student = {uid: userId, unid: universityID};
 
                 console.log("creating student: "+ userId+", from university: " + universityID);
+
+                connection.query("UPDATE users SET role = ? WHERE uid = ? AND role = ?", ['student', userId, 'user'], function(err, rows){
+                     if(err) {
+                        deferred.reject(err.name + ': ' + err.message);
+                    }
+                });
 
                 //maybe use a procedure here instead of a sql statement
                 connection.query("insert into student set ?", [student], function(err, rows) {
