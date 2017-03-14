@@ -5,15 +5,13 @@ var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
 var pool = require('../db').pool;
 
-
 var service = {};
  
 service.create = create;
 service.getComments = getComments;
-//service._delete = _delete;
+service._delete = _delete;
 
 module.exports = service;
-
 
 //Create a event
 function create(commentParam) {
@@ -25,6 +23,8 @@ function create(commentParam) {
             connection.release();
             deferred.reject(err.name + ': ' + err.message);
         }
+
+        console.log(commentParam);
 
         connection.query("insert into comments set ?", [commentParam], function(err, rows) {
             connection.release();
@@ -54,7 +54,7 @@ function getComments(eventId) {
                 deferred.reject(err.name + ': ' + err.message);
             }
 
-            if(rows.length > 0)
+            if(rows && rows.length > 0)
             {
                 //comments found
                 deferred.resolve(rows);
@@ -67,4 +67,28 @@ function getComments(eventId) {
         });
     });
     return deferred.promise;
+}
+
+function _delete(eid, uid) {
+    var deferred = Q.defer();
+
+    pool.getConnection(function(err, connection) {
+        if(err) {
+            connection.release();
+            deferred.reject(err.name + ': ' + err.message);
+        }
+    
+        connection.query("DELETE FROM comments WHERE eid = ? AND uid = ?", [eid, uid], function(err, rows) {
+            connection.release();
+
+            if(err){
+                deferred.reject(err.name +": "+ err.message);
+            }
+            console.log("Comment was deleted");
+             deferred.resolve();
+
+        });
+
+    });
+    return deferred.promise;    
 }

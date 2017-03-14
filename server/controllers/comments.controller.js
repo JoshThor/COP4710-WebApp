@@ -7,14 +7,12 @@ var commentService = require('services/comment.service');
 router.post('/create', create);
 //router.post('/register', register);
 router.get('/:id', getAll);
-//router.delete('/:id', _delete);
+router.delete('/:id', _delete);
 
- 
 module.exports = router;
 
-
 function create(req, res) {
-commentService.getComments(req.body)
+commentService.create(req.body)
         .then(function () {
             res.sendStatus(200);
         })
@@ -29,7 +27,7 @@ commentService.getComments(req.params.id)
             if (comments) {
                 
                 // authentication successful
-                res.send(user);
+                res.send(comments);
             } else {
                 // authentication failed
                 res.send("No Comments found");
@@ -39,3 +37,14 @@ commentService.getComments(req.params.id)
             res.status(400).send(err);
         });
 }
+
+function _delete(req, res) {
+    commentService._delete(req.params.id, req.body.uid)
+        .then(function() {
+            res.sendStatus(200);
+        })
+        .catch(function(err) {
+            res.status(400).send(err);
+        });
+}
+

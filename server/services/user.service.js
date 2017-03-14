@@ -13,7 +13,6 @@ service.getAll = getAll;
 service._delete = _delete;
 service.getUserById = getUserById;
 
- 
 module.exports = service;
 
 //Authenticate a user

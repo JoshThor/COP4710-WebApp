@@ -16,7 +16,7 @@ service.getRSOEvents = getRSOEvents;
 service.approveEvents = approveEvents;
 service._delete = _delete;
 
-module.export = service;
+module.exports = service;
 
 //Create a event
 function create(eventParam) {
@@ -28,8 +28,10 @@ function create(eventParam) {
             connection.release();
             deferred.reject(err.name + ': ' + err.message);
         }
-    
-        var event = {lid: rows[0].lid, uid: eventParam.uid, eventName: eventParam.name, timedate: eventParam.time, category: eventParam.category, 
+
+        console.log(eventParam);
+
+        var event = {uid: eventParam.uid, eventName: eventParam.name, timedate: eventParam.time, category: eventParam.category, 
             description: eventParam.description, latitude: eventParam.latitude, longitude: eventParam.longitude};
 
         connection.query("INSERT INTO _events SET ?", [event], function(err, rows) {
@@ -39,7 +41,7 @@ function create(eventParam) {
                 deferred.reject(err.name +": "+ err.message);
             }
 
-            deferred.promise();
+            deferred.resolve();
             //now we want to determine what kind of event? public, private, rso ect..
 
         });
@@ -65,7 +67,7 @@ function getAll() {
                 deferred.reject(err.name +": "+ err.message);
             }
 
-             deferred.promise(rows);
+             deferred.resolve(rows);
 
         });
 
@@ -83,14 +85,14 @@ function getPrivateEvents(unid) {
             deferred.reject(err.name + ': ' + err.message);
         }
     
-        connection.query("SELECT e.eventName, e.description, e.category FROM _events e, privateEvent p WHERE p.eid = e.eid AND p.unid = ? ",[unid], function(err, rows) {
+        connection.query("SELECT e.eventName, e.description, e.category, e.latitude, e.longitude, e.timedate FROM _events e, privateEvent p WHERE p.eid = e.eid AND p.unid = ? ",[unid], function(err, rows) {
             connection.release();
 
             if(err){
                 deferred.reject(err.name +": "+ err.message);
             }
 
-             deferred.promise(rows);
+             deferred.resolve(rows);
 
         });
 
@@ -107,14 +109,14 @@ function getPublicEvents() {
             deferred.reject(err.name + ': ' + err.message);
         }
     
-        connection.query("SELECT e.eventName, e.description, e.category FROM _events e, publicEvent p WHERE p.eid = e.eid", function(err, rows) {
+        connection.query("SELECT e.eventName, e.description, e.category, e.latitude, e.longitude, e.timedate FROM _events e, publicEvent p WHERE p.eid = e.eid", function(err, rows) {
             connection.release();
 
             if(err){
                 deferred.reject(err.name +": "+ err.message);
             }
 
-             deferred.promise(rows);
+             deferred.resolve(rows);
 
         });
 
@@ -131,14 +133,14 @@ function getRSOEvents(rid) {
             deferred.reject(err.name + ': ' + err.message);
         }
     
-        connection.query("SELECT e.eventName, e.description, e.category FROM _events e, rsoEvent r WHERE r.eid = e.eid AND r.rid = ?", [rid], function(err, rows) {
+        connection.query("SELECT e.eventName, e.description, e.category, e.latitude, e.longitude, e.timedate FROM _events e, rsoEvent r WHERE r.eid = e.eid AND r.rid = ?", [rid], function(err, rows) {
             connection.release();
 
             if(err){
                 deferred.reject(err.name +": "+ err.message);
             }
 
-             deferred.promise(rows);
+             deferred.resolve(rows);
 
         });
 
@@ -162,14 +164,13 @@ function approveEvents(eid, status) {
                 deferred.reject(err.name +": "+ err.message);
             }
             console.log("Event ID: "+ eid +" updated with status: "+ status);
-            deferred.promise();
+            deferred.resolve();
 
         });
 
     });
     return deferred.promise;    
 }
-
 
 function _delete(eid) {
     var deferred = Q.defer();
@@ -187,7 +188,7 @@ function _delete(eid) {
                 deferred.reject(err.name +": "+ err.message);
             }
             console.log("Event ID: "+ eid +" was deleted");
-             deferred.promise(rows);
+             deferred.resolve();
 
         });
 

@@ -73,6 +73,8 @@ function create(rsoParam) {
                 }
                 createRSO();
 
+
+
             });
 
         }
@@ -80,16 +82,28 @@ function create(rsoParam) {
         function createRSO() {
 
             //change these
-            var rso = {uid: rsoParam.userId, unid: rsoParam.unid, rsoName: rsoParam.name};
-
+            var rso = {uid: rsoParam.uid, unid: rsoParam.unid, rsoName: rsoParam.name};
+            
             //maybe use a procedure here instead of a sql statement
             connection.query("insert into rso set ?", [rso], function(err, rows) {
                 connection.release();
                 if(err) {
                     deferred.reject(err.name + ': ' + err.message);
                 }
+                console.log(rows);
+                if(rows) {
+                    var rsoMember = {uid: rsoParam.uid, rid: rows.insertId};
 
-                deferred.resolve();
+                    connection.query("INSERT INTO rsoMembers SET ?", [rsoMember], function(err, rows) {
+                        if(err) {
+                            deferred.reject(err.name + ': ' + err.message);
+                        }
+                    });
+
+                    deferred.resolve();
+                } else {
+                    deferred.reject("Error");
+                }
             });
 
             console.log("Created RSO: "+rsoParam.name);
@@ -210,7 +224,7 @@ function _delete(rsoId){
 
         console.log("Deleting rso: " + rsoId);
 
-        connection.query("DELETE FROM rso WHERE id = ?", [rsoId], function(err, rows) {
+        connection.query("DELETE FROM rso WHERE rid = ?", [rsoId], function(err, rows) {
             connection.release();
 
             if(err) {
