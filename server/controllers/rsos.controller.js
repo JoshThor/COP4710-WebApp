@@ -8,6 +8,7 @@ router.post('/create', create);
 router.get('/', getAll);
 router.post('/join/:id', join);
 router.delete('/:id', _delete);
+router.get('/getall', getAllForUser)
 
  
 module.exports = router;
@@ -38,6 +39,16 @@ function join(req, res) {
             res.sendStatus(200);
         })
         .catch(function (err){
+            res.status(400).send(err);
+        });
+}
+
+function getAllForUser(req, res) {
+    rsoService.getAllForUser(req.body.uid)
+        .then(function(rso) {
+            res.send(rsos)
+        })
+        .catch(function(err) {
             res.status(400).send(err);
         });
 }

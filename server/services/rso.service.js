@@ -12,6 +12,7 @@ service.create = create;
 service.getAll = getAll;
 service._delete = _delete;
 service.join = join;
+service.getAllForUser = getAllForUser;
 
 module.exports = service;
 
@@ -126,6 +127,33 @@ function getAll(){
         console.log("Getting all rso's...");
 
         connection.query("select * from rso", function(err, rows) {
+            connection.release();
+
+            if(err) {
+                deferred.reject(err.name + ': ' + err.message);
+            }
+
+            deferred.resolve(rows);
+
+        });
+    });
+    return deferred.promise;
+}
+
+//Get all rso's that the current user is not in 
+function getAllForUser(uid){
+    var deferred = Q.defer();
+
+    pool.getConnection(function(err, connection) {
+
+        if(err) {
+            connection.release();
+            deferred.reject(err.name + ': ' + err.message);
+        }
+
+        console.log("Getting all rso's for the user: "+uid);
+
+        connection.query("SELECT * FROM rso r, rsoMembers m WHERE r.rid = m.rid AND m.uid != ?", [uid], function(err, rows) {
             connection.release();
 
             if(err) {
