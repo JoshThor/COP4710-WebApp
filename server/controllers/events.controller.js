@@ -3,13 +3,40 @@ var express = require('express');
 var router = express.Router();
 var eventService = require('services/event.service');
 
+//routes
+//All of these routes can be called using the http://localhost:3000/events/ URI followed by one of the routes below:
 
+//Creates an event
+//URI: http://localhost:3000/events/create
 router.post('/create', create);
+
+//Gets all event
+//URI: http://localhost:3000/events/
 router.get('/', getAll);
+
+//Gets all private events for a specific university id
+//URI: http://localhost:3000/events/private/:id
+//Example: http://localhost:3000/events/private/1 gets all private events that belong to the unid 1
 router.get('/private/:id', getPrivateEvents);
+
+
+//Gets all public events 
+//URI: http://localhost:3000/events/public
 router.get('/public', getPublicEvents);
-router.get('/rso/:id', RSOEvents);              //router.get('/rso/:id', RSOEvents); 
+
+//Gets all RSO events for a specific rso id
+//URI: http://localhost:3000/events/rso/:id
+//Example: http://localhost:3000/events/rso/1 gets all private events that belong to the rid 1
+router.get('/rso/:id', RSOEvents);
+
+//approve an event (only superadmins can approve)
+//URI: http://localhost:3000/events/approve/:id
+//Example: http://localhost:3000/events/approve/1 approves the event with eid = 1
 router.post('/approve/:id', approveEvents);
+
+//delete an event
+//URI: http://localhost:3000/events/:id
+//Example: http://localhost:3000/events/1 deletes the event with eid = 1
 router.delete('/:id', _delete);
 
  

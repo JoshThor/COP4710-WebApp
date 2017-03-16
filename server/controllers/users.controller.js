@@ -4,10 +4,28 @@ var router = express.Router();
 var userService = require('services/user.service');
  
 // routes
+//All of these routes can be called using the http://localhost:3000/users/ URI followed by one of the routes below:
+
+//Authenticate a user
+//URI: http://localhost:3000/users/authenticate
 router.post('/authenticate', authenticate);
+
+//register a user
+//URI: http://localhost:3000/users/register
 router.post('/register', register);
+
+//Gets all users
+//URI: http://localhost:3000/users/
 router.get('/', getAll);
+
+//Delete a user
+//URI: http://localhost:3000/users/:id
+//Example:http://localhost:3000/users/1 deletes user with the uid 1
 router.delete('/:id', _delete);
+
+//Gets a user with the specified id
+//URI: http://localhost:3000/users/:id
+//Example:http://localhost:3000/users/1 gets user with the uid 1
 router.get('/:id', getUserById);
 
  

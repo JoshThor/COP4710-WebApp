@@ -4,10 +4,28 @@ var router = express.Router();
 var rsoService = require('services/rso.service');
  
 // routes change these
+//All of these routes can be called using the http://localhost:3000/rsos/ url followed by one of the routes below:
+
+// Creates an RSO
+//URL: http://localhost:3000/rsos/create
 router.post('/create', create);
+
+// Gets all RSO's
+//URL: http://localhost:3000/rsos/
 router.get('/', getAll);
+
+// joins an RSO
+//URL: http://localhost:3000/rsos/join/:id
+//Example:  http://localhost:3000/rsos/join/3 would join the rso with rid 3
 router.post('/join/:id', join);
+
+// Delete an RSO
+//URL: http://localhost:3000/rsos/:id
+//Example:  http://localhost:3000/rsos/3 would delete the rso with rid 3
 router.delete('/:id', _delete);
+
+// Gets all joinable RSO's for that user (user id has to be sent in reuest)
+//URL: http://localhost:3000/rsos/getall
 router.get('/getall', getAllForUser)
 
  
