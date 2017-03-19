@@ -7,9 +7,9 @@ import { AppComponent } from './app.component';
 import { routing } from './app.routing';
 import { AppConfig } from './app.config';
 
-import { AlertComponent } from './_directives/index';
+import { AlertComponent, EventZippyComponent } from './_directives/index';
 import { AuthGuard } from './_guards/index';
-import { AlertService, AuthenticationService, UserService } from './_services/index';
+import { AlertService, AuthenticationService, UserService, RSOService, EventService } from './_services/index';
 import { HomeComponent } from './home/index';
 import { LoginComponent } from './login/index';
 import { RegisterComponent } from './register/index';
@@ -19,7 +19,7 @@ import { FindEventsComponent } from './find-events/find-events.component';
 import { CreateEventsComponent } from './create-events/create-events.component';
 import { ApproveEventsComponent } from './approve-events/approve-events.component';
 import { CreateRSOComponent } from './create-rso/create-rso.component';
-import {ViewRSOComponent } from './view-rso/view-rso.component';
+import { ViewRSOComponent } from './view-rso/view-rso.component';
 
 @NgModule({
     imports: [
@@ -31,6 +31,7 @@ import {ViewRSOComponent } from './view-rso/view-rso.component';
     declarations: [
         AppComponent,
         AlertComponent,
+        EventZippyComponent,
         HomeComponent,
         LoginComponent,
         RegisterComponent,
@@ -45,7 +46,9 @@ import {ViewRSOComponent } from './view-rso/view-rso.component';
         AuthGuard,
         AlertService,
         AuthenticationService,
-        UserService
+        UserService,
+        RSOService,
+        EventService
     ],
     bootstrap: [AppComponent]
 })

@@ -41,6 +41,7 @@ AppModule = __decorate([
         declarations: [
             app_component_1.AppComponent,
             index_1.AlertComponent,
+            index_1.EventZippyComponent,
             index_4.HomeComponent,
             index_5.LoginComponent,
             index_6.RegisterComponent,
@@ -55,7 +56,9 @@ AppModule = __decorate([
             index_2.AuthGuard,
             index_3.AlertService,
             index_3.AuthenticationService,
-            index_3.UserService
+            index_3.UserService,
+            index_3.RSOService,
+            index_3.EventService
         ],
         bootstrap: [app_component_1.AppComponent]
     })

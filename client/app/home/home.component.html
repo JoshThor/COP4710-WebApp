@@ -1,7 +1,7 @@
 ﻿<div [ngSwitch]="currentTab">
   <ul class="jumbotron nav nav-pills nav-justified">
-    <li role="presentation" [ngClass]="{'active': currentTab == ''}">
-      <a (click)="switchTab('')">Home</a>
+    <li role="presentation" [ngClass]="{'active': currentTab == 'home'}">
+      <a (click)="switchTab('home')">Home</a>
     </li>
     <li role="presentation" [ngClass]="{'active': currentTab == 'find-events'}">
       <a (click)="switchTab('find-events')">Find Events</a>
@@ -16,7 +16,7 @@
       <a (click)="switchTab('create-rso')">Create RSOs</a>
     </li>
     <li role="presentation" [ngClass]="{'active': currentTab == 'view-rso'}">
-      <a (click)="switchTab('view-rso')">View RSOs</a>
+      <a (click)="switchTab('view-rso')">View/Join RSOs</a>
     </li>
   </ul>
 
@@ -25,16 +25,16 @@
   <template [ngSwitchCase]="'approve-events'"><approve-events></approve-events></template>
   <template [ngSwitchCase]="'create-rso'"><create-rso></create-rso></template>
   <template [ngSwitchCase]="'view-rso'"><view-rso></view-rso></template>
-  <template [ngSwitchCase]="''">
+  <template [ngSwitchCase]="'home'" ngSwitchDefault>
     <!-- <h1>Hi {{currentUser.firstName}}!</h1> -->
     <p>You're logged in with Angular 2!!</p>
     <h3>All registered users:</h3>
-    <ul>
+    <!-- <ul>
         <li *ngFor="let user of users">
             {{user.username}} ({{user.firstName}} {{user.lastName}}) - {{user.email}}
             - <a (click)="deleteUser(user.id)">Delete</a>
         </li>
-    </ul>
+    </ul> -->
     <p><a [routerLink]="['/login']">Logout</a></p>
   </template>
 </div>

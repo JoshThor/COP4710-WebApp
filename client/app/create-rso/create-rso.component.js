@@ -9,7 +9,30 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var CreateRSOComponent = (function () {
     function CreateRSOComponent() {
+        /* TODO:
+          - accessible by everyone
+          - http request:
+            > userId (from local storage),
+            > univeristyId (from list), [input field]
+            > rsoName, [input field]
+          - Make rsoService call (fake it)
+          */
+        this.universityList = [
+            "UCF", "UF", "FSU", "FGCU", "FAMU", "USF", "UM"
+        ];
+        this.formData = {
+            userId: "",
+            rsoName: "",
+            uid: ""
+        };
     }
+    CreateRSOComponent.prototype.submitForm = function () {
+        // Check that form is properly filled out
+        // Make rsoService call
+        console.log(this.formData);
+    };
+    CreateRSOComponent.prototype.ngOnInit = function () {
+    };
     return CreateRSOComponent;
 }());
 CreateRSOComponent = __decorate([

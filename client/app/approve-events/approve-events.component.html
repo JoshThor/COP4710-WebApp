@@ -1,3 +1,30 @@
-<div>
+<div calss="page-container">
   <h1>Approve Events Component</h1>
+
+  <div class="col-md-8 col-md-offset-1" >
+    <h3>Public Events</h3>
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let event of publicEvents; let i = index">
+        <h4 class="list-group-item-heading">{{event.eventName}}</h4>
+        <p class="list-group-item-text">{{event.description}}</p>
+        <br>
+        <button class="btn btn-primary btn-sm">Approve</button>
+        <button class="btn btn-danger btn-sm">Disapprove</button>
+      </li>
+    </ul>
+  </div> <!-- End Public Event Container -->
+
+  <div class="col-md-8 col-md-offset-1">
+    <h3>Private Events</h3>
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let event of privateEvents; let i = index">
+        <h4 class="list-group-item-heading">{{event.eventName}}</h4>
+        <p class="list-group-item-text">{{event.description}}</p>
+        <br>
+        <button class="btn btn-primary btn-sm">Approve</button>
+        <button class="btn btn-danger btn-sm">Disapprove</button>
+      </li>
+    </ul>
+  </div> <!-- End Private Event Container -->
+
 </div>
