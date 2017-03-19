@@ -27,8 +27,8 @@ function create(rsoParam) {
             deferred.reject(err.name + ': ' + err.message);
         }
 
-        //rsoParam.name may change
-        connection.query("select * from rso WHERE rsoName = ?", [rsoParam.name], function(err, rows) {
+        //rsoParam.rsoName may change
+        connection.query("select * from rso WHERE rsoName = ?", [rsoParam.rsoName], function(err, rows) {
 
             if(err) {
                 deferred.reject(err.name + ': ' + err.message);
@@ -36,7 +36,7 @@ function create(rsoParam) {
 
             if(rows.length > 0 )
             {
-                deferred.reject('RSO name "' + rsoParam.name + '" is already taken');
+                deferred.reject('RSO name "' + rsoParam.rsoName + '" is already taken');
             } else {
                 makeAdmin();
             }
@@ -83,7 +83,7 @@ function create(rsoParam) {
         function createRSO() {
 
             //change these
-            var rso = {uid: rsoParam.uid, unid: rsoParam.unid, rsoName: rsoParam.name};
+            var rso = {uid: rsoParam.uid, unid: rsoParam.unid, rsoName: rsoParam.rsoName};
             
             //maybe use a procedure here instead of a sql statement
             connection.query("insert into rso set ?", [rso], function(err, rows) {
@@ -91,7 +91,7 @@ function create(rsoParam) {
                 if(err) {
                     deferred.reject(err.name + ': ' + err.message);
                 }
-                console.log(rows);
+                
                 if(rows) {
                     var rsoMember = {uid: rsoParam.uid, rid: rows.insertId};
 
@@ -107,7 +107,7 @@ function create(rsoParam) {
                 }
             });
 
-            console.log("Created RSO: "+rsoParam.name);
+            console.log("Created RSO: "+rsoParam.rsoName);
         }
     });
     return deferred.promise;

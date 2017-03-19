@@ -5,7 +5,6 @@ var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
 var pool = require('../db').pool;
 
-
 var service = {};
  
 service.create = create;
@@ -76,7 +75,9 @@ function getAll() {
 }
 
 
-function getPrivateEvents(unid) {
+//Change to User Id
+
+function getPrivateEvents(uid) {
     var deferred = Q.defer();
 
     pool.getConnection(function(err, connection) {
@@ -85,7 +86,7 @@ function getPrivateEvents(unid) {
             deferred.reject(err.name + ': ' + err.message);
         }
     
-        connection.query("SELECT e.eventName, e.description, e.category, e.latitude, e.longitude, e.timedate FROM _events e, privateEvent p WHERE p.eid = e.eid AND p.unid = ? ",[unid], function(err, rows) {
+        connection.query("SELECT e.eid, e.eventName, e.description, e.category, e.latitude, e.longitude, e.timedate FROM _events e, privateEvent p, student s WHERE p.eid = e.eid AND p.unid = s.unid AND s.uid = ?", [uid], function(err, rows) {
             connection.release();
 
             if(err){
@@ -109,7 +110,7 @@ function getPublicEvents() {
             deferred.reject(err.name + ': ' + err.message);
         }
     
-        connection.query("SELECT e.eventName, e.description, e.category, e.latitude, e.longitude, e.timedate FROM _events e, publicEvent p WHERE p.eid = e.eid", function(err, rows) {
+        connection.query("SELECT e.eid, e.eventName, e.description, e.category, e.latitude, e.longitude, e.timedate FROM _events e, publicEvent p WHERE p.eid = e.eid", function(err, rows) {
             connection.release();
 
             if(err){
@@ -124,7 +125,8 @@ function getPublicEvents() {
     return deferred.promise;    
 }
 
-function getRSOEvents(rid) {
+//query databse for user id
+function getRSOEvents(uid) {
     var deferred = Q.defer();
 
     pool.getConnection(function(err, connection) {
@@ -133,7 +135,7 @@ function getRSOEvents(rid) {
             deferred.reject(err.name + ': ' + err.message);
         }
     
-        connection.query("SELECT e.eventName, e.description, e.category, e.latitude, e.longitude, e.timedate FROM _events e, rsoEvent r WHERE r.eid = e.eid AND r.rid = ?", [rid], function(err, rows) {
+        connection.query("SELECT e.eid, e.eventName, e.description, e.category, e.latitude, e.longitude, e.timedate FROM _events e, rsoEvent r, rsoMembers m WHERE r.eid = e.eid AND r.rid = m.rid AND m.uid = ?", [uid], function(err, rows) {
             connection.release();
 
             if(err){
