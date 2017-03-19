@@ -74,8 +74,6 @@ function create(rsoParam) {
                 }
                 createRSO();
 
-
-
             });
 
         }

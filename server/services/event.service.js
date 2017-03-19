@@ -6,7 +6,7 @@ var bcrypt = require('bcryptjs');
 var pool = require('../db').pool;
 
 var service = {};
- 
+
 service.create = create;
 service.getAll = getAll;
 service.getPrivateEvents = getPrivateEvents;
@@ -79,23 +79,36 @@ function getAll() {
 
 function getPrivateEvents(uid) {
     var deferred = Q.defer();
+    //console.log(uid);
 
     pool.getConnection(function(err, connection) {
         if(err) {
             connection.release();
             deferred.reject(err.name + ': ' + err.message);
         }
-    
-        connection.query("SELECT e.eid, e.eventName, e.description, e.category, e.latitude, e.longitude, e.timedate FROM _events e, privateEvent p, student s WHERE p.eid = e.eid AND p.unid = s.unid AND s.uid = ?", [uid], function(err, rows) {
-            connection.release();
 
-            if(err){
-                deferred.reject(err.name +": "+ err.message);
-            }
+        connection.query(`SELECT e.eid, e.eventName, e.description, e.category, e.latitude, e.longitude, e.timedate FROM _events e, privateEvent p, student s
+            WHERE p.eid = e.eid AND (p.unid = s.unid AND s.uid = ?)`, [uid], function(err, rows) {
 
-             deferred.resolve(rows);
+                if(err){
+                    deferred.reject(err.name +": "+ err.message);
+                } else if(rows > 0){
+                     deferred.resolve(rows);
+                }else{
+                    connection.query(`SELECT e.eid, e.eventName, e.description, e.category, e.latitude, e.longitude, e.timedate FROM _events e, privateEvent p, admin a 
+                        WHERE p.eid = e.eid AND (p.unid = a.unid AND a.uid = ?)`, [uid], function(err, rows) {
 
-        });
+                    connection.release();
+
+                    if(err){
+                        deferred.reject(err.name +": "+ err.message);
+                    }
+
+                    deferred.resolve(rows);
+
+                    });
+                }
+            });
 
     });
     return deferred.promise;    
