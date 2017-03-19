@@ -24,6 +24,11 @@ router.get('/private/:id', getPrivateEvents);
 //URI: http://localhost:3000/events/public
 router.get('/public', getPublicEvents);
 
+
+//~~~~
+//Will change to get all RSO that the user can view so in the request send the UID
+//~~~~
+
 //Gets all RSO events for a specific rso id
 //URI: http://localhost:3000/events/rso/:id
 //Example: http://localhost:3000/events/rso/1 gets all private events that belong to the rid 1
