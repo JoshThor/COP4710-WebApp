@@ -14,20 +14,23 @@ router.post('/create', create);
 //URI: http://localhost:3000/events/
 router.get('/', getAll);
 
-//Gets all private events for a specific university id
-//URI: http://localhost:3000/events/private/:id
-//Example: http://localhost:3000/events/private/1 gets all private events that belong to the unid 1
-router.get('/private/:id', getPrivateEvents);
+//Gets all private events for university that a user is a student at
+//URI: http://localhost:3000/events/private
+router.get('/private/:uid', getPrivateEvents);
 
 
 //Gets all public events 
 //URI: http://localhost:3000/events/public
 router.get('/public', getPublicEvents);
 
-//Gets all RSO events for a specific rso id
-//URI: http://localhost:3000/events/rso/:id
-//Example: http://localhost:3000/events/rso/1 gets all private events that belong to the rid 1
-router.get('/rso/:id', RSOEvents);
+
+//~~~~
+//Will change to get all RSO that the user can view so in the request send the UID
+//~~~~
+
+//Gets all RSO events for each rso that a user belongs to
+//URI: http://localhost:3000/events/rso
+router.get('/rso/:uid', RSOEvents);
 
 //approve an event (only superadmins can approve)
 //URI: http://localhost:3000/events/approve/:id
@@ -64,7 +67,7 @@ function getAll(req, res) {
 }
 
 function getPrivateEvents(req, res) {
-    eventService.getPrivateEvents(req.params.id)
+    eventService.getPrivateEvents(req.params.uid)
         .then(function(events) {
             res.send(events);
         })
@@ -84,7 +87,7 @@ function getPublicEvents(req, res) {
 }
 
 function RSOEvents(req, res) {
-    eventService.getRSOEvents(req.params.id)        //either in the body or in the paramaters
+    eventService.getRSOEvents(req.params.uid)        //either in the body or in the paramaters
         .then(function(events) {
             res.send(events);
         })
