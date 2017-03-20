@@ -80,14 +80,8 @@ function create(rsoParam) {
 
         function createRSO() {
 
-            //change these
-<<<<<<< HEAD
-            var rso = {uid: rsoParam.uid, unid: rsoParam.unid, rsoName: rsoParam.name};
-
-=======
             var rso = {uid: rsoParam.uid, unid: rsoParam.unid, rsoName: rsoParam.rsoName};
-
->>>>>>> fd8e81f64495944b9bf619567283903f600bd4a9
+            
             //maybe use a procedure here instead of a sql statement
             connection.query("insert into rso set ?", [rso], function(err, rows) {
                 connection.release();
