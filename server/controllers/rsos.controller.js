@@ -17,7 +17,7 @@ router.get('/', getAll);
 // joins an RSO
 //URL: http://localhost:3000/rsos/join/:id
 //Example:  http://localhost:3000/rsos/join/3 would join the rso with rid 3
-router.post('/join/:id', join);
+router.post('/join/:rid', join);
 
 // Delete an RSO
 //URL: http://localhost:3000/rsos/:id
@@ -52,7 +52,7 @@ function getAll(req, res) {
 }
 
 function join(req, res) {
-    rsoService.join(req.params.id, req.body.uid)
+    rsoService.join(req.params.rid, req.body.uid)
         .then(function() {
             res.sendStatus(200);
         })
@@ -64,7 +64,7 @@ function join(req, res) {
 function getAllForUser(req, res) {
     rsoService.getAllForUser(req.params.uid)
         .then(function(rso) {
-            res.send(rsos)
+            res.send(rso)
         })
         .catch(function(err) {
             res.status(400).send(err);
