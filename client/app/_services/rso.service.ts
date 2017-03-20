@@ -13,7 +13,7 @@ export class RSOService {
       - What are the I/Os for each request?
       - Do I need to set up in ngModule?? */
 
-    public getAllForUser(_id: string): any {
+    public getJoinableRSOs(_id: string): any {
       // return http.get(this.config.apiUrl + '/rsos/', this.jwt()).map((response: Response) => response.json());
       /* Test Data */
       return [
@@ -29,7 +29,6 @@ export class RSOService {
     }
 
     public createRSO(data: any) {
-      //console.log( data );
       return this.http.post(this.config.apiUrl + '/rsos/create', data, this.jwt());
     }
 

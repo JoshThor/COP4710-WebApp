@@ -20,7 +20,7 @@ export class CreateRSOComponent {
   private formData: any = {
     uid: this.userObj._id,
     rsoName: "",
-    unid: 1 // Number
+    unid: 1
   }
 
   private submitForm() {
