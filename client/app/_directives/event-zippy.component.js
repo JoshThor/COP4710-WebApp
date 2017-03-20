@@ -10,28 +10,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var index_1 = require("../_services/index");
 var EventZippyComponent = (function () {
-    function EventZippyComponent() {
-        /* TODO:
-          - Make http request for comments in this component
-          - Have single @Input for eventId to make http request */
-        this._comment = "";
+    function EventZippyComponent(_eventService) {
+        this._eventService = _eventService;
+        this._myComment = "";
+        this.comments = [];
     }
     EventZippyComponent.prototype.ngOnInit = function () {
-        /* Make http request here */
+        // this.comments = this._eventService.getComments( this._eventId );
     };
     return EventZippyComponent;
 }());
 __decorate([
     core_1.Input('eventId'),
     __metadata("design:type", String)
-], EventZippyComponent.prototype, "_id", void 0);
+], EventZippyComponent.prototype, "_eventId", void 0);
 EventZippyComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
         selector: 'event-zippy',
-        template: "\n    <div>\n\n      <div class=\"form-group\"> <!-- *ngFor=\"let comment in comments; i = index\" for <div> element -->\n        <label>\n        Commenter's username\n        <br/>\n        <span class=\"badge\">4 <span class=\"glyphicon glyphicon-star\" aria-hidden=\"true\"></span></span>\n        </label>\n        <input type=\"text\" class=\"form-control\" disabled placeholder=\"User's comments...\" />\n      </div>\n\n      <div class=\"form-group\">\n        <label>Current user's username</label>\n        <input type=\"text\" class=\"form-control\" [(ngModel)]=\"_comment\" placeholder=\"Type your comments here...\" />\n      </div>\n    </div>\n  "
-    })
+        template: "\n    <div>\n\n      <div class=\"form-group\"> <!-- *ngFor=\"let comment in comments; i = index\" for <div> element -->\n        <label>\n          Commenter's username\n          <br/>\n          <span class=\"badge\">4 <span class=\"glyphicon glyphicon-star\" aria-hidden=\"true\"></span></span>\n        </label>\n        <input type=\"text\" class=\"form-control\" disabled placeholder=\"User's comments...\" />\n      </div>\n\n      <div class=\"form-group\">\n        <label>Current user's username</label>\n        <input type=\"text\" class=\"form-control\" [(ngModel)]=\"_myComment\" placeholder=\"Type your comments here...\" />\n      </div>\n    </div>\n  "
+    }),
+    __metadata("design:paramtypes", [index_1.EventService])
 ], EventZippyComponent);
 exports.EventZippyComponent = EventZippyComponent;
 //# sourceMappingURL=event-zippy.component.js.map

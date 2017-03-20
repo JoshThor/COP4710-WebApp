@@ -17,6 +17,9 @@ var EventService = (function () {
         this.http = http;
         this.config = config;
     }
+    /* TODO:
+      - Add Event IDs to all get-events responses so that comments may be called on each
+    */
     EventService.prototype.getPublicEvents = function () {
         //return this.http.get(this.config.apiUrl + '/events/public/', this.jwt()).map((response: Response) => response.json());
         /* Test Data */
@@ -39,7 +42,7 @@ var EventService = (function () {
         ];
     };
     EventService.prototype.getRSOEvents = function (_id) {
-        // _id -> RSO ID
+        // _id -> user ID
         //return this.http.get(this.config.apiUrl + '/events/rso/' + _id, this.jwt()).map((response: Response) => response.json());
         /* Test Data */
         return [
@@ -50,8 +53,9 @@ var EventService = (function () {
         ];
     };
     EventService.prototype.getPendingEvents = function (_id) {
+        /* TODO: What call to make? */
         // -id -> Univeristy ID
-        // return ...
+        //return this.http.get(this.config.apiUrl + '' + _id, this.jwt()).map((response: Response) => response.json());
         /* Test Data */
         return [
             { eventName: "Test Pending Event" },
@@ -64,7 +68,15 @@ var EventService = (function () {
     };
     EventService.prototype.approvePendingEvent = function (_id, approval) {
         // -id -> Event ID
-        // return ... (POST)
+        // return this.http.get(this.config.apiUrl + '/events/approve/' + _id, this.jwt()).map((response: Response) => response.json());
+    };
+    EventService.prototype.getComments = function (_id) {
+        // return this.http.get(this.config.apiUrl + '/comments/' + _id, this.jwt()).map((response: Response) => response.json());
+        /* Test Data */
+        /* TODO: Do these come back in reverse chronological order? */
+        return [
+            {}
+        ];
     };
     EventService.prototype.jwt = function () {
         // create authorization header with jwt token

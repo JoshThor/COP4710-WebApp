@@ -32,6 +32,7 @@ router.get('/getall', getAllForUser)
 module.exports = router;
 
 function create(req, res) {
+
     rsoService.create(req.body)
         .then(function () {
             res.sendStatus(200);

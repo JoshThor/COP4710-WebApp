@@ -34,6 +34,7 @@ export class FindEventsComponent {
   }
 
   private ngOnInit(): void {
+    let userObj = JSON.parse(localStorage.getItem("currentUser"));
     var i = 0;
 
     this.publicEvents = this._eventService.getPublicEvents(); //.subscribe((rsp) => { console.log(rsp); });
@@ -41,12 +42,12 @@ export class FindEventsComponent {
       this.togglePublicEventComments.push(false);
     }
 
-    this.privateEvents = this._eventService.getPrivateEvents(""); //.subscribe((rsp) => { console.log(rsp); });
+    this.privateEvents = this._eventService.getPrivateEvents( userObj._id ); //.subscribe((rsp) => { console.log(rsp); });
     for (i=0; i<this.privateEvents.length; i++) {
       this.togglePrivateEventComments.push(false);
     }
 
-    this.rsoEvents = this._eventService.getRSOEvents(""); //.subscribe((rsp) => { console.log(rsp); });
+    this.rsoEvents = this._eventService.getRSOEvents( userObj._id ); //.subscribe((rsp) => { console.log(rsp); });
     for (i=0; i<this.rsoEvents.length; i++) {
       this.toggleRSOEventComments.push(false);
     }

@@ -12,6 +12,33 @@
       </textarea>
       <div *ngIf="f.submitted && !eventDescription.valid" class="help-block">Description for Event is required</div>
     </div>
+    <div class="form-inline">
+      <div class="form-group">
+        <label>Month: </label>
+        <select type="select" class="form-control">
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Day: </label>
+        <select type="select" class="form-control"></select>
+      </div>
+      <div class="form-group">
+        <label>Year: </label>
+        <select type="select" class="form-control"></select>
+      </div>
+      <div class="form-group">
+        <label>Hour</label>
+        <select type="select" class="form-control"></select>
+      </div>
+      <div class="form-group">
+        <label>Minute</label>
+        <select type="select" class="form-control"></select>
+      </div>
+      <div class="form-group">
+        <label>AM/PM</label>
+        <select type="select" class="form-control"></select>
+      </div>
+    </div>
     <div class="form-group">
       <label for="eventType">Type of Event</label>
       <select type="select" class="form-control"  name="eventType" [(ngModel)]="formData.eventType" #eventType="ngModel" required>

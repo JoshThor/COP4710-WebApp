@@ -21,9 +21,8 @@ var RSOService = (function () {
       - What requests are to be made for RSOs?
       - What are the I/Os for each request?
       - Do I need to set up in ngModule?? */
-    RSOService.prototype.getAll = function (_id) {
-        // _id -> user ID
-        // return http.get(...)...
+    RSOService.prototype.getAllForUser = function (_id) {
+        // return http.get(this.config.apiUrl + '/rsos/', this.jwt()).map((response: Response) => response.json());
         /* Test Data */
         return [
             { rid: "", rsoName: "" },
@@ -33,6 +32,19 @@ var RSOService = (function () {
         ];
     };
     RSOService.prototype.joinRSO = function (_rid, uid) {
+        // return http.post(this.config.apiUrl + '/rsos/join/' + _rid, this.jwt()).map((response: Response) => response.json());
+    };
+    RSOService.prototype.createRSO = function (data) {
+        //console.log( data );
+        return this.http.post(this.config.apiUrl + '/rsos/create', data, this.jwt());
+    };
+    RSOService.prototype.jwt = function () {
+        // create authorization header with jwt token
+        var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (currentUser && currentUser.token) {
+            var headers = new http_1.Headers({ 'Authorization': 'Bearer ' + currentUser.token });
+            return new http_1.RequestOptions({ headers: headers });
+        }
     };
     return RSOService;
 }());

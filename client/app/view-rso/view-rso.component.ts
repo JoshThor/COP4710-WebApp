@@ -23,6 +23,7 @@ export class ViewRSOComponent {
   constructor(private _rsoService: RSOService) { }
 
   private ngOnInit() {
-    // Make rsoService call
+    // let userObj = JSON.parse( localStorage.getItem("currentUser") );
+    // this.rsoList = this._rsoService.getAllForUser( userObj._id );
   }
 }

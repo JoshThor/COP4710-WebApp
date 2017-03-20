@@ -26,7 +26,8 @@ var ViewRSOComponent = (function () {
         ];
     }
     ViewRSOComponent.prototype.ngOnInit = function () {
-        // Make rsoService call
+        // let userObj = JSON.parse( localStorage.getItem("currentUser") );
+        // this.rsoList = this._rsoService.getAllForUser( userObj._id );
     };
     return ViewRSOComponent;
 }());

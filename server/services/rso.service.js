@@ -7,7 +7,7 @@ var pool = require('../db').pool;
 
 
 var service = {};
- 
+
 service.create = create;
 service.getAll = getAll;
 service._delete = _delete;
@@ -26,7 +26,7 @@ function create(rsoParam) {
             connection.release();
             deferred.reject(err.name + ': ' + err.message);
         }
-
+        
         //rsoParam.name may change
         connection.query("select * from rso WHERE rsoName = ?", [rsoParam.name], function(err, rows) {
 
@@ -70,7 +70,7 @@ function create(rsoParam) {
                         }
                     });
 
-                    
+
                 }
                 createRSO();
 
@@ -84,7 +84,7 @@ function create(rsoParam) {
 
             //change these
             var rso = {uid: rsoParam.uid, unid: rsoParam.unid, rsoName: rsoParam.name};
-            
+
             //maybe use a procedure here instead of a sql statement
             connection.query("insert into rso set ?", [rso], function(err, rows) {
                 connection.release();
@@ -113,7 +113,7 @@ function create(rsoParam) {
     return deferred.promise;
 }
 
-//Get all rso's that the current user is not in 
+//Get all rso's that the current user is not in
 function getAll(){
     var deferred = Q.defer();
 
@@ -140,7 +140,7 @@ function getAll(){
     return deferred.promise;
 }
 
-//Get all rso's that the current user is not in 
+//Get all rso's that the current user is not in
 function getAllForUser(uid){
     var deferred = Q.defer();
 
@@ -184,7 +184,7 @@ function join(rsoId, userId){
            if(err) {
                deferred.reject(err.name+ ": " + err.message);
            }
-           
+
            //if user is not a student
            if(rows.length == 0) {
                makeStudent();
@@ -195,13 +195,13 @@ function join(rsoId, userId){
 
             var universityID;
             connection.query("select * from rso WHERE rid = ?", [rsoId], function(err, rows) {
-                
+
                 if(err) {
                     deferred.reject(err.name + ': ' + err.message);
                 }
 
                 universityID = rows[0].unid;
-        
+
                 var student = {uid: userId, unid: universityID};
 
                 console.log("creating student: "+ userId+", from university: " + universityID);
@@ -218,7 +218,7 @@ function join(rsoId, userId){
                         deferred.reject(err.name + ': ' + err.message);
                     }
                 });
-            
+
             });
         }
 

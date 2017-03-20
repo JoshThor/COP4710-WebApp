@@ -4,15 +4,15 @@
   <form name="form" #f="ngForm" novalidate>
     <div class="form-group">
       <label for="rsoName">Name of RSO</label>
-      <input type="text" class="form-control" name="rsoName" [(ngModel)]="formData.rsoName" #name="ngModel" required />
+      <input type="text" class="form-control" name="rsoName" [(ngModel)]="formData.rsoName" #rsoName="ngModel" required />
       <div *ngIf="f.submitted && !rsoName.valid" class="help-block">Name for RSO is required</div>
     </div>
     <div class="form-group">
-      <label for="uid">University</label>
-      <select type="select" class="form-control"  name="uid" [(ngModel)]="formData.uid" #uid="ngModel" required>
-        <option *ngFor="let u of universityList" value="{{u}}">{{u}}</option>
+      <label for="unid">University</label>
+      <select type="select" class="form-control"  name="unid" [(ngModel)]="formData.unid" #unid="ngModel" required>
+        <option *ngFor="let u of universityList; let i = index" value="{{i}}">{{u}}</option>
       </select>
-      <div *ngIf="f.submitted && !uid.valid" class="help-block">University is required</div>
+      <div *ngIf="f.submitted && !unid.valid" class="help-block">University is required</div>
     </div>
     <div class="form-group">
         <button [disabled]="loading" class="btn btn-primary" (click)="submitForm()">Create RSO</button>

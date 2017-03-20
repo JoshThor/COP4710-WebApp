@@ -13,9 +13,8 @@ export class RSOService {
       - What are the I/Os for each request?
       - Do I need to set up in ngModule?? */
 
-    public getAll(_id: string): any {
-      // _id -> user ID
-      // return http.get(...)...
+    public getAllForUser(_id: string): any {
+      // return http.get(this.config.apiUrl + '/rsos/', this.jwt()).map((response: Response) => response.json());
       /* Test Data */
       return [
         { rid: "", rsoName: "" },
@@ -25,7 +24,21 @@ export class RSOService {
       ]
     }
 
-    public joinRSO(_rid: string, uid: string): void {
-      
+    public joinRSO(_rid: string, uid: string) {
+      // return http.post(this.config.apiUrl + '/rsos/join/' + _rid, this.jwt()).map((response: Response) => response.json());
+    }
+
+    public createRSO(data: any) {
+      //console.log( data );
+      return this.http.post(this.config.apiUrl + '/rsos/create', data, this.jwt());
+    }
+
+    private jwt() {
+        // create authorization header with jwt token
+        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (currentUser && currentUser.token) {
+            let headers = new Headers({ 'Authorization': 'Bearer ' + currentUser.token });
+            return new RequestOptions({ headers: headers });
+        }
     }
  }

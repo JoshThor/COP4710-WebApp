@@ -11,16 +11,9 @@ var CreateEventsComponent = (function () {
     function CreateEventsComponent() {
         /* TODO:
           - Accessible by Admin, SuperAdmin
-          - Send for http request:
-            > id (from localStorage),
-            > name of event, [input field],
-            > type of event (from list), [input field]
-            > time and date ("yyyy-mm-dd hh:mm:ss"),
-            > category (from list), [input field]
-            > description, [input field]
-            > latitude (from Google Maps),
-            > longitude (from Google Maps)
-          - Make fake post request on submission */
+      
+          - Add datepicker from https://www.npmjs.com/package/angular2-datepicker
+           OR https://github.com/ng2-ui/ng2-datetime-picker */
         this.eventTypeList = [
             "List Option 0",
             "List Option 1",
@@ -33,23 +26,29 @@ var CreateEventsComponent = (function () {
             "Category 2",
             "Category 3"
         ];
+        this.userObj = JSON.parse(localStorage.getItem("currentUser"));
         this.formData = {
-            id: "",
+            id: this.userObj._id,
             eventName: "",
             eventDescription: "",
             eventType: "",
             eventCategory: [],
             eventLocation: "",
-            datetime: "" // Create function to calculate and format
+            datetime: ""
         };
     }
     CreateEventsComponent.prototype.ngOnInit = function () {
         // Initialize values here
     };
     CreateEventsComponent.prototype.submitForm = function () {
+        this.formatDateTime();
         // Check that all fields are properly filled
         // Make request
         console.log(this.formData);
+        return;
+    };
+    CreateEventsComponent.prototype.formatDateTime = function () {
+        // Add all values as strings, format as "YYYY-MM-DDTHH:MM:SSZ", create new datetime and set to formData attribute
         return;
     };
     CreateEventsComponent.prototype.updateCategory = function (val) {

@@ -8,6 +8,10 @@ import { Event } from '../_models/index';
 export class EventService {
     constructor(private http: Http, private config: AppConfig) { }
 
+    /* TODO:
+      - Add Event IDs to all get-events responses so that comments may be called on each
+    */
+
     public getPublicEvents() {
       //return this.http.get(this.config.apiUrl + '/events/public/', this.jwt()).map((response: Response) => response.json());
       /* Test Data */
@@ -32,7 +36,7 @@ export class EventService {
     }
 
     public getRSOEvents(_id: string) {
-      // _id -> RSO ID
+      // _id -> user ID
       //return this.http.get(this.config.apiUrl + '/events/rso/' + _id, this.jwt()).map((response: Response) => response.json());
       /* Test Data */
       return [
@@ -44,8 +48,9 @@ export class EventService {
     }
 
     public getPendingEvents(_id: string) {
+      /* TODO: What call to make? */
       // -id -> Univeristy ID
-      // return ...
+      //return this.http.get(this.config.apiUrl + '' + _id, this.jwt()).map((response: Response) => response.json());
       /* Test Data */
       return [
         { eventName: "Test Pending Event" },
@@ -59,7 +64,16 @@ export class EventService {
 
     public approvePendingEvent(_id: string, approval: string): void {
       // -id -> Event ID
-      // return ... (POST)
+      // return this.http.get(this.config.apiUrl + '/events/approve/' + _id, this.jwt()).map((response: Response) => response.json());
+    }
+
+    public getComments(_id: string) {
+      // return this.http.get(this.config.apiUrl + '/comments/' + _id, this.jwt()).map((response: Response) => response.json());
+      /* Test Data */
+      /* TODO: Do these come back in reverse chronological order? */
+      return [
+        {  }
+      ]
     }
 
     private jwt() {
