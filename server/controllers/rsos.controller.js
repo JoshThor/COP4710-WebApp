@@ -26,7 +26,7 @@ router.delete('/:id', _delete);
 
 // Gets all joinable RSO's for that user (user id has to be sent in reuest)
 //URL: http://localhost:3000/rsos/getall
-router.get('/getall', getAllForUser)
+router.get('/getall/:uid', getAllForUser)
 
  
 module.exports = router;
@@ -62,7 +62,7 @@ function join(req, res) {
 }
 
 function getAllForUser(req, res) {
-    rsoService.getAllForUser(req.body.uid)
+    rsoService.getAllForUser(req.params.uid)
         .then(function(rso) {
             res.send(rsos)
         })

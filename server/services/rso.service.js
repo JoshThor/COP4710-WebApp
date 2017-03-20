@@ -151,7 +151,7 @@ function getAllForUser(uid){
 
         console.log("Getting all rso's for the user: "+uid);
 
-        connection.query("SELECT * FROM rso r, rsoMembers m WHERE r.rid = m.rid AND m.uid != ?", [uid], function(err, rows) {
+        connection.query("SELECT r.rid, r.unid, r.rsoName FROM rso r, rsoMembers m WHERE r.rid = m.rid AND m.uid != ?", [uid], function(err, rows) {
             connection.release();
 
             if(err) {
