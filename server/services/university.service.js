@@ -24,7 +24,7 @@ function create(univParam) {
             deferred.reject(err.name + ': ' + err.message);
         }
 
-        connection.query("select * from rso WHERE rsoName = ?", [univParam.unName], function(err, rows) {
+        connection.query("select * from university WHERE unName = ?", [univParam.unName], function(err, rows) {
 
             if(err) {
                 deferred.reject(err.name + ': ' + err.message);
@@ -42,16 +42,17 @@ function create(univParam) {
         function createUniversity() {
 
             //change these
-            var university = {uid: unName.uid, unName: univParam.unName, location: univParam.location, description: univParam.description, numStudents: univParam.numStudents};
+            var university = {uid: univParam.uid, unName: univParam.unName, location: univParam.location, description: univParam.description, numStudents: univParam.numStudents};
             
             //maybe use a procedure here instead of a sql statement
             connection.query("insert into university set ?", [university], function(err, rows) {
                 connection.release();
+                
                 if(err) {
                     deferred.reject(err.name + ': ' + err.message);
                 }
 
-                Console.log("Created University: "+univParam.unName+" With unid: " + rows.insertId);
+                console.log("Created University: "+univParam.unName+" With unid: " + rows.insertId);
 
                 deferred.resolve();
             });

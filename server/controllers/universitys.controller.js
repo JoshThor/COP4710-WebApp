@@ -4,19 +4,19 @@ var router = express.Router();
 var univService = require('services/university.service');
  
 // routes change these
-//All of these routes can be called using the http://localhost:3000/university/ url followed by one of the routes below:
+//All of these routes can be called using the http://localhost:4000/university/ url followed by one of the routes below:
 
 // Creates a University
-//URL: http://localhost:3000/university/create
+//URL: http://localhost:4000/university/create
 router.post('/create', create);
 
 // Gets all Universitys
-//URL: http://localhost:3000/university/
+//URL: http://localhost:4000/university/
 router.get('/', getAll);
 
 // Delete a University
-//URL: http://localhost:3000/university/:id
-//Example:  http://localhost:3000/university/3 would delete the University with unid 3
+//URL: http://localhost:4000/university/:id
+//Example:  http://localhost:4000/university/3 would delete the University with unid 3
 router.delete('/:unid', _delete);
 
  

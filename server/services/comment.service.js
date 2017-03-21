@@ -24,7 +24,7 @@ function create(commentParam) {
             deferred.reject(err.name + ': ' + err.message);
         }
 
-        console.log(commentParam);
+        console.log("Inserting comment for event id: "+commentParam.eid+", and user id: "+commentParam.uid);
 
         connection.query("insert into comments set ?", [commentParam], function(err, rows) {
             connection.release();
@@ -47,6 +47,8 @@ function getComments(eventId) {
             connection.release();
             deferred.reject(err.name + ': ' + err.message);
         }
+
+        console.log("Getting all comments for event id: "+eventId);
 
         connection.query("select * from comments WHERE eid = ?", [eventId], function(err, rows) {
             connection.release();
@@ -84,8 +86,8 @@ function _delete(eid, uid) {
             if(err){
                 deferred.reject(err.name +": "+ err.message);
             }
-            console.log("Comment was deleted");
-             deferred.resolve();
+            console.log("Comment was deleted for user id: "+uid);
+            deferred.resolve();
 
         });
 
