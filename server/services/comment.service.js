@@ -10,6 +10,7 @@ var service = {};
 service.create = create;
 service.getComments = getComments;
 service._delete = _delete;
+serevice.update = update;
 
 module.exports = service;
 
@@ -87,6 +88,30 @@ function _delete(eid, uid) {
                 deferred.reject(err.name +": "+ err.message);
             }
             console.log("Comment was deleted for user id: "+uid);
+            deferred.resolve();
+
+        });
+
+    });
+    return deferred.promise;    
+}
+
+function update(commentParam) {
+    var deferred = Q.defer();
+
+    pool.getConnection(function(err, connection) {
+        if(err) {
+            connection.release();
+            deferred.reject(err.name + ': ' + err.message);
+        }
+    
+        connection.query("UPDATE comments SET body = ?, rating = ? WHERE eid = ? AND uid = ?", [commentParam.body, commentParam.rating, commentParam.eid, commentParam.uid], function(err, rows) {
+            connection.release();
+
+            if(err){
+                deferred.reject(err.name +": "+ err.message);
+            }
+            console.log("Comment was updated for user id: "+commentParam.uid);
             deferred.resolve();
 
         });

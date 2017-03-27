@@ -11,6 +11,9 @@ var commentService = require('services/comment.service');
 //URI: http://localhost:4000/comments/create
 router.post('/create', create);
 
+//Same thing as comment pretty much just updating comment and rating
+router.post('/update', update);
+
 //gets all comments for an event
 //needs the event id
 //URI: http://localhost:4000/comments/:id
@@ -27,6 +30,16 @@ module.exports = router;
 
 function create(req, res) {
 commentService.create(req.body)
+        .then(function () {
+            res.sendStatus(200);
+        })
+        .catch(function (err) {
+            res.status(400).send(err);
+        });
+}
+
+function update(req, res) {
+commentService.update(req.body)
         .then(function () {
             res.sendStatus(200);
         })
