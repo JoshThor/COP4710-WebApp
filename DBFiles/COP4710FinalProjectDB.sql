@@ -93,7 +93,7 @@ create table comments(
     body varchar(500),
     rating integer,
     timedate datetime default current_timestamp,
-    primary key(uid, eid),
+    primary key(uid, eid, timedate),
     foreign key(uid) references users(uid),
     foreign key(eid) references _events(eid)
 );
