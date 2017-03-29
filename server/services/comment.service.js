@@ -10,6 +10,7 @@ var service = {};
 service.create = create;
 service.getComments = getComments;
 service._delete = _delete;
+serevice.update = update;
 
 module.exports = service;
 
@@ -24,7 +25,7 @@ function create(commentParam) {
             deferred.reject(err.name + ': ' + err.message);
         }
 
-        console.log(commentParam);
+        console.log("Inserting comment for event id: "+commentParam.eid+", and user id: "+commentParam.uid);
 
         connection.query("insert into comments set ?", [commentParam], function(err, rows) {
             connection.release();
@@ -47,6 +48,8 @@ function getComments(eventId) {
             connection.release();
             deferred.reject(err.name + ': ' + err.message);
         }
+
+        console.log("Getting all comments for event id: "+eventId);
 
         connection.query("select * from comments WHERE eid = ?", [eventId], function(err, rows) {
             connection.release();
@@ -84,8 +87,32 @@ function _delete(eid, uid) {
             if(err){
                 deferred.reject(err.name +": "+ err.message);
             }
-            console.log("Comment was deleted");
-             deferred.resolve();
+            console.log("Comment was deleted for user id: "+uid);
+            deferred.resolve();
+
+        });
+
+    });
+    return deferred.promise;    
+}
+
+function update(commentParam) {
+    var deferred = Q.defer();
+
+    pool.getConnection(function(err, connection) {
+        if(err) {
+            connection.release();
+            deferred.reject(err.name + ': ' + err.message);
+        }
+    
+        connection.query("UPDATE comments SET body = ?, rating = ? WHERE eid = ? AND uid = ?", [commentParam.body, commentParam.rating, commentParam.eid, commentParam.uid], function(err, rows) {
+            connection.release();
+
+            if(err){
+                deferred.reject(err.name +": "+ err.message);
+            }
+            console.log("Comment was updated for user id: "+commentParam.uid);
+            deferred.resolve();
 
         });
 

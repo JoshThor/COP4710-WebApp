@@ -4,28 +4,28 @@ var router = express.Router();
 var rsoService = require('services/rso.service');
  
 // routes change these
-//All of these routes can be called using the http://localhost:3000/rsos/ url followed by one of the routes below:
+//All of these routes can be called using the http://localhost:4000/rsos/ url followed by one of the routes below:
 
 // Creates an RSO
-//URL: http://localhost:3000/rsos/create
+//URL: http://localhost:4000/rsos/create
 router.post('/create', create);
 
 // Gets all RSO's
-//URL: http://localhost:3000/rsos/
+//URL: http://localhost:4000/rsos/
 router.get('/', getAll);
 
 // joins an RSO
-//URL: http://localhost:3000/rsos/join/:id
-//Example:  http://localhost:3000/rsos/join/3 would join the rso with rid 3
-router.post('/join/:id', join);
+//URL: http://localhost:4000/rsos/join/:id
+//Example:  http://localhost:4000/rsos/join/3 would join the rso with rid 3
+router.post('/join/:rid', join);
 
 // Delete an RSO
-//URL: http://localhost:3000/rsos/:id
-//Example:  http://localhost:3000/rsos/3 would delete the rso with rid 3
+//URL: http://localhost:4000/rsos/:id
+//Example:  http://localhost:4000/rsos/3 would delete the rso with rid 3
 router.delete('/:id', _delete);
 
 // Gets all joinable RSO's for that user (user id has to be sent in reuest)
-//URL: http://localhost:3000/rsos/getall
+//URL: http://localhost:4000/rsos/getall
 router.get('/getall/:uid', getAllForUser)
 
  
@@ -53,7 +53,7 @@ function getAll(req, res) {
 }
 
 function join(req, res) {
-    rsoService.join(req.params.id, req.body.uid)
+    rsoService.join(req.params.rid, req.body.uid)
         .then(function() {
             res.sendStatus(200);
         })
@@ -65,7 +65,7 @@ function join(req, res) {
 function getAllForUser(req, res) {
     rsoService.getAllForUser(req.params.uid)
         .then(function(rso) {
-            res.send(rsos)
+            res.send(rso)
         })
         .catch(function(err) {
             res.status(400).send(err);

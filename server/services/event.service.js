@@ -88,7 +88,7 @@ function getPrivateEvents(uid) {
         }
 
         connection.query(`SELECT e.eid, e.eventName, e.description, e.category, e.latitude, e.longitude, e.timedate FROM _events e, privateEvent p, student s
-            WHERE p.eid = e.eid AND (p.unid = s.unid AND s.uid = ?)`, [uid], function(err, rows) {
+            WHERE p.eid = e.eid AND e.eventStatus = 'Approved' AND (p.unid = s.unid AND s.uid = ?)`, [uid], function(err, rows) {
 
                 if(err){
                     deferred.reject(err.name +": "+ err.message);
@@ -96,7 +96,7 @@ function getPrivateEvents(uid) {
                      deferred.resolve(rows);
                 }else{
                     connection.query(`SELECT e.eid, e.eventName, e.description, e.category, e.latitude, e.longitude, e.timedate FROM _events e, privateEvent p, admin a 
-                        WHERE p.eid = e.eid AND (p.unid = a.unid AND a.uid = ?)`, [uid], function(err, rows) {
+                        WHERE p.eid = e.eid AND e.eventStatus = 'Approved' AND (p.unid = a.unid AND a.uid = ?)`, [uid], function(err, rows) {
 
                     connection.release();
 
@@ -123,7 +123,7 @@ function getPublicEvents() {
             deferred.reject(err.name + ': ' + err.message);
         }
     
-        connection.query("SELECT e.eid, e.eventName, e.description, e.category, e.latitude, e.longitude, e.timedate FROM _events e, publicEvent p WHERE p.eid = e.eid", function(err, rows) {
+        connection.query("SELECT e.eid, e.eventName, e.description, e.category, e.latitude, e.longitude, e.timedate FROM _events e, publicEvent p WHERE p.eid = e.eid AND e.eventStatus = ?", 'Approved', function(err, rows) {
             connection.release();
 
             if(err){
@@ -204,6 +204,31 @@ function _delete(eid) {
             }
             console.log("Event ID: "+ eid +" was deleted");
              deferred.resolve();
+
+        });
+
+    });
+    return deferred.promise;    
+}
+
+//query databse for user id
+function getUnapprovedEvents() {
+    var deferred = Q.defer();
+
+    pool.getConnection(function(err, connection) {
+        if(err) {
+            connection.release();
+            deferred.reject(err.name + ': ' + err.message);
+        }
+    
+        connection.query("SELECT e.eid, e.eventName, e.description, e.category, e.latitude, e.longitude, e.timedate FROM _events e WHERE e.eventStatus = ?", ['Unapproved'], function(err, rows) {
+            connection.release();
+
+            if(err){
+                deferred.reject(err.name +": "+ err.message);
+            }
+
+             deferred.resolve(rows);
 
         });
 
