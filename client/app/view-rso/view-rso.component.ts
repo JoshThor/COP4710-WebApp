@@ -23,7 +23,10 @@ export class ViewRSOComponent {
   constructor(private _rsoService: RSOService) { }
 
   private ngOnInit() {
-    // let userObj = JSON.parse( localStorage.getItem("currentUser") );
-    // this.rsoList = this._rsoService.getAllForUser( userObj._id );
+    let userObj = JSON.parse( localStorage.getItem("currentUser") );
+    this._rsoService.getJoinableRSOs( userObj._id ).subscribe(res => {
+      console.log(res);
+      console.log( res.json() );
+    });
   }
 }

@@ -6,11 +6,11 @@ var bcrypt = require('bcryptjs');
 var pool = require('../db').pool;
 
 var service = {};
- 
+
 service.create = create;
 service.getComments = getComments;
 service._delete = _delete;
-serevice.update = update;
+service.update = update;
 
 module.exports = service;
 
@@ -80,7 +80,7 @@ function _delete(eid, uid) {
             connection.release();
             deferred.reject(err.name + ': ' + err.message);
         }
-    
+
         connection.query("DELETE FROM comments WHERE eid = ? AND uid = ?", [eid, uid], function(err, rows) {
             connection.release();
 
@@ -93,7 +93,7 @@ function _delete(eid, uid) {
         });
 
     });
-    return deferred.promise;    
+    return deferred.promise;
 }
 
 function update(commentParam) {
@@ -104,7 +104,7 @@ function update(commentParam) {
             connection.release();
             deferred.reject(err.name + ': ' + err.message);
         }
-    
+
         connection.query("UPDATE comments SET body = ?, rating = ? WHERE eid = ? AND uid = ?", [commentParam.body, commentParam.rating, commentParam.eid, commentParam.uid], function(err, rows) {
             connection.release();
 
@@ -117,5 +117,5 @@ function update(commentParam) {
         });
 
     });
-    return deferred.promise;    
+    return deferred.promise;
 }

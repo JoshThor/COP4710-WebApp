@@ -12,6 +12,10 @@ export class EventService {
       - Add Event IDs to all get-events responses so that comments may be called on each
     */
 
+    public createEvent(eventParam) {
+      return this.http.post(this.config.apiUrl + '/events/create', eventParam, this.jwt()).map((response: Response) => response.json());
+    }
+
     public getPublicEvents() {
       //return this.http.get(this.config.apiUrl + '/events/public/', this.jwt()).map((response: Response) => response.json());
       /* Test Data */

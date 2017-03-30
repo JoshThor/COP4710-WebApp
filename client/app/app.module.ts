@@ -21,12 +21,16 @@ import { ApproveEventsComponent } from './approve-events/approve-events.componen
 import { CreateRSOComponent } from './create-rso/create-rso.component';
 import { ViewRSOComponent } from './view-rso/view-rso.component';
 
+/* Other */
+import { MyDatePickerModule } from 'mydatepicker';
+
 @NgModule({
     imports: [
         BrowserModule,
         FormsModule,
         HttpModule,
-        routing
+        routing,
+        MyDatePickerModule
     ],
     declarations: [
         AppComponent,

@@ -25,6 +25,8 @@ var create_events_component_1 = require("./create-events/create-events.component
 var approve_events_component_1 = require("./approve-events/approve-events.component");
 var create_rso_component_1 = require("./create-rso/create-rso.component");
 var view_rso_component_1 = require("./view-rso/view-rso.component");
+/* Other */
+var mydatepicker_1 = require("mydatepicker");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -36,7 +38,8 @@ AppModule = __decorate([
             platform_browser_1.BrowserModule,
             forms_1.FormsModule,
             http_1.HttpModule,
-            app_routing_1.routing
+            app_routing_1.routing,
+            mydatepicker_1.MyDatePickerModule
         ],
         declarations: [
             app_component_1.AppComponent,

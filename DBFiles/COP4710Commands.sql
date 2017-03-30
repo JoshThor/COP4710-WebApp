@@ -1,7 +1,7 @@
 #SELECT * FROM cop4710._events;
 select * from users;
 
-#insert into superadmin set uid = 2;
+#insert into superadmin set uid = 1;
 
 #select * from superadmin;
 
@@ -13,4 +13,4 @@ select * from users;
 #delete from rso
 #select * from admin;
 
-select * from rsoMembers;
+select * from  superadmin; #rsoMembers;

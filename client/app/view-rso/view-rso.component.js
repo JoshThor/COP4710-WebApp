@@ -26,8 +26,11 @@ var ViewRSOComponent = (function () {
         ];
     }
     ViewRSOComponent.prototype.ngOnInit = function () {
-        // let userObj = JSON.parse( localStorage.getItem("currentUser") );
-        // this.rsoList = this._rsoService.getAllForUser( userObj._id );
+        var userObj = JSON.parse(localStorage.getItem("currentUser"));
+        this._rsoService.getJoinableRSOs(userObj._id).subscribe(function (res) {
+            console.log(res);
+            console.log(res.json());
+        });
     };
     return ViewRSOComponent;
 }());

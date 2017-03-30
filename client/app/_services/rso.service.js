@@ -22,14 +22,7 @@ var RSOService = (function () {
       - What are the I/Os for each request?
       - Do I need to set up in ngModule?? */
     RSOService.prototype.getJoinableRSOs = function (_id) {
-        // return http.get(this.config.apiUrl + '/rsos/', this.jwt()).map((response: Response) => response.json());
-        /* Test Data */
-        return [
-            { rid: "", rsoName: "" },
-            { rid: "", rsoName: "" },
-            { rid: "", rsoName: "" },
-            { rid: "", rsoName: "" }
-        ];
+        return this.http.get(this.config.apiUrl + '/rsos/getall/' + _id, this.jwt()).map(function (response) { return response.json(); });
     };
     RSOService.prototype.joinRSO = function (_rid, uid) {
         // return http.post(this.config.apiUrl + '/rsos/join/' + _rid, this.jwt()).map((response: Response) => response.json());

@@ -1,42 +1,53 @@
-<div class="page-container">
+<div class="page-container container-fluid">
   <h1>Create Event Component</h1>
   <form name="form" #f="ngForm" novalidate>
     <div class="form-group">
       <label for="eventName">Name of Event</label>
       <input type="text" class="form-control" name="eventName" [(ngModel)]="formData.eventName" #eventName="ngModel" required />
-      <div *ngIf="f.submitted && !eventName.valid" class="help-block">Name for Event is required</div>
+      <div *ngIf="f.submitted && !eventName.valid" class="help-block alert alert-danger">Name for Event is required</div>
     </div>
     <div class="form-group">
       <label for="eventDescription">Event Description</label>
       <textarea rows="4" class="form-control" name="eventDescription" [(ngModel)]="formData.eventDescription" #eventDescription="ngModel" required>
       </textarea>
-      <div *ngIf="f.submitted && !eventDescription.valid" class="help-block">Description for Event is required</div>
+      <div *ngIf="f.submitted && !eventDescription.valid" class="help-block alert alert-danger">Description for Event is required</div>
     </div>
-    <div class="form-inline">
-      <div class="form-group">
-        <label>Month: </label>
-        <select type="select" class="form-control">
-        </select>
+    <div class="form-group">
+      <label for="eventDate">Date of Event</label>
+      <div class="row">
+        <div class="col-sm-6">
+        <my-date-picker
+          name="eventDate"
+          #eventDate="ngModel"
+          [(ngModel)]="formData.eventDate"
+          required
+          [options]="myDatePickerOptions"
+          (dateChanged)="onDateChanged($event)">
+        </my-date-picker>
+        </div>
       </div>
-      <div class="form-group">
-        <label>Day: </label>
-        <select type="select" class="form-control"></select>
-      </div>
-      <div class="form-group">
-        <label>Year: </label>
-        <select type="select" class="form-control"></select>
-      </div>
-      <div class="form-group">
-        <label>Hour</label>
-        <select type="select" class="form-control"></select>
-      </div>
-      <div class="form-group">
-        <label>Minute</label>
-        <select type="select" class="form-control"></select>
-      </div>
-      <div class="form-group">
-        <label>AM/PM</label>
-        <select type="select" class="form-control"></select>
+    </div>
+    <div class="form-group">
+      <label>Time of Event</label>
+      <div class="row">
+        <div class="col-sm-2">
+          <label>Hour</label>
+          <select type="select" class="form-control" name="timeObjectHr" [(ngModel)]="timeObject.hr" #timeObjectHr="ngModel">
+            <option *ngFor="let h of timeKeeper.hr; let i = index" value="{{i}}">{{h}}</option>
+          </select>
+        </div>
+        <div class="col-sm-2">
+          <label>Minute</label>
+          <select type="select" class="form-control" name="timeObjectMin" [(ngModel)]="timeObject.min" #timeObjectMin="ngModel">
+            <option *ngFor="let m of timeKeeper.min; let i = index" value="{{i}}">{{m}}</option>
+          </select>
+        </div>
+        <div class="col-sm-2">
+          <label>AM/PM</label>
+          <select type="select" class="form-control" name="timeObjectMer" [(ngModel)]="timeObject.mer" #timeObjectMer="ngModel">
+            <option *ngFor="let m of timeKeeper.mer; let i = index" value="{{i}}">{{m}}</option>
+          </select>
+        </div>
       </div>
     </div>
     <div class="form-group">
@@ -44,7 +55,7 @@
       <select type="select" class="form-control"  name="eventType" [(ngModel)]="formData.eventType" #eventType="ngModel" required>
         <option *ngFor="let type of eventTypeList; let i = index" value="{{i}}">{{type}}</option>
       </select>
-      <div *ngIf="f.submitted && !eventType.valid" class="help-block">Type for Event is required</div>
+      <div *ngIf="f.submitted && !eventType.valid" class="help-block alert alert-danger">Type for Event is required</div>
     </div>
     <div class="form-group">
       <label for="eventCategory">Event Category</label><br>
@@ -57,7 +68,7 @@
       <label for="eventLocation">Event Location</label>
       <input type="search" class="form-control" name="eventLocation" [(ngModel)]="formData.eventLocation" #eventLocation="ngModel" required />
       <!-- TODO: Implement Google Maps here [dropdown?] -->
-      <div *ngIf="f.submitted && !eventLocation.valid" class="help-block">Event Location is required</div>
+      <div *ngIf="f.submitted && !eventLocation.valid" class="help-block alert alert-danger">Event Location is required</div>
     </div>
     <div class="form-group">
         <button [disabled]="loading" class="btn btn-primary" (click)="submitForm()">Create Event</button>

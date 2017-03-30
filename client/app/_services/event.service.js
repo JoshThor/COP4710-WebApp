@@ -20,6 +20,9 @@ var EventService = (function () {
     /* TODO:
       - Add Event IDs to all get-events responses so that comments may be called on each
     */
+    EventService.prototype.createEvent = function (eventParam) {
+        return this.http.post(this.config.apiUrl + '/events/create', eventParam, this.jwt()).map(function (response) { return response.json(); });
+    };
     EventService.prototype.getPublicEvents = function () {
         //return this.http.get(this.config.apiUrl + '/events/public/', this.jwt()).map((response: Response) => response.json());
         /* Test Data */
