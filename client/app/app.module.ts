@@ -23,6 +23,7 @@ import { ViewRSOComponent } from './view-rso/view-rso.component';
 
 /* Other */
 import { MyDatePickerModule } from 'mydatepicker';
+import { AgmCoreModule } from 'angular2-google-maps/core';
 
 @NgModule({
     imports: [
@@ -30,7 +31,10 @@ import { MyDatePickerModule } from 'mydatepicker';
         FormsModule,
         HttpModule,
         routing,
-        MyDatePickerModule
+        MyDatePickerModule,
+        AgmCoreModule.forRoot({
+          apiKey: 'AIzaSyCXsG8bxccQbw17Xels5W3KzLmoP_Mfu2M'
+        })
     ],
     declarations: [
         AppComponent,

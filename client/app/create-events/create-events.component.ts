@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {IMyOptions, IMyDateModel} from 'mydatepicker';
+import {SebmGoogleMap} from "angular2-google-maps/core";
+import { AgmCoreModule } from 'angular2-google-maps/core';
 import { EventService, AlertService } from '../_services/index';
 declare var module: { id: string; }
 
@@ -71,7 +73,7 @@ export class CreateEventsComponent {
     eventCategory: [],
     eventDate: "", eventTime: {hr: "0", min: "0"},
     eventDatetime: "",
-    eventLocation: "", /* TODO: Change to object {} when Google Maps is implemented */
+    eventLocation: {lat: 28.538336, lng: -81.379234},
   }
 
   constructor(private _eventService: EventService, private _alertService: AlertService) { }

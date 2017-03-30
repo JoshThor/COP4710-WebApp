@@ -26,7 +26,8 @@
 
             // other libraries
             'rxjs': 'npm:rxjs',
-            'mydatepicker': 'npm:mydatepicker/bundles/mydatepicker.umd.js'
+            'mydatepicker': 'npm:mydatepicker/bundles/mydatepicker.umd.js',
+            'angular2-google-maps/core': 'npm:angular2-google-maps/core/core.umd.js'
         },
         // packages tells the System loader how to load when no filename and/or no extension
         packages: {
