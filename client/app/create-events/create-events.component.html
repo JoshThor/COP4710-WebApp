@@ -67,7 +67,9 @@
     <div class="form-group">
       <label for="eventLocation">Event Location</label>
       <input type="search" class="form-control" name="eventLocation" [(ngModel)]="formData.eventLocation" #eventLocation="ngModel" required />
-      <!-- TODO: Implement Google Maps here [dropdown?] -->
+      <sebm-google-map [latitude]="formData.eventLocation.lat" [longitude]="formData.eventLocation.lng" style="height:300px">
+        <sebm-google-map-marker [latitude]="formData.eventLocation.lat" [longitude]="formData.eventLocation.lng"></sebm-google-map-marker>
+      </sebm-google-map>
       <div *ngIf="f.submitted && !eventLocation.valid" class="help-block alert alert-danger">Event Location is required</div>
     </div>
     <div class="form-group">

@@ -27,6 +27,7 @@ var create_rso_component_1 = require("./create-rso/create-rso.component");
 var view_rso_component_1 = require("./view-rso/view-rso.component");
 /* Other */
 var mydatepicker_1 = require("mydatepicker");
+var core_2 = require("angular2-google-maps/core");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -39,7 +40,10 @@ AppModule = __decorate([
             forms_1.FormsModule,
             http_1.HttpModule,
             app_routing_1.routing,
-            mydatepicker_1.MyDatePickerModule
+            mydatepicker_1.MyDatePickerModule,
+            core_2.AgmCoreModule.forRoot({
+                apiKey: 'AIzaSyCXsG8bxccQbw17Xels5W3KzLmoP_Mfu2M'
+            })
         ],
         declarations: [
             app_component_1.AppComponent,

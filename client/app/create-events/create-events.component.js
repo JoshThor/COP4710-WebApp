@@ -56,7 +56,7 @@ var CreateEventsComponent = (function () {
             eventCategory: [],
             eventDate: "", eventTime: { hr: "0", min: "0" },
             eventDatetime: "",
-            eventLocation: "",
+            eventLocation: { lat: 28.538336, lng: -81.379234 },
         };
     }
     CreateEventsComponent.prototype.onDateChanged = function (event) {
