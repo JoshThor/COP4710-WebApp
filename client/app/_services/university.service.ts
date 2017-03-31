@@ -2,27 +2,19 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 
 import { AppConfig } from '../app.config';
-import { RSO } from '../_models/index';
+import { University } from '../_models/index';
 
 @Injectable()
-export class RSOService {
+export class UniversityService {
     constructor(private http: Http, private config: AppConfig) { }
 
     /* TODO:
-      - What requests are to be made for RSOs?
+      - What requests are to be made for Universities?
       - What are the I/Os for each request?
       - Do I need to set up in ngModule?? */
 
-    public getJoinableRSOs(_id: string) {
-      return this.http.get(this.config.apiUrl + '/rsos/getJoinable/' + _id, this.jwt()).map((response: Response) => response.json());
-    }
-
-    public joinRSO(_rid: string, uid: string) {
-      // return http.post(this.config.apiUrl + '/rsos/join/' + _rid, this.jwt()).map((response: Response) => response.json());
-    }
-
-    public createRSO(data: any) {
-      return this.http.post(this.config.apiUrl + '/rsos/create', data, this.jwt());
+    public getUniversities() {
+      return this.http.get(this.config.apiUrl + '/university/', this.jwt()).map((response: Response) => response.json());
     }
 
     private jwt() {

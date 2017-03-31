@@ -9,7 +9,7 @@ import { AppConfig } from './app.config';
 
 import { AlertComponent, EventZippyComponent } from './_directives/index';
 import { AuthGuard } from './_guards/index';
-import { AlertService, AuthenticationService, UserService, RSOService, EventService } from './_services/index';
+import { AlertService, AuthenticationService, UserService, RSOService, EventService, UniversityService } from './_services/index';
 import { HomeComponent } from './home/index';
 import { LoginComponent } from './login/index';
 import { RegisterComponent } from './register/index';
@@ -56,7 +56,8 @@ import { AgmCoreModule } from 'angular2-google-maps/core';
         AuthenticationService,
         UserService,
         RSOService,
-        EventService
+        EventService,
+        UniversityService
     ],
     bootstrap: [AppComponent]
 })

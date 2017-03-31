@@ -12,19 +12,34 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var index_1 = require("../_services/index");
 var CreateRSOComponent = (function () {
-    function CreateRSOComponent(_rsoService, _alertService) {
+    function CreateRSOComponent(_rsoService, _alertService, universityService) {
         this._rsoService = _rsoService;
         this._alertService = _alertService;
-        this.universityList = [
-            "UF", "UCF", "FSU", "FGCU", "FAMU", "USF", "UM"
+        this.universityService = universityService;
+        this.universityList = [];
+        this.selectedUniversity = 2;
+        /*private universityList: string[] = [
+          "UF", "UCF", "FSU", "FGCU", "FAMU", "USF", "UM"
         ]; /* TODO: These strings evaluate to numbers */
         this.userObj = JSON.parse(localStorage.getItem("currentUser"));
         this.formData = {
             uid: this.userObj._id,
             rsoName: "",
-            unid: 1
+            unid: null
         };
     }
+    CreateRSOComponent.prototype.ngOnInit = function () {
+        this.getUniversities();
+    };
+    CreateRSOComponent.prototype.getUniversities = function () {
+        var _this = this;
+        this.universityService.getUniversities().subscribe(function (universities) {
+            _this.universityList = universities;
+        });
+    };
+    CreateRSOComponent.prototype.onChange = function (deviceValue) {
+        console.log(this.formData);
+    };
     CreateRSOComponent.prototype.submitForm = function () {
         // Check that form is properly filled out
         // Make rsoService call
@@ -37,8 +52,6 @@ var CreateRSOComponent = (function () {
             //this._alertService.error('Error');
         }); // */
     };
-    CreateRSOComponent.prototype.ngOnInit = function () {
-    };
     return CreateRSOComponent;
 }());
 CreateRSOComponent = __decorate([
@@ -47,7 +60,7 @@ CreateRSOComponent = __decorate([
         selector: 'create-rso',
         templateUrl: 'create-rso.component.html'
     }),
-    __metadata("design:paramtypes", [index_1.RSOService, index_1.AlertService])
+    __metadata("design:paramtypes", [index_1.RSOService, index_1.AlertService, index_1.UniversityService])
 ], CreateRSOComponent);
 exports.CreateRSOComponent = CreateRSOComponent;
 //# sourceMappingURL=create-rso.component.js.map

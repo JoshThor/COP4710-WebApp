@@ -8,4 +8,5 @@ __export(require("./authentication.service"));
 __export(require("./user.service"));
 __export(require("./rso.service"));
 __export(require("./event.service"));
+__export(require("./university.service"));
 //# sourceMappingURL=index.js.map

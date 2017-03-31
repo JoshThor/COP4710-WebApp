@@ -21,15 +21,20 @@ var ViewRSOComponent = (function () {
           - have a [join] button
           - make fake data call to get RSOs
         */
-        this.rsoList = [
+        /*Fake data
+          private rsoList: any[] = [
             "Test RSO Name 0", "Test RSO Name 1", "Test RSO Name 2", "Test RSO Name 4"
-        ];
+          ]
+        */
+        this.rsos = [];
     }
+    //Gets a list of joinable RSO's
     ViewRSOComponent.prototype.ngOnInit = function () {
+        var _this = this;
         var userObj = JSON.parse(localStorage.getItem("currentUser"));
         this._rsoService.getJoinableRSOs(userObj._id).subscribe(function (res) {
-            console.log(res);
-            console.log(res.json());
+            _this.rsos = res;
+            console.log(_this.rsos);
         });
     };
     return ViewRSOComponent;

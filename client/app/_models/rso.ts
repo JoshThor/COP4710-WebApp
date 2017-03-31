@@ -1,9 +1,10 @@
 import { User } from './user';
 
 export class RSO {
-    _id: string;
+    rid: string;
     userId: string;         //userId of admin
-    name: string;           //name of RSO
+    rsoName: string;           //name of RSO
     status: string;         // Approved, not-approved, pending....
+    unid: string;           //university id
     users: User[];
 }

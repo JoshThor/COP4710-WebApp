@@ -12,7 +12,8 @@ service.create = create;
 service.getAll = getAll;
 service._delete = _delete;
 service.join = join;
-service.getAllForUser = getAllForUser;
+service.getJoinable = getJoinable;
+service.getForUser = getForUser;
 
 module.exports = service;
 
@@ -89,8 +90,11 @@ function create(rsoParam) {
                     deferred.reject(err.name + ': ' + err.message);
                 }
 
-                if(rows) {
+                if(!err) {
+
                     var rsoMember = {uid: rsoParam.uid, rid: rows.insertId};
+
+                    console.log("Adding uid: " + rsoParam.uid+" to rid: "+rows.insertId +" member group");
 
                     connection.query("INSERT INTO rsoMembers SET ?", [rsoMember], function(err, rows) {
                         if(err) {
@@ -138,7 +142,34 @@ function getAll(){
 }
 
 //Get all rso's that the current user is not in
-function getAllForUser(uid){
+function getForUser(uid){
+    var deferred = Q.defer();
+
+    pool.getConnection(function(err, connection) {
+
+        if(err) {
+            connection.release();
+            deferred.reject(err.name + ': ' + err.message);
+        }
+
+        console.log("Getting all rso's...");
+
+        connection.query("select * from rso where uid = ?", uid, function(err, rows) {
+            connection.release();
+
+            if(err) {
+                deferred.reject(err.name + ': ' + err.message);
+            }
+
+            deferred.resolve(rows);
+
+        });
+    });
+    return deferred.promise;
+}
+
+//Get all rso's that the current user is not in
+function getJoinable(uid){
     var deferred = Q.defer();
 
     pool.getConnection(function(err, connection) {
@@ -151,7 +182,7 @@ function getAllForUser(uid){
         console.log("Getting all rso's for the user: "+uid);
 
         connection.query("SELECT r.rid, r.unid, r.rsoName FROM rso r WHERE NOT EXISTS (SELECT * FROM rsomembers WHERE r.rid = rid AND uid = ?)", [uid], function(err, rows) {
-            console.log(rows);
+            //console.log(rows);
             connection.release();
 
             if(err) {

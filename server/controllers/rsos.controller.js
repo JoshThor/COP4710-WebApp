@@ -26,7 +26,11 @@ router.delete('/:id', _delete);
 
 // Gets all joinable RSO's for that user (user id has to be sent in reuest)
 //URL: http://localhost:4000/rsos/getall
-router.get('/getall/:uid', getAllForUser)
+router.get('/getJoinable/:uid', getJoinable)
+
+// Gets all joinable RSO's for that user (user id has to be sent in reuest)
+//URL: http://localhost:4000/rsos/getall
+router.get('/getForUser/:uid', getForUser)
 
  
 module.exports = router;
@@ -62,8 +66,20 @@ function join(req, res) {
         });
 }
 
-function getAllForUser(req, res) {
-    rsoService.getAllForUser(req.params.uid)
+function getJoinable(req, res) {
+    rsoService.getJoinable(req.params.uid)
+        .then(function(rso) {
+            res.send(rso)
+        })
+        .catch(function(err) {
+            res.status(400).send(err);
+        });
+}
+
+getForUser
+
+function getForUser(req, res) {
+    rsoService.getForUser(req.params.uid)
         .then(function(rso) {
             res.send(rso)
         })

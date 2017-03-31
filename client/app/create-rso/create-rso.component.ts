@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { RSOService, AlertService } from '../_services/index';
+import {University} from '../_models/index';
+import { RSOService, AlertService, UniversityService } from '../_services/index';
 declare var module: { id: string; }
 
 @Component({
@@ -7,11 +8,18 @@ declare var module: { id: string; }
   selector: 'create-rso',
   templateUrl: 'create-rso.component.html'
 })
-export class CreateRSOComponent {
+export class CreateRSOComponent implements OnInit {
 
-  constructor(private _rsoService: RSOService, private _alertService: AlertService) { }
+  constructor(private _rsoService: RSOService, private _alertService: AlertService, private universityService: UniversityService) { }
 
-  private universityList: string[] = [
+  ngOnInit() {
+    this.getUniversities();
+  }
+
+  private universityList: University[] = [];
+  private selectedUniversity = 2;
+
+  /*private universityList: string[] = [
     "UF", "UCF", "FSU", "FGCU", "FAMU", "USF", "UM"
   ]; /* TODO: These strings evaluate to numbers */
 
@@ -20,7 +28,18 @@ export class CreateRSOComponent {
   private formData: any = {
     uid: this.userObj._id,
     rsoName: "",
-    unid: 1
+    unid: null
+  }
+
+  private getUniversities()
+  {
+    this.universityService.getUniversities().subscribe(
+        universities => {this.universityList = universities;
+      });
+  }
+
+  onChange(deviceValue) {
+    console.log(this.formData);
   }
 
   private submitForm() {
@@ -37,10 +56,6 @@ export class CreateRSOComponent {
         //this._alertService.error('Error');
       }
     ); // */
-  }
-
-  private ngOnInit() {
-
   }
 
 }

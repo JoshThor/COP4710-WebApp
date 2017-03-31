@@ -12,25 +12,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 var app_config_1 = require("../app.config");
-var RSOService = (function () {
-    function RSOService(http, config) {
+var UniversityService = (function () {
+    function UniversityService(http, config) {
         this.http = http;
         this.config = config;
     }
     /* TODO:
-      - What requests are to be made for RSOs?
+      - What requests are to be made for Universities?
       - What are the I/Os for each request?
       - Do I need to set up in ngModule?? */
-    RSOService.prototype.getJoinableRSOs = function (_id) {
-        return this.http.get(this.config.apiUrl + '/rsos/getJoinable/' + _id, this.jwt()).map(function (response) { return response.json(); });
+    UniversityService.prototype.getUniversities = function () {
+        return this.http.get(this.config.apiUrl + '/university/', this.jwt()).map(function (response) { return response.json(); });
     };
-    RSOService.prototype.joinRSO = function (_rid, uid) {
-        // return http.post(this.config.apiUrl + '/rsos/join/' + _rid, this.jwt()).map((response: Response) => response.json());
-    };
-    RSOService.prototype.createRSO = function (data) {
-        return this.http.post(this.config.apiUrl + '/rsos/create', data, this.jwt());
-    };
-    RSOService.prototype.jwt = function () {
+    UniversityService.prototype.jwt = function () {
         // create authorization header with jwt token
         var currentUser = JSON.parse(localStorage.getItem('currentUser'));
         if (currentUser && currentUser.token) {
@@ -38,11 +32,11 @@ var RSOService = (function () {
             return new http_1.RequestOptions({ headers: headers });
         }
     };
-    return RSOService;
+    return UniversityService;
 }());
-RSOService = __decorate([
+UniversityService = __decorate([
     core_1.Injectable(),
     __metadata("design:paramtypes", [http_1.Http, app_config_1.AppConfig])
-], RSOService);
-exports.RSOService = RSOService;
-//# sourceMappingURL=rso.service.js.map
+], UniversityService);
+exports.UniversityService = UniversityService;
+//# sourceMappingURL=university.service.js.map

@@ -33,6 +33,15 @@ function create(eventParam) {
         var event = {uid: eventParam.uid, eventName: eventParam.name, timedate: eventParam.time, category: eventParam.category, 
             description: eventParam.description, latitude: eventParam.latitude, longitude: eventParam.longitude};
 
+            /*
+            * Determine what kind of event it is (private, public, RSO)
+            * Some sort of if-else statment
+            * if private: you need university ID
+            * if public dont require anything special
+            * if RSO require RSO ID
+            * put these in different functions
+            */
+
         connection.query("INSERT INTO _events SET ?", [event], function(err, rows) {
             connection.release();
 
@@ -40,10 +49,67 @@ function create(eventParam) {
                 deferred.reject(err.name +": "+ err.message);
             }
 
-            deferred.resolve();
-            //now we want to determine what kind of event? public, private, rso ect..
-
+            //eventParam.type must be passed to this function
+            switch(eventParam.type)
+            {
+                case 'RSO':
+                    insertRSO(rows.insertId);
+                    break;
+                case 'Private':
+                    insertPriv(rows.insertId);
+                    break;
+                case 'Public':
+                    insertPub(rows.insertId);
+                    break;
+                default:
+                    deferred.resolve();
+                    break;
+            }
         });
+
+        function insertPub(eid)
+        {
+
+            connection.query("INSERT INTO publicEvent SET ?", [eid], function(err, rows) {
+                connection.release();
+
+                if(err){
+                    deferred.reject(err.name +": "+ err.message);
+                }
+
+                deferred.resolve();
+            });
+        }
+    
+        function insertPriv(eid)
+        {
+            var private = {eid: eid, unid: eventParam.unid};
+
+            connection.query("INSERT INTO privateEvent SET ?", [private], function(err, rows) {
+                connection.release();
+
+                if(err){
+                    deferred.reject(err.name +": "+ err.message);
+                }
+
+                deferred.resolve();
+            });
+        }
+
+        function insertRSO(eid)
+        {
+            var rso = {eid: eid, rid: eventParam.rid};
+            
+            connection.query("INSERT INTO rsoEvent SET ?", [rso], function(err, rows) {
+                connection.release();
+
+                if(err){
+                    deferred.reject(err.name +": "+ err.message);
+                }
+
+                deferred.resolve();
+            });
+        }
 
     });
     return deferred.promise;
@@ -65,6 +131,8 @@ function getAll() {
             if(err){
                 deferred.reject(err.name +": "+ err.message);
             }
+
+            var index = rso.insertId;
 
              deferred.resolve(rows);
 

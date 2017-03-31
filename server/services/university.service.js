@@ -61,8 +61,6 @@ function create(univParam) {
     return deferred.promise;
 }
 
-
-
 //Get all rso's that the current user is not in 
 function getAll(){
     var deferred = Q.defer();

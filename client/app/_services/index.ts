@@ -3,3 +3,4 @@ export * from './authentication.service';
 export * from './user.service';
 export * from './rso.service';
 export * from './event.service';
+export * from './university.service';
