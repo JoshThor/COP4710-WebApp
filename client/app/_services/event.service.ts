@@ -13,7 +13,7 @@ export class EventService {
     */
 
     public createEvent(eventParam) {
-      return this.http.post(this.config.apiUrl + '/events/create', eventParam, this.jwt()).map((response: Response) => response.json());
+      return this.http.post(this.config.apiUrl + '/events/create', eventParam, this.jwt()).map((response: Response) => response);
     }
 
     public getPublicEvents() {

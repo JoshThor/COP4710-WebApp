@@ -63,7 +63,7 @@ create table _events (
     description varchar(500),
 	latitude varchar(45),
     longitude varchar(45),
-    eventStatus varchar(20),
+    eventStatus varchar(20) default "Unapproved",
     #foreign key(lid) references locations(lid),
     foreign key(uid) references admin(uid)
 );
