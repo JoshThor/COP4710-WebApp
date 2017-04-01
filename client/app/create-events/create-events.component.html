@@ -1,17 +1,20 @@
 <div class="page-container container-fluid">
   <h1>Create Event Component</h1>
   <form name="form" #f="ngForm" novalidate>
+    <!-- NAME -->
     <div class="form-group">
       <label for="eventName">Name of Event</label>
       <input type="text" class="form-control" name="eventName" [(ngModel)]="formData.eventName" #eventName="ngModel" required />
       <div *ngIf="f.submitted && !eventName.valid" class="help-block alert alert-danger">Name for Event is required</div>
     </div>
+    <!-- DESCRIPTION -->
     <div class="form-group">
       <label for="eventDescription">Event Description</label>
       <textarea rows="4" class="form-control" name="eventDescription" [(ngModel)]="formData.eventDescription" #eventDescription="ngModel" required>
       </textarea>
       <div *ngIf="f.submitted && !eventDescription.valid" class="help-block alert alert-danger">Description for Event is required</div>
     </div>
+    <!-- DATE -->
     <div class="form-group">
       <label for="eventDate">Date of Event</label>
       <div class="row">
@@ -27,6 +30,7 @@
         </div>
       </div>
     </div>
+    <!-- TIME -->
     <div class="form-group">
       <label>Time of Event</label>
       <div class="row">
@@ -50,13 +54,23 @@
         </div>
       </div>
     </div>
+    <!-- TYPE -->
     <div class="form-group">
       <label for="eventType">Type of Event</label>
-      <select type="select" class="form-control"  name="eventType" [(ngModel)]="formData.eventType" #eventType="ngModel" required>
-        <option *ngFor="let type of eventTypeList; let i = index" value="{{i}}">{{type}}</option>
+      <select type="select" class="form-control"  name="eventType" [(ngModel)]="formData.eventType" #eventType="ngModel" (change)="changeEventType($event)" required>
+        <option *ngFor="let type of eventTypeList; let i = index" value="{{type}}">{{type}}</option>
       </select>
       <div *ngIf="f.submitted && !eventType.valid" class="help-block alert alert-danger">Type for Event is required</div>
     </div>
+    <!-- TYPE == 'RSO' -->
+    <div class="form-group" *ngIf="formData.eventType === 'RSO'">
+      <label for="eventType">RSO</label>
+      <select type="select" class="form-control"  name="rso" [(ngModel)]="formData.rso" #rso="ngModel" required>
+        <option *ngFor="let rso of RSOsList; let i = index" value="{{rso}}">{{rso}}</option>
+      </select>
+      <div *ngIf="f.submitted && !rso.valid" class="help-block alert alert-danger">RSO for RSO Event is required</div>
+    </div>
+    <!-- CATEGORY -->
     <div class="form-group">
       <label for="eventCategory">Event Category</label><br>
       <div *ngFor="let cat of categoryList">
@@ -64,6 +78,7 @@
         <span> {{cat}}</span>
       </div>
     </div>
+    <!-- LOCATION -->
     <div class="form-group">
       <label for="eventLocation">Event Location</label>
       <input type="search" class="form-control" name="eventLocation" [(ngModel)]="formData.eventLocation" #eventLocation="ngModel" required />

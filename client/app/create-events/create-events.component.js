@@ -16,12 +16,18 @@ var CreateEventsComponent = (function () {
         this._eventService = _eventService;
         this._alertService = _alertService;
         /* TODO:
-          - Accessible by Admin, SuperAdmin*/
+          - Accessible by Admin, SuperAdmin
+        */
         this.eventTypeList = [
-            "List Option 0",
-            "List Option 1",
-            "List Option 2",
-            "List Option 3"
+            "Public",
+            "Private",
+            "RSO"
+        ];
+        this.RSOsList = [
+            "fake RSO 1",
+            "fake RSO 2",
+            "fake RSO 3",
+            "fake RSO 4"
         ];
         this.categoryList = [
             "Category 0",
@@ -39,13 +45,12 @@ var CreateEventsComponent = (function () {
                 "50", "51", "52", "53", "54", "55", "56", "57", "58", "59"],
             mer: ["AM", "PM"]
         };
-        /* Datepicker */
+        /********** Datepicker **********/
         this.myDatePickerOptions = {
             // other options...
             dateFormat: 'yyyy-mm-dd',
         };
-        /* End Datepicker */
-        this.AgmApiKey = "AIzaSyCXsG8bxccQbw17Xels5W3KzLmoP_Mfu2M";
+        /********** End Datepicker **********/
         this.userObj = JSON.parse(localStorage.getItem("currentUser"));
         this.timeObject = { hr: "0", min: "0", mer: "0" };
         this.formData = {
@@ -57,32 +62,24 @@ var CreateEventsComponent = (function () {
             eventDate: "", eventTime: { hr: "0", min: "0" },
             eventDatetime: "",
             eventLocation: { lat: 28.538336, lng: -81.379234 },
+            rso: ""
         };
     }
-    CreateEventsComponent.prototype.onDateChanged = function (event) {
-        // event properties are: event.date, event.jsdate, event.formatted and event.epoc
-        //console.log( event.date );
-        //console.log( event.jsdate );
-        //console.log( event.formatted );
-        this.formData.eventDate = event.formatted;
-        console.log(this.formData.eventDate);
-    };
-    CreateEventsComponent.prototype.ngOnInit = function () {
-        // Initialize values here
-    };
+    CreateEventsComponent.prototype.ngOnInit = function () { };
     CreateEventsComponent.prototype.submitForm = function () {
-        // Check that all fields are properly filled
-        // Make request
         this.formatDateTime();
         console.log(this.formData);
+        /* TODO: Check all fields are filled and valid before sending!! */
         var event = {
             uid: this.formData.id + "",
             name: this.formData.eventName,
             time: this.formData.eventDatetime,
             category: this.formData.eventCategory[0],
             description: this.formData.eventDescription,
-            latitude: "",
-            longitude: ""
+            latitude: this.formData.eventLocation.lat,
+            longitude: this.formData.eventLocation.lng,
+            type: this.formData.eventType,
+            rid: this.formData.rso
         };
         console.log(event);
         this._eventService.createEvent(event).subscribe(function (data) {
@@ -91,11 +88,26 @@ var CreateEventsComponent = (function () {
             function (error) {
                 console.log("ERR");
             };
-        return;
+    };
+    /* AUXILIARY FUNCTIONS */
+    CreateEventsComponent.prototype.onDateChanged = function (event) {
+        // event properties are: event.date, event.jsdate, event.formatted and event.epoc
+        this.formData.eventDate = event.formatted;
+        //console.log( this.formData.eventDate );
+    };
+    CreateEventsComponent.prototype.changeEventType = function (e) {
+        if (e.target.value === "RSO") {
+            /* Call server for RSO for student */
+        }
+        else {
+            this.formData.rso = "";
+        }
     };
     CreateEventsComponent.prototype.convertMilitaryTime = function () {
+        /* Convert to military time */
         this.formData.eventTime.hr = parseInt(this.timeObject.hr, 10) + 12 * (this.timeObject.mer) + "";
         this.formData.eventTime.min = this.timeObject.min;
+        /* Format strings */
         if (this.formData.eventTime.hr.length < 2) {
             this.formData.eventTime.hr = "0" + this.formData.eventTime.hr;
         }
@@ -104,8 +116,10 @@ var CreateEventsComponent = (function () {
         }
     };
     CreateEventsComponent.prototype.formatDateTime = function () {
+        /* Save and convert to military time */
         var str = this.formData.eventDate.formatted;
         this.convertMilitaryTime();
+        /* Format strings */
         str += " " + this.formData.eventTime.hr + ":" + this.formData.eventTime.min + ":00";
         this.formData.eventDatetime = str;
         return;
