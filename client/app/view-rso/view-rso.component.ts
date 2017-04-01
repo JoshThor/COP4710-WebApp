@@ -14,7 +14,6 @@ export class ViewRSOComponent {
     - list all RSOs the user is not in
     - each list item is ONLY name of RSO
     - have a [join] button
-    - make fake data call to get RSOs
   */
 
 /*Fake data
@@ -24,16 +23,37 @@ export class ViewRSOComponent {
 */
 
   private rsos: RSO[] = [];
+  private userObj;
 
   constructor(private _rsoService: RSOService) { }
 
+//Join RSOs
+  joinRSO(_id: string) {
+    console.log(_id);
+    this._rsoService.joinRSO(_id, this.userObj).subscribe((data) => { 
+      this.loadRSOs() 
+    },
+    error => {
+        console.log("Error: "+error._body);
+        //this._alertService.error('Error');
+      });
+  }
 
-  //Gets a list of joinable RSO's
+  //On page load
   private ngOnInit() {
-    let userObj = JSON.parse( localStorage.getItem("currentUser") );
-    this._rsoService.getJoinableRSOs( userObj._id ).subscribe(res => { 
-      this.rsos = res;
-      console.log(this.rsos);
+    this.userObj = JSON.parse( localStorage.getItem("currentUser") );
+    this.loadRSOs();
+  }
+
+//Gets a list of joinable RSO's
+  private loadRSOs() {
+    this._rsoService.getJoinableRSOs( this.userObj._id ).subscribe(res => {
+
+        this.rsos = res;
     });
+  }
+
+  isEmptyObject(obj) {
+    return (Object.keys(obj).length === 0);
   }
 }

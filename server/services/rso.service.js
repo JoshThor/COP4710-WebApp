@@ -214,6 +214,8 @@ function join(rsoId, userId){
                deferred.reject(err.name+ ": " + err.message);
            }
 
+           console.log(rows);
+
            //if user is not a student
            if(rows.length == 0) {
                makeStudent();

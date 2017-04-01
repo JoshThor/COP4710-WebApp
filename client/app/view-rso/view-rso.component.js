@@ -19,7 +19,6 @@ var ViewRSOComponent = (function () {
           - list all RSOs the user is not in
           - each list item is ONLY name of RSO
           - have a [join] button
-          - make fake data call to get RSOs
         */
         /*Fake data
           private rsoList: any[] = [
@@ -28,14 +27,31 @@ var ViewRSOComponent = (function () {
         */
         this.rsos = [];
     }
-    //Gets a list of joinable RSO's
-    ViewRSOComponent.prototype.ngOnInit = function () {
+    //Join RSOs
+    ViewRSOComponent.prototype.joinRSO = function (_id) {
         var _this = this;
-        var userObj = JSON.parse(localStorage.getItem("currentUser"));
-        this._rsoService.getJoinableRSOs(userObj._id).subscribe(function (res) {
-            _this.rsos = res;
-            console.log(_this.rsos);
+        console.log(_id);
+        this._rsoService.joinRSO(_id, this.userObj).subscribe(function (data) {
+            _this.loadRSOs();
+        }, function (error) {
+            console.log("Error: " + error._body);
+            //this._alertService.error('Error');
         });
+    };
+    //On page load
+    ViewRSOComponent.prototype.ngOnInit = function () {
+        this.userObj = JSON.parse(localStorage.getItem("currentUser"));
+        this.loadRSOs();
+    };
+    //Gets a list of joinable RSO's
+    ViewRSOComponent.prototype.loadRSOs = function () {
+        var _this = this;
+        this._rsoService.getJoinableRSOs(this.userObj._id).subscribe(function (res) {
+            _this.rsos = res;
+        });
+    };
+    ViewRSOComponent.prototype.isEmptyObject = function (obj) {
+        return (Object.keys(obj).length === 0);
     };
     return ViewRSOComponent;
 }());

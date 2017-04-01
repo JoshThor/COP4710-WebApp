@@ -3,14 +3,26 @@
 
   <div class="col-md-8 col-md-offset-1" >
     <h3>RSOs</h3>
-    <ul class="list-group">
-      <li class="list-group-item" *ngFor="let rso of rsos">
-        <h4 class="list-group-item-heading">{{rso.rsoName}}</h4>
-        <p class="list-group-item-text">We are an RSO</p>
-        <br>
-        <button class="btn btn-primary">Join</button>
-      </li>
-    </ul>
+    <div *ngIf="!isEmptyObject(rsos)"><!-- Begin check for empty obj -->
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let rso of rsos">
+          <h4 class="list-group-item-heading">{{rso.rsoName}}</h4>
+          <p class="list-group-item-text">{{rso.desc}}</p>
+          <br>
+          <button class="btn btn-primary" (click) ="joinRSO(rso.rid)">Join</button>
+        </li>
+      </ul>
+    </div> <!-- End Check for empty obj -->
+
+    <div *ngIf="isEmptyObject(rsos)">
+      <br/>
+      <h4> No joinable RSOs </h4>
+    </div>
+
   </div> <!-- End RSO List Container -->
 
+
+
 </div>
+
+

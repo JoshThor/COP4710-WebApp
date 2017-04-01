@@ -57,7 +57,7 @@ function getAll(req, res) {
 }
 
 function join(req, res) {
-    rsoService.join(req.params.rid, req.body.uid)
+    rsoService.join(req.params.rid, req.body._id)
         .then(function() {
             res.sendStatus(200);
         })

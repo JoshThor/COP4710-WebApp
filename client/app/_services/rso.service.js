@@ -24,8 +24,9 @@ var RSOService = (function () {
     RSOService.prototype.getJoinableRSOs = function (_id) {
         return this.http.get(this.config.apiUrl + '/rsos/getJoinable/' + _id, this.jwt()).map(function (response) { return response.json(); });
     };
-    RSOService.prototype.joinRSO = function (_rid, uid) {
-        // return http.post(this.config.apiUrl + '/rsos/join/' + _rid, this.jwt()).map((response: Response) => response.json());
+    RSOService.prototype.joinRSO = function (_rid, userData) {
+        console.log(userData._id);
+        return this.http.post(this.config.apiUrl + '/rsos/join/' + _rid, userData, this.jwt()).map(function (response) { return response; });
     };
     RSOService.prototype.createRSO = function (data) {
         return this.http.post(this.config.apiUrl + '/rsos/create', data, this.jwt());

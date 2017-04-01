@@ -17,8 +17,9 @@ export class RSOService {
       return this.http.get(this.config.apiUrl + '/rsos/getJoinable/' + _id, this.jwt()).map((response: Response) => response.json());
     }
 
-    public joinRSO(_rid: string, uid: string) {
-      // return http.post(this.config.apiUrl + '/rsos/join/' + _rid, this.jwt()).map((response: Response) => response.json());
+    public joinRSO(_rid: string, userData: any) {
+      console.log(userData._id);
+       return this.http.post(this.config.apiUrl + '/rsos/join/' + _rid, userData, this.jwt()).map((response: Response) => response);
     }
 
     public createRSO(data: any) {
