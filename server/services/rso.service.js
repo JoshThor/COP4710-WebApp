@@ -114,7 +114,6 @@ function create(rsoParam) {
     return deferred.promise;
 }
 
-//Get all rso's that the current user is not in
 function getAll(){
     var deferred = Q.defer();
 
@@ -141,7 +140,7 @@ function getAll(){
     return deferred.promise;
 }
 
-//Get all rso's that the current user is not in
+//Get all rso's that the current user is in
 function getForUser(uid){
     var deferred = Q.defer();
 

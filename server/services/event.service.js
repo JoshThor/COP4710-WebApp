@@ -30,8 +30,16 @@ function create(eventParam) {
 
         console.log(eventParam);
 
-        var event = {uid: eventParam.uid, eventName: eventParam.name, timedate: eventParam.time, category: eventParam.category, 
-            description: eventParam.description, latitude: eventParam.latitude, longitude: eventParam.longitude};
+        var event = {
+            uid: eventParam.uid,
+            eventName: eventParam.name,
+            timedate: eventParam.time,
+            category: eventParam.category, 
+            description: eventParam.description,
+            latitude: eventParam.latitude,
+            longitude: eventParam.longitude,
+            eventStatus: eventParam.status
+            };
 
             /*
             * Determine what kind of event it is (private, public, RSO)
@@ -43,10 +51,15 @@ function create(eventParam) {
             */
 
         connection.query("INSERT INTO _events SET ?", [event], function(err, rows) {
-            connection.release();
 
             if(err){
                 deferred.reject(err.name +": "+ err.message);
+            }
+
+            if(rows === null || rows === undefined)
+            {
+                console.log("Error");
+                deferred.reject("Error");
             }
 
             //eventParam.type must be passed to this function
@@ -69,8 +82,9 @@ function create(eventParam) {
 
         function insertPub(eid)
         {
+            console.log("Inserting event id: "+eid+" into the public table.");
 
-            connection.query("INSERT INTO publicEvent SET ?", [eid], function(err, rows) {
+            connection.query("INSERT INTO publicEvent SET eid = ?", [eid], function(err, rows) {
                 connection.release();
 
                 if(err){
@@ -83,23 +97,36 @@ function create(eventParam) {
     
         function insertPriv(eid)
         {
-            var private = {eid: eid, unid: eventParam.unid};
 
-            connection.query("INSERT INTO privateEvent SET ?", [private], function(err, rows) {
-                connection.release();
-
+            connection.query("SELECT unid from admin WHERE uid = ?", [eventParam.uid], function(err, rows) {
                 if(err){
+                    connection.release();
                     deferred.reject(err.name +": "+ err.message);
                 }
 
-                deferred.resolve();
+                console.log("Inserting event id: "+eid+" into the private event table.");
+                //console.log(rows[0].unid);
+                var private = {eid: eid, unid: rows[0].unid};
+
+                connection.query("INSERT INTO privateEvent SET ?", [private], function(err, rows) {
+                    connection.release();
+
+                    if(err){
+                        deferred.reject(err.name +": "+ err.message);
+                    }
+
+                    deferred.resolve();
+                });
             });
+            
+            
         }
 
         function insertRSO(eid)
         {
             var rso = {eid: eid, rid: eventParam.rid};
-            
+            console.log("Inserting event id: "+eid+" into the RSOEvent table.");
+
             connection.query("INSERT INTO rsoEvent SET ?", [rso], function(err, rows) {
                 connection.release();
 
