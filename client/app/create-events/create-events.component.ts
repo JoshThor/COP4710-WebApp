@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {IMyOptions, IMyDateModel} from 'mydatepicker';
 import {SebmGoogleMap} from "angular2-google-maps/core";
 import { AgmCoreModule } from 'angular2-google-maps/core';
-import { EventService, AlertService } from '../_services/index';
+import { EventService, RSOService, AlertService } from '../_services/index';
 declare var module: { id: string; }
 
 @Component({
@@ -13,6 +13,7 @@ declare var module: { id: string; }
 export class CreateEventsComponent {
   /* TODO:
     - Accessible by Admin, SuperAdmin
+    - Reset form after
   */
 
   private eventTypeList: string[] = [
@@ -71,7 +72,7 @@ export class CreateEventsComponent {
     rso: ""
   }
 
-  constructor(private _eventService: EventService, private _alertService: AlertService) { }
+  constructor(private _eventService: EventService, private _rsoService: RSOService, private _alertService: AlertService) { }
 
   private ngOnInit(): void { /* Initialize values here */ }
 
@@ -100,6 +101,8 @@ export class CreateEventsComponent {
       error => {
         console.log("ERR");
       };
+
+      /* TODO: Reset form after submitting */
   }
 
   /* AUXILIARY FUNCTIONS */
@@ -113,6 +116,13 @@ export class CreateEventsComponent {
   private changeEventType(e) {
     if (e.target.value === "RSO") {
       /* Call server for RSO for student */
+      this._rsoService.getUserRSOs(this.userObj._id).subscribe(
+        data => {
+          console.log(data);
+          this.RSOsList = data;
+        }, error => {
+          console.log("ERR");
+        });
     }
     else {
       this.formData.rso = "";

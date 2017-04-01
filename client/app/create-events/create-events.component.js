@@ -12,11 +12,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var index_1 = require("../_services/index");
 var CreateEventsComponent = (function () {
-    function CreateEventsComponent(_eventService, _alertService) {
+    function CreateEventsComponent(_eventService, _rsoService, _alertService) {
         this._eventService = _eventService;
+        this._rsoService = _rsoService;
         this._alertService = _alertService;
         /* TODO:
           - Accessible by Admin, SuperAdmin
+          - Reset form after
         */
         this.eventTypeList = [
             "Public",
@@ -88,6 +90,7 @@ var CreateEventsComponent = (function () {
             function (error) {
                 console.log("ERR");
             };
+        /* TODO: Reset form after submitting */
     };
     /* AUXILIARY FUNCTIONS */
     CreateEventsComponent.prototype.onDateChanged = function (event) {
@@ -96,8 +99,15 @@ var CreateEventsComponent = (function () {
         //console.log( this.formData.eventDate );
     };
     CreateEventsComponent.prototype.changeEventType = function (e) {
+        var _this = this;
         if (e.target.value === "RSO") {
             /* Call server for RSO for student */
+            this._rsoService.getUserRSOs(this.userObj._id).subscribe(function (data) {
+                console.log(data);
+                _this.RSOsList = data;
+            }, function (error) {
+                console.log("ERR");
+            });
         }
         else {
             this.formData.rso = "";
@@ -146,7 +156,7 @@ CreateEventsComponent = __decorate([
         selector: 'create-events',
         templateUrl: 'create-events.component.html'
     }),
-    __metadata("design:paramtypes", [index_1.EventService, index_1.AlertService])
+    __metadata("design:paramtypes", [index_1.EventService, index_1.RSOService, index_1.AlertService])
 ], CreateEventsComponent);
 exports.CreateEventsComponent = CreateEventsComponent;
 //# sourceMappingURL=create-events.component.js.map

@@ -36,17 +36,36 @@ var FindEventsComponent = (function () {
         }
     };
     FindEventsComponent.prototype.ngOnInit = function () {
+        var _this = this;
         var userObj = JSON.parse(localStorage.getItem("currentUser"));
         var i = 0;
-        this.publicEvents = this._eventService.getPublicEvents(); //.subscribe((rsp) => { console.log(rsp); });
+        /* TODO:
+          - Add a message stating there are no events if array.length == 0
+        */
+        this._eventService.getPublicEvents().subscribe(function (data) {
+            console.log(data);
+            _this.publicEvents = data;
+        }, function (error) {
+            console.log("ERR");
+        });
         for (i = 0; i < this.publicEvents.length; i++) {
             this.togglePublicEventComments.push(false);
         }
-        this.privateEvents = this._eventService.getPrivateEvents(userObj._id); //.subscribe((rsp) => { console.log(rsp); });
+        this._eventService.getPrivateEvents(userObj._id).subscribe(function (data) {
+            console.log(data);
+            _this.privateEvents = data;
+        }, function (error) {
+            console.log("ERR");
+        });
         for (i = 0; i < this.privateEvents.length; i++) {
             this.togglePrivateEventComments.push(false);
         }
-        this.rsoEvents = this._eventService.getRSOEvents(userObj._id); //.subscribe((rsp) => { console.log(rsp); });
+        this._eventService.getRSOEvents(userObj._id).subscribe(function (data) {
+            console.log(data);
+            _this.rsoEvents = data;
+        }, function (error) {
+            console.log("ERR");
+        });
         for (i = 0; i < this.rsoEvents.length; i++) {
             this.toggleRSOEventComments.push(false);
         }

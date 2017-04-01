@@ -11,7 +11,12 @@ export class RSOService {
     /* TODO:
       - What requests are to be made for RSOs?
       - What are the I/Os for each request?
-      - Do I need to set up in ngModule?? */
+      - Do I need to set up in ngModule??
+    */
+
+    public getUserRSOs(_id: string) {
+      return this.http.get(this.config.apiUrl + '/rsos/getForUser/' + _id, this.jwt()).map((response: Response) => response.json());
+    }
 
     public getJoinableRSOs(_id: string) {
       return this.http.get(this.config.apiUrl + '/rsos/getJoinable/' + _id, this.jwt()).map((response: Response) => response.json());

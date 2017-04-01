@@ -24,36 +24,13 @@ var EventService = (function () {
         return this.http.post(this.config.apiUrl + '/events/create', eventParam, this.jwt()).map(function (response) { return response; });
     };
     EventService.prototype.getPublicEvents = function () {
-        //return this.http.get(this.config.apiUrl + '/events/public/', this.jwt()).map((response: Response) => response.json());
-        /* Test Data */
-        return [
-            { eventName: "Test Public Event Name", description: "test description", category: "", timedate: "", latitude: "", longitude: "" },
-            { eventName: "Test Public Event Name", description: "test description", category: "", timedate: "", latitude: "", longitude: "" },
-            { eventName: "Test Public Event Name", description: "test description", category: "", timedate: "", latitude: "", longitude: "" },
-            { eventName: "Test Public Event Name", description: "test description", category: "", timedate: "", latitude: "", longitude: "" }
-        ];
+        return this.http.get(this.config.apiUrl + '/events/public/', this.jwt()).map(function (response) { return response.json(); });
     };
     EventService.prototype.getPrivateEvents = function (_id) {
-        // _id -> Univeristy ID
-        //return this.http.get(this.config.apiUrl + '/events/private/' + _id, this.jwt()).map((response: Response) => response.json());
-        /* Test Data */
-        return [
-            { eventName: "Test Private Event Name", description: "test description", category: "", timedate: "", latitude: "", longitude: "" },
-            { eventName: "Test Private Event Name", description: "test description", category: "", timedate: "", latitude: "", longitude: "" },
-            { eventName: "Test Private Event Name", description: "test description", category: "", timedate: "", latitude: "", longitude: "" },
-            { eventName: "Test Private Event Name", description: "test description", category: "", timedate: "", latitude: "", longitude: "" }
-        ];
+        return this.http.get(this.config.apiUrl + '/events/private/' + _id, this.jwt()).map(function (response) { return response.json(); });
     };
     EventService.prototype.getRSOEvents = function (_id) {
-        // _id -> user ID
-        //return this.http.get(this.config.apiUrl + '/events/rso/' + _id, this.jwt()).map((response: Response) => response.json());
-        /* Test Data */
-        return [
-            { eventName: "Test RSO Event Name", description: "test description", category: "", timedate: "", latitude: "", longitude: "" },
-            { eventName: "Test RSO Event Name", description: "test description", category: "", timedate: "", latitude: "", longitude: "" },
-            { eventName: "Test RSO Event Name", description: "test description", category: "", timedate: "", latitude: "", longitude: "" },
-            { eventName: "Test RSO Event Name", description: "test description", category: "", timedate: "", latitude: "", longitude: "" }
-        ];
+        return this.http.get(this.config.apiUrl + '/events/rso/' + _id, this.jwt()).map(function (response) { return response.json(); });
     };
     EventService.prototype.getPendingEvents = function (_id) {
         /* TODO: What call to make? */

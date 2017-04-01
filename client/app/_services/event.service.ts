@@ -17,38 +17,15 @@ export class EventService {
     }
 
     public getPublicEvents() {
-      //return this.http.get(this.config.apiUrl + '/events/public/', this.jwt()).map((response: Response) => response.json());
-      /* Test Data */
-      return [
-        { eventName: "Test Public Event Name", description: "test description", category: "", timedate: "", latitude: "", longitude: ""},
-        { eventName: "Test Public Event Name", description: "test description", category: "", timedate: "", latitude: "", longitude: ""},
-        { eventName: "Test Public Event Name", description: "test description", category: "", timedate: "", latitude: "", longitude: ""},
-        { eventName: "Test Public Event Name", description: "test description", category: "", timedate: "", latitude: "", longitude: ""}
-      ];
+      return this.http.get(this.config.apiUrl + '/events/public/', this.jwt()).map((response: Response) => response.json());
     }
 
     public getPrivateEvents(_id: string) {
-      // _id -> Univeristy ID
-      //return this.http.get(this.config.apiUrl + '/events/private/' + _id, this.jwt()).map((response: Response) => response.json());
-      /* Test Data */
-      return [
-        { eventName: "Test Private Event Name", description: "test description", category: "", timedate: "", latitude: "", longitude: ""},
-        { eventName: "Test Private Event Name", description: "test description", category: "", timedate: "", latitude: "", longitude: ""},
-        { eventName: "Test Private Event Name", description: "test description", category: "", timedate: "", latitude: "", longitude: ""},
-        { eventName: "Test Private Event Name", description: "test description", category: "", timedate: "", latitude: "", longitude: ""}
-      ];
+      return this.http.get(this.config.apiUrl + '/events/private/' + _id, this.jwt()).map((response: Response) => response.json());
     }
 
     public getRSOEvents(_id: string) {
-      // _id -> user ID
-      //return this.http.get(this.config.apiUrl + '/events/rso/' + _id, this.jwt()).map((response: Response) => response.json());
-      /* Test Data */
-      return [
-        { eventName: "Test RSO Event Name", description: "test description", category: "", timedate: "", latitude: "", longitude: ""},
-        { eventName: "Test RSO Event Name", description: "test description", category: "", timedate: "", latitude: "", longitude: ""},
-        { eventName: "Test RSO Event Name", description: "test description", category: "", timedate: "", latitude: "", longitude: ""},
-        { eventName: "Test RSO Event Name", description: "test description", category: "", timedate: "", latitude: "", longitude: ""}
-      ];
+      return this.http.get(this.config.apiUrl + '/events/rso/' + _id, this.jwt()).map((response: Response) => response.json());
     }
 
     public getPendingEvents(_id: string) {

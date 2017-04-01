@@ -20,7 +20,7 @@
         <h4 class="list-group-item-heading">{{event.eventName}}</h4>
         <p class="list-group-item-text">{{event.description}}</p>
         <a class="list-group-item-text" (click)="toggle(i, 1)">View comments...</a>
-        <event-zippy *ngIf="togglePrivateEventComments[i]" [eventId]="0"></event-zippy> 
+        <event-zippy *ngIf="togglePrivateEventComments[i]" [eventId]="0"></event-zippy>
       </li>
     </ul>
   </div> <!-- End Private Event Container -->

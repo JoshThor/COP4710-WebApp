@@ -66,7 +66,7 @@
     <div class="form-group" *ngIf="formData.eventType === 'RSO'">
       <label for="eventType">RSO</label>
       <select type="select" class="form-control"  name="rso" [(ngModel)]="formData.rso" #rso="ngModel" required>
-        <option *ngFor="let rso of RSOsList; let i = index" value="{{rso}}">{{rso}}</option>
+        <option *ngFor="let rso of RSOsList; let i = index" value="{{rso.rid}}">{{rso.rsoName}}</option>
       </select>
       <div *ngIf="f.submitted && !rso.valid" class="help-block alert alert-danger">RSO for RSO Event is required</div>
     </div>

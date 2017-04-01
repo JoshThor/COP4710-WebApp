@@ -8,9 +8,9 @@ declare var module: { id: string; }
   templateUrl: 'find-events.component.html'
 })
 export class FindEventsComponent {
-  private publicEvents: any[] = [];
-  private privateEvents: any[] = [];
-  private rsoEvents: any[] = [];
+  private publicEvents: any = [];
+  private privateEvents: any = [];
+  private rsoEvents: any = [];
 
   private togglePublicEventComments: boolean[] = [];
   private togglePrivateEventComments: boolean[] = [];
@@ -37,17 +37,40 @@ export class FindEventsComponent {
     let userObj = JSON.parse(localStorage.getItem("currentUser"));
     var i = 0;
 
-    this.publicEvents = this._eventService.getPublicEvents(); //.subscribe((rsp) => { console.log(rsp); });
+    /* TODO:
+      - Add a message stating there are no events if array.length == 0
+    */
+
+     this._eventService.getPublicEvents().subscribe(
+      data => {
+        console.log(data);
+        this.publicEvents = data;
+      }, error => {
+        console.log("ERR");
+      }
+    );
     for (i=0; i<this.publicEvents.length; i++) {
       this.togglePublicEventComments.push(false);
     }
 
-    this.privateEvents = this._eventService.getPrivateEvents( userObj._id ); //.subscribe((rsp) => { console.log(rsp); });
+    this._eventService.getPrivateEvents( userObj._id ).subscribe(
+      data => {
+        console.log(data);
+        this.privateEvents = data;
+      }, error => {
+        console.log("ERR");
+      });
     for (i=0; i<this.privateEvents.length; i++) {
       this.togglePrivateEventComments.push(false);
     }
 
-    this.rsoEvents = this._eventService.getRSOEvents( userObj._id ); //.subscribe((rsp) => { console.log(rsp); });
+    this._eventService.getRSOEvents( userObj._id ).subscribe(
+      data => {
+        console.log(data);
+        this.rsoEvents = data;
+      }, error => {
+        console.log("ERR");
+      });
     for (i=0; i<this.rsoEvents.length; i++) {
       this.toggleRSOEventComments.push(false);
     }
