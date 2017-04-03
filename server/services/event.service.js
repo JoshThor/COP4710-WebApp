@@ -30,6 +30,15 @@ function create(eventParam) {
 
         console.log(eventParam);
 
+        if(eventParam.type == 'RSO')
+        {
+            eventParam.status = 'Approved';
+        }
+        else
+        {
+            eventParam.status = 'Unapproved';
+        }
+
         var event = {
             uid: eventParam.uid,
             eventName: eventParam.name,
@@ -75,6 +84,7 @@ function create(eventParam) {
                     insertPub(rows.insertId);
                     break;
                 default:
+                    console.log("Incorrect Event type...");
                     deferred.resolve();
                     break;
             }
@@ -306,7 +316,7 @@ function _delete(eid) {
     return deferred.promise;    
 }
 
-//query databse for user id
+
 function getUnapprovedEvents() {
     var deferred = Q.defer();
 
