@@ -78,13 +78,14 @@
         <span> {{cat}}</span>
       </div>
     </div>
+    <!-- Location -->
     <div class="form-group">
       <label for="eventLocation">Event Location</label>
       <input name="eventLocation"  placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl" required/>
-      <!--<input type="search" class="form-control" name="eventLocation" [(ngModel)]="formData.eventLocation" #eventLocation="ngModel" required /> -->
       <sebm-google-map [latitude]="formData.eventLocation.lat" [longitude]="formData.eventLocation.lng" [zoom]="zoom" style="height:300px">
         <sebm-google-map-marker [latitude]="formData.eventLocation.lat" [longitude]="formData.eventLocation.lng" [markerDraggable]="true" (dragEnd)="markerDragEnd({lat: $event.coords.lat, lng: $event.coords.lng}, $event)"> </sebm-google-map-marker>
       </sebm-google-map>
+      <!-- Dont really need to require location since it has a default value -->
       <!-- <div *ngIf="f.submitted" class="help-block alert alert-danger">Event Location is required</div> -->
     </div>
     <div class="form-group">
