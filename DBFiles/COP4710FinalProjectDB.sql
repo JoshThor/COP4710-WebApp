@@ -49,6 +49,7 @@ create table rso (
     uid bigint not null,
     unid bigint not null,
     rsoName varchar(45),
+    rsoStatus varchar(10) default 'Pending',
     foreign key (uid) references admin(uid),
 	foreign key (unid) references university(unid)
 );
@@ -104,6 +105,8 @@ create table rsoMembers(
 	foreign key(uid) references users(uid),
     foreign key(rid) references rso(rid)
 );
+
+
 
 
     

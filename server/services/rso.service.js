@@ -208,6 +208,8 @@ function join(rsoId, userId){
             deferred.reject(err.name + ': ' + err.message);
         }
 
+        console.log(rsoId, userId);
+
         connection.query("select * from student WHERE uid = ?", userId, function(err, rows) {
            if(err) {
                deferred.reject(err.name+ ": " + err.message);
@@ -216,9 +218,10 @@ function join(rsoId, userId){
            console.log(rows);
 
            //if user is not a student
-           if(rows.length == 0) {
+           if(rows.length == 0 || rows == undefined || rows == null) {
                makeStudent();
            }
+           insertMember();
         });
 
         function makeStudent() {
@@ -252,19 +255,22 @@ function join(rsoId, userId){
             });
         }
 
-        console.log("user Id: " + userId +", joining rso: " + rsoId);
-        var rso = {rid: rsoId, uid: userId};
+        function insertMember(){
 
-        connection.query("insert into rsoMembers set ?", [rso], function(err, rows) {
-            connection.release();
+            console.log("user Id: " + userId +", joining rso: " + rsoId);
+            var rso = {rid: rsoId, uid: userId};
 
-            if(err) {
-                deferred.reject(err.name + ': ' + err.message);
-            }
+            connection.query("insert into rsoMembers set ?", [rso], function(err, rows) {
+                connection.release();
 
-            deferred.resolve();
+                if(err) {
+                    deferred.reject(err.name + ': ' + err.message);
+                }
 
-        });
+                deferred.resolve();
+
+            });
+        }
     });
     return deferred.promise;
 }
