@@ -41,8 +41,10 @@ AppModule = __decorate([
             http_1.HttpModule,
             app_routing_1.routing,
             mydatepicker_1.MyDatePickerModule,
+            forms_1.ReactiveFormsModule,
             core_2.AgmCoreModule.forRoot({
-                apiKey: 'AIzaSyCXsG8bxccQbw17Xels5W3KzLmoP_Mfu2M'
+                apiKey: 'AIzaSyCXsG8bxccQbw17Xels5W3KzLmoP_Mfu2M',
+                libraries: ["places"]
             })
         ],
         declarations: [

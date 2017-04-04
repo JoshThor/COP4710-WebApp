@@ -10,12 +10,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var forms_1 = require("@angular/forms");
+var core_2 = require("angular2-google-maps/core");
 var index_1 = require("../_services/index");
 var CreateEventsComponent = (function () {
-    function CreateEventsComponent(_eventService, _rsoService, _alertService) {
+    function CreateEventsComponent(_eventService, _rsoService, _alertService, mapsAPILoader, ngZone) {
         this._eventService = _eventService;
         this._rsoService = _rsoService;
         this._alertService = _alertService;
+        this.mapsAPILoader = mapsAPILoader;
+        this.ngZone = ngZone;
         /* TODO:
           - Accessible by Admin, SuperAdmin
           - Reset form after
@@ -67,7 +71,48 @@ var CreateEventsComponent = (function () {
             rso: ""
         };
     }
-    CreateEventsComponent.prototype.ngOnInit = function () { };
+    //private ngOnInit(): void { /* Initialize values here */ }
+    CreateEventsComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        //set google maps defaults
+        this.zoom = 4;
+        this.formData.eventLocation.lat = 28.538336;
+        this.formData.eventLocation.lng = -81.379234;
+        //create search FormControl
+        this.searchControl = new forms_1.FormControl();
+        //set current position
+        this.setCurrentPosition();
+        //load Places Autocomplete
+        this.mapsAPILoader.load().then(function () {
+            var autocomplete = new google.maps.places.Autocomplete(_this.searchElementRef.nativeElement, {
+                types: ["address"]
+            });
+            autocomplete.addListener("place_changed", function () {
+                _this.ngZone.run(function () {
+                    //get the place result
+                    var place = autocomplete.getPlace();
+                    //verify result
+                    if (place.geometry === undefined || place.geometry === null) {
+                        return;
+                    }
+                    //set latitude, longitude and zoom
+                    _this.formData.eventLocation.lat = place.geometry.location.lat();
+                    _this.formData.eventLocation.lng = place.geometry.location.lng();
+                    _this.zoom = 12;
+                });
+            });
+        });
+    };
+    CreateEventsComponent.prototype.setCurrentPosition = function () {
+        var _this = this;
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                _this.formData.eventLocation.lat = position.coords.latitude;
+                _this.formData.eventLocation.lng = position.coords.longitude;
+                _this.zoom = 12;
+            });
+        }
+    };
     CreateEventsComponent.prototype.submitForm = function () {
         this.formatDateTime();
         console.log(this.formData);
@@ -148,15 +193,24 @@ var CreateEventsComponent = (function () {
         this.formData.eventCategory.push(val);
         return;
     };
+    CreateEventsComponent.prototype.markerDragEnd = function (m, $event) {
+        console.log('DragEnd', m, $event);
+        this.formData.eventLocation.lat = m.lat;
+        this.formData.eventLocation.lng = m.lng;
+    };
     return CreateEventsComponent;
 }());
+__decorate([
+    core_1.ViewChild("search"),
+    __metadata("design:type", core_1.ElementRef)
+], CreateEventsComponent.prototype, "searchElementRef", void 0);
 CreateEventsComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
         selector: 'create-events',
         templateUrl: 'create-events.component.html'
     }),
-    __metadata("design:paramtypes", [index_1.EventService, index_1.RSOService, index_1.AlertService])
+    __metadata("design:paramtypes", [index_1.EventService, index_1.RSOService, index_1.AlertService, core_2.MapsAPILoader, core_1.NgZone])
 ], CreateEventsComponent);
 exports.CreateEventsComponent = CreateEventsComponent;
 //# sourceMappingURL=create-events.component.js.map

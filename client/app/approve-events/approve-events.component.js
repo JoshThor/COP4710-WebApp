@@ -19,15 +19,33 @@ var ApproveEventsComponent = (function () {
           - only need name and [approve] and [deny] buttons
           - Make eventService call with test data for pending events
           - Make eventService call on test data for approval/disapproval */
-        this.publicEvents = [];
-        this.privateEvents = [];
+        this.Events = [];
+        this.eventData = {
+            status: ""
+        };
     }
-    ApproveEventsComponent.prototype.approval = function (value) {
-        /* TODO: Make call on eventService to approve/disapprove event */
+    ApproveEventsComponent.prototype.approval = function (eid, value) {
+        var _this = this;
+        this.eventData.status = value;
+        console.log("DEBUG: " + eid + " " + value);
+        this._eventService.approvePendingEvent(eid, this.eventData).subscribe(function (data) {
+            _this.loadEvents();
+        }, function (error) {
+            console.log("Error: " + error._body);
+            //this._alertService.error('Error');
+        });
     };
     ApproveEventsComponent.prototype.ngOnInit = function () {
-        this.publicEvents = this._eventService.getPublicEvents(); //.subscribe((rsp) => { console.log(rsp); });
-        this.privateEvents = this._eventService.getPrivateEvents(""); //.subscribe((rsp) => { console.log(rsp); });
+        this.loadEvents();
+    };
+    ApproveEventsComponent.prototype.loadEvents = function () {
+        var _this = this;
+        this._eventService.getPendingEvents().subscribe(function (rsp) {
+            console.log(rsp);
+            _this.Events = rsp;
+        }, function (err) {
+            console.log(err);
+        });
     };
     return ApproveEventsComponent;
 }());

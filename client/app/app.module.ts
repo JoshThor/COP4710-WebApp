@@ -1,6 +1,6 @@
 ﻿import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
@@ -32,8 +32,10 @@ import { AgmCoreModule } from 'angular2-google-maps/core';
         HttpModule,
         routing,
         MyDatePickerModule,
+        ReactiveFormsModule,
         AgmCoreModule.forRoot({
-          apiKey: 'AIzaSyCXsG8bxccQbw17Xels5W3KzLmoP_Mfu2M'
+          apiKey: 'AIzaSyCXsG8bxccQbw17Xels5W3KzLmoP_Mfu2M',
+          libraries: ["places"]
         })
     ],
     declarations: [

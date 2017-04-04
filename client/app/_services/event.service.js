@@ -32,23 +32,14 @@ var EventService = (function () {
     EventService.prototype.getRSOEvents = function (_id) {
         return this.http.get(this.config.apiUrl + '/events/rso/' + _id, this.jwt()).map(function (response) { return response.json(); });
     };
-    EventService.prototype.getPendingEvents = function (_id) {
+    EventService.prototype.getPendingEvents = function () {
         /* TODO: What call to make? */
         // -id -> Univeristy ID
-        //return this.http.get(this.config.apiUrl + '' + _id, this.jwt()).map((response: Response) => response.json());
-        /* Test Data */
-        return [
-            { eventName: "Test Pending Event" },
-            { eventName: "Test Pending Event" },
-            { eventName: "Test Pending Event" },
-            { eventName: "Test Pending Event" },
-            { eventName: "Test Pending Event" },
-            { eventName: "Test Pending Event" }
-        ];
+        return this.http.get(this.config.apiUrl + '/events/pending', this.jwt()).map(function (response) { return response.json(); });
     };
     EventService.prototype.approvePendingEvent = function (_id, approval) {
         // -id -> Event ID
-        // return this.http.get(this.config.apiUrl + '/events/approve/' + _id, this.jwt()).map((response: Response) => response.json());
+        return this.http.post(this.config.apiUrl + '/events/approve/' + _id, approval, this.jwt()).map(function (response) { return response; });
     };
     EventService.prototype.getComments = function (_id) {
         // return this.http.get(this.config.apiUrl + '/comments/' + _id, this.jwt()).map((response: Response) => response.json());

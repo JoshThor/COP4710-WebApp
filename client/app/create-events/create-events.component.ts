@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgModule, NgZone, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import {IMyOptions, IMyDateModel} from 'mydatepicker';
-import {SebmGoogleMap} from "angular2-google-maps/core";
-import { AgmCoreModule } from 'angular2-google-maps/core';
+import { AgmCoreModule, MapsAPILoader, SebmGoogleMap } from 'angular2-google-maps/core';
 import { EventService, RSOService, AlertService } from '../_services/index';
 declare var module: { id: string; }
 
@@ -10,6 +10,7 @@ declare var module: { id: string; }
   selector: 'create-events',
   templateUrl: 'create-events.component.html'
 })
+
 export class CreateEventsComponent {
   /* TODO:
     - Accessible by Admin, SuperAdmin
@@ -47,6 +48,8 @@ export class CreateEventsComponent {
     mer: ["AM", "PM"]
   }
 
+
+
   /********** Datepicker **********/
 
   private myDatePickerOptions: IMyOptions = {
@@ -72,9 +75,62 @@ export class CreateEventsComponent {
     rso: ""
   }
 
-  constructor(private _eventService: EventService, private _rsoService: RSOService, private _alertService: AlertService) { }
+  /** Map Variables **/
+  public searchControl: FormControl;
+  public zoom: number;
 
-  private ngOnInit(): void { /* Initialize values here */ }
+  @ViewChild("search")
+  public searchElementRef: ElementRef;
+
+  constructor(private _eventService: EventService, private _rsoService: RSOService, private _alertService: AlertService, private mapsAPILoader: MapsAPILoader, private ngZone: NgZone) { }
+
+//private ngOnInit(): void { /* Initialize values here */ }
+
+  ngOnInit() {
+      //set google maps defaults
+      this.zoom = 4;
+      this.formData.eventLocation.lat = 28.538336;
+      this.formData.eventLocation.lng = -81.379234;
+      
+      //create search FormControl
+      this.searchControl = new FormControl();
+      
+      //set current position
+      this.setCurrentPosition();
+      
+      //load Places Autocomplete
+      this.mapsAPILoader.load().then(() => {
+        let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+          types: ["address"]
+        });
+        autocomplete.addListener("place_changed", () => {
+          this.ngZone.run(() => {
+            //get the place result
+            let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+    
+            //verify result
+            if (place.geometry === undefined || place.geometry === null) {
+              return;
+            }
+            
+            //set latitude, longitude and zoom
+            this.formData.eventLocation.lat = place.geometry.location.lat();
+            this.formData.eventLocation.lng = place.geometry.location.lng();
+            this.zoom = 12;
+          });
+        });
+      });
+    }
+  
+  private setCurrentPosition() {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.formData.eventLocation.lat = position.coords.latitude;
+        this.formData.eventLocation.lng = position.coords.longitude;
+        this.zoom = 12;
+      });
+    }
+  }
 
   private submitForm(): void {
     this.formatDateTime();
@@ -170,4 +226,23 @@ export class CreateEventsComponent {
     return;
   }
 
+  private markerDragEnd(m, $event: MouseEvent) {
+    console.log('DragEnd', m, $event);
+    this.formData.eventLocation.lat = m.lat;
+    this.formData.eventLocation.lng = m.lng;
+  }
+
 }
+
+@NgModule({
+  imports: [ 
+    AgmCoreModule.forRoot({
+      libraries: ["places"]
+    }),
+    BrowserModule,
+    FormsModule,
+    ReactiveFormsModule
+  ],
+  declarations: [ App ],
+  bootstrap: [ App ]
+})

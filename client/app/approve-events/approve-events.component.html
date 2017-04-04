@@ -2,18 +2,20 @@
   <h1>Approve Events Component</h1>
 
   <div class="col-md-8 col-md-offset-1" >
-    <h3>Public Events</h3>
+    <h3>Unapproved Events</h3>
     <ul class="list-group">
-      <li class="list-group-item" *ngFor="let event of publicEvents; let i = index">
+      <li class="list-group-item" *ngFor="let event of Events; let i = index">
         <h4 class="list-group-item-heading">{{event.eventName}}</h4>
         <p class="list-group-item-text">{{event.description}}</p>
         <br>
-        <button class="btn btn-primary btn-sm">Approve</button>
-        <button class="btn btn-danger btn-sm">Disapprove</button>
+        <button class="btn btn-primary btn-sm" (click) ="approval(event.eid, 'Approved')">Approve</button>
+        <button class="btn btn-danger btn-sm" (click) ="approval(event.eid, 'Disapproved')">Disapprove</button>
       </li>
     </ul>
   </div> <!-- End Public Event Container -->
 
+
+<!--
   <div class="col-md-8 col-md-offset-1">
     <h3>Private Events</h3>
     <ul class="list-group">
@@ -25,6 +27,6 @@
         <button class="btn btn-danger btn-sm">Disapprove</button>
       </li>
     </ul>
-  </div> <!-- End Private Event Container -->
+  </div>  End Private Event Container -->
 
 </div>

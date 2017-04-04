@@ -42,6 +42,9 @@ router.post('/approve/:id', approveEvents);
 //Example: http://localhost:4000/events/1 deletes the event with eid = 1
 router.delete('/:id', _delete);
 
+//Gets Unapproved Events
+router.get('/pending', getPending);
+
  
 module.exports = router;
 
@@ -97,8 +100,10 @@ function RSOEvents(req, res) {
 }
 
 function approveEvents(req, res) {
+    console.log(req.body);
     eventService.approveEvents(req.params.id, req.body.status)
         .then(function() {
+            console.log("HERE");
             res.sendStatus(200);
         })
         .catch(function (err) {
@@ -110,6 +115,16 @@ function _delete(req, res) {
     eventService._delete(req.params.id)
         .then(function() {
             res.sendStatus(200);
+        })
+        .catch(function(err) {
+            res.status(400).send(err);
+        });
+}
+
+function getPending(req, res) {
+    eventService.getUnapprovedEvents()
+        .then(function(events) {
+            res.send(events);
         })
         .catch(function(err) {
             res.status(400).send(err);

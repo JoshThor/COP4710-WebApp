@@ -28,24 +28,15 @@ export class EventService {
       return this.http.get(this.config.apiUrl + '/events/rso/' + _id, this.jwt()).map((response: Response) => response.json());
     }
 
-    public getPendingEvents(_id: string) {
+    public getPendingEvents() {
       /* TODO: What call to make? */
       // -id -> Univeristy ID
-      //return this.http.get(this.config.apiUrl + '' + _id, this.jwt()).map((response: Response) => response.json());
-      /* Test Data */
-      return [
-        { eventName: "Test Pending Event" },
-        { eventName: "Test Pending Event" },
-        { eventName: "Test Pending Event" },
-        { eventName: "Test Pending Event" },
-        { eventName: "Test Pending Event" },
-        { eventName: "Test Pending Event" }
-      ];
+      return this.http.get(this.config.apiUrl + '/events/pending', this.jwt()).map((response: Response) => response.json());
     }
 
-    public approvePendingEvent(_id: string, approval: string): void {
+    public approvePendingEvent(_id: string, approval) {
       // -id -> Event ID
-      // return this.http.get(this.config.apiUrl + '/events/approve/' + _id, this.jwt()).map((response: Response) => response.json());
+      return this.http.post(this.config.apiUrl + '/events/approve/' + _id, approval, this.jwt()).map((response: Response) => response);
     }
 
     public getComments(_id: string) {

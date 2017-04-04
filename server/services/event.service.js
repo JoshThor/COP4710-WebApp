@@ -13,6 +13,7 @@ service.getPrivateEvents = getPrivateEvents;
 service.getPublicEvents = getPublicEvents;
 service.getRSOEvents = getRSOEvents;
 service.approveEvents = approveEvents;
+service.getUnapprovedEvents = getUnapprovedEvents;
 service._delete = _delete;
 
 module.exports = service;
@@ -69,6 +70,7 @@ function create(eventParam) {
             {
                 console.log("Error");
                 deferred.reject("Error");
+                deferred.resolve();
             }
 
             //eventParam.type must be passed to this function

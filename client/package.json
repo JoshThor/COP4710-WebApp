@@ -31,11 +31,12 @@
     "zone.js": "^0.6.26"
   },
   "devDependencies": {
+    "@types/core-js": "^0.9.34",
+    "@types/googlemaps": "^3.26.8",
+    "@types/jasmine": "^2.5.36",
+    "@types/node": "^6.0.46",
     "concurrently": "^3.1.0",
     "lite-server": "^2.2.2",
-    "typescript": "^2.0.3",
-    "@types/core-js": "^0.9.34",
-    "@types/node": "^6.0.46",
-    "@types/jasmine": "^2.5.36"
+    "typescript": "^2.0.3"
   }
 }

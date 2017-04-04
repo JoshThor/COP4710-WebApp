@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from '../_services/index';
+import { Event } from '../_models/index';
+
 declare var module: { id: string; }
 
 @Component({
@@ -14,18 +16,44 @@ export class ApproveEventsComponent {
     - Make eventService call with test data for pending events
     - Make eventService call on test data for approval/disapproval */
 
-  private publicEvents = [];
-  private privateEvents = [];
+  private Events = [];
+
+  private eventData: any = {
+      status: ""
+    };
+
 
   constructor(private _eventService: EventService) { }
 
-  private approval(value): void {
-    /* TODO: Make call on eventService to approve/disapprove event */
+  private approval(eid, value: string): void {
+
+    this.eventData.status = value
+
+    console.log("DEBUG: " +eid + " "+ value);
+    
+    this._eventService.approvePendingEvent(eid, this.eventData).subscribe((data) => { 
+      this.loadEvents();
+    },
+    error => {
+        console.log("Error: "+error._body);
+        //this._alertService.error('Error');
+      });
   }
 
   private ngOnInit() {
-    this.publicEvents = this._eventService.getPublicEvents(); //.subscribe((rsp) => { console.log(rsp); });
-    this.privateEvents = this._eventService.getPrivateEvents(""); //.subscribe((rsp) => { console.log(rsp); });
+    this.loadEvents();
+  }
+
+  private loadEvents()
+  {
+    this._eventService.getPendingEvents().subscribe((rsp) => 
+    { 
+      console.log(rsp); 
+      this.Events = rsp;
+    },
+    err => {
+      console.log(err);
+    });
   }
 
 }
