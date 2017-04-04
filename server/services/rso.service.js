@@ -140,7 +140,7 @@ function getAll(){
     return deferred.promise;
 }
 
-//Get all rso's that the current user is in
+//Get all rso's that the user is an admin of
 function getForUser(uid){
     var deferred = Q.defer();
 
@@ -153,7 +153,7 @@ function getForUser(uid){
 
         console.log("Getting all rso's...");
 
-        connection.query("select * from rso where uid = ?", uid, function(err, rows) {
+        connection.query("select * from rso where uid = ? AND rsoStatus = ?", [uid, 'Active'], function(err, rows) {
             connection.release();
 
             if(err) {

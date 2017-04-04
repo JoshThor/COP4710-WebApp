@@ -107,6 +107,24 @@ create table rsoMembers(
 );
 
 
+DROP TRIGGER IF EXISTS after_insert_rso_member;
+DELIMITER //
+
+CREATE TRIGGER after_insert_rso_member
+AFTER INSERT ON `rsoMembers`
+FOR EACH ROW BEGIN 
+UPDATE rso r1
+	JOIN
+    (
+		SELECT rid
+        FROM rsomembers
+        GROUP BY rid
+        HAVING COUNT(*) > 4
+    ) r2
+    ON r1.rid = r2.rid
+    SET r1.rsoStatus = 'Active';
+END;
+
 
 
     
