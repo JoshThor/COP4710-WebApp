@@ -70,13 +70,17 @@ var FindEventsComponent = (function () {
             this.toggleRSOEventComments.push(false);
         }
     };
+    FindEventsComponent.prototype.parseString = function (value) {
+        return parseFloat(value);
+    };
     return FindEventsComponent;
 }());
 FindEventsComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
         selector: 'find-events',
-        templateUrl: 'find-events.component.html'
+        styles: ["\n   .sebm-google-map-container {\n     height: 300px;\n     width: 300px;\n   }\n"],
+        templateUrl: 'find-events.component.html',
     }),
     __metadata("design:paramtypes", [index_1.EventService])
 ], FindEventsComponent);

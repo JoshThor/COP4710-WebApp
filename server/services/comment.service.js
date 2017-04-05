@@ -51,7 +51,7 @@ function getComments(eventId) {
 
         console.log("Getting all comments for event id: "+eventId);
 
-        connection.query("select * from comments WHERE eid = ?", [eventId], function(err, rows) {
+        connection.query("select u.username, c.eid, c.uid, c.body, c.rating, c.timedate from comments c, users u WHERE eid = ? AND c.uid = u.uid", [eventId], function(err, rows) {
             connection.release();
             if(err) {
                 deferred.reject(err.name + ': ' + err.message);

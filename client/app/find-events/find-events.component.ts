@@ -1,11 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from '../_services/index';
+import { SebmGoogleMap } from 'angular2-google-maps/core';
 declare var module: { id: string; }
 
 @Component({
   moduleId: module.id,
   selector: 'find-events',
-  templateUrl: 'find-events.component.html'
+  styles: [`
+   .sebm-google-map-container {
+     height: 300px;
+     width: 300px;
+   }
+`],
+  templateUrl: 'find-events.component.html',
 })
 export class FindEventsComponent {
   private publicEvents: any = [];
@@ -74,6 +81,12 @@ export class FindEventsComponent {
     for (i=0; i<this.rsoEvents.length; i++) {
       this.toggleRSOEventComments.push(false);
     }
+  }
+
+  private parseString(value: string) {
+
+    return parseFloat(value);
+
   }
 
 }
