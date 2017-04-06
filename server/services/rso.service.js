@@ -180,7 +180,7 @@ function getJoinable(uid){
 
         console.log("Getting all rso's for the user: "+uid);
 
-        connection.query("SELECT r.rid, r.unid, r.rsoName FROM rso r WHERE NOT EXISTS (SELECT * FROM rsomembers WHERE r.rid = rid AND uid = ?)", [uid], function(err, rows) {
+        connection.query("SELECT r.rid, r.unid, r.rsoName FROM rso r WHERE NOT EXISTS (SELECT * FROM rsoMembers WHERE r.rid = rid AND uid = ?)", [uid], function(err, rows) {
             //console.log(rows);
             connection.release();
 
@@ -260,7 +260,7 @@ function join(rsoId, userId){
             console.log("user Id: " + userId +", joining rso: " + rsoId);
             var rso = {rid: rsoId, uid: userId};
 
-            connection.query("insert into rsoMembers set ?", [rso], function(err, rows) {
+            connection.query(`INSERT INTO rsoMembers set ?`, [rso], function(err, rows) {
                 connection.release();
 
                 if(err) {
