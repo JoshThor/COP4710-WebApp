@@ -1,38 +1,64 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { EventService } from '../_services/index';
+import { User } from '../_models/index';
 declare var module: { id: string; }
 
 @Component({
   moduleId: module.id,
   selector: 'event-zippy',
-  template: `
-    <div>
-
-      <div class="form-group"> <!-- *ngFor="let comment in comments; i = index" for <div> element -->
-        <label>
-          Commenter's username
-          <br/>
-          <span class="badge">4 <span class="glyphicon glyphicon-star" aria-hidden="true"></span></span>
-        </label>
-        <input type="text" class="form-control" disabled placeholder="User's comments..." />
-      </div>
-
-      <div class="form-group">
-        <label>Current user's username</label>
-        <input type="text" class="form-control" [(ngModel)]="_myComment" placeholder="Type your comments here..." />
-      </div>
-    </div>
-  `
+templateUrl: 'event-zippy.component.html'
 })
 export class EventZippyComponent {
+
   @Input('eventId') _eventId: string;
+
   private _myComment: string = "";
 
   private comments: any[] = [];
 
-  constructor(private _eventService: EventService) { }
+  private userObj;
+
+  private commentParam = {
+    uid: "",
+    eid: "",
+    body: "",
+    rating: ""
+  };
+
+
+  constructor(private _eventService: EventService) {  
+  }
 
   ngOnInit() {
-    // this.comments = this._eventService.getComments( this._eventId );
+    this.userObj = JSON.parse(localStorage.getItem('currentUser'));
+    this._eventService.getComments( this._eventId ).subscribe(
+      data => {
+        this.comments = data;
+        console.log(data);
+      },
+      error => {
+        console.log("Error: " + error);
+      }
+    );
+  }
+
+  submit(){
+    let comment = {
+      uid: this.userObj._id,
+      eid: this._eventId,
+      body: this.commentParam.body,
+      rating: '4'
+    }
+
+    console.log(comment);
+
+    this._eventService.postComments(comment).subscribe(
+      data => {
+        this.ngOnInit();
+      },
+      error => {
+        console.log("Error: " + error);
+      }
+    );
   }
 }

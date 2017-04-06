@@ -40,12 +40,13 @@ export class EventService {
     }
 
     public getComments(_id: string) {
-      // return this.http.get(this.config.apiUrl + '/comments/' + _id, this.jwt()).map((response: Response) => response.json());
-      /* Test Data */
-      /* TODO: Do these come back in reverse chronological order? */
-      return [
-        {  }
-      ]
+        return this.http.get(this.config.apiUrl + '/comments/' + _id, this.jwt()).map((response: Response) => response.json());
+
+    }
+
+    public postComments(commentParam) {
+        return this.http.post(this.config.apiUrl + '/comments/create', commentParam, this.jwt()).map((response: Response) => response);
+
     }
 
     private jwt() {

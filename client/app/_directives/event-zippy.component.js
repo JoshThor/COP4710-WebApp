@@ -16,9 +16,37 @@ var EventZippyComponent = (function () {
         this._eventService = _eventService;
         this._myComment = "";
         this.comments = [];
+        this.commentParam = {
+            uid: "",
+            eid: "",
+            body: "",
+            rating: ""
+        };
     }
     EventZippyComponent.prototype.ngOnInit = function () {
-        // this.comments = this._eventService.getComments( this._eventId );
+        var _this = this;
+        this.userObj = JSON.parse(localStorage.getItem('currentUser'));
+        this._eventService.getComments(this._eventId).subscribe(function (data) {
+            _this.comments = data;
+            console.log(data);
+        }, function (error) {
+            console.log("Error: " + error);
+        });
+    };
+    EventZippyComponent.prototype.submit = function () {
+        var _this = this;
+        var comment = {
+            uid: this.userObj._id,
+            eid: this._eventId,
+            body: this.commentParam.body,
+            rating: '4'
+        };
+        console.log(comment);
+        this._eventService.postComments(comment).subscribe(function (data) {
+            _this.ngOnInit();
+        }, function (error) {
+            console.log("Error: " + error);
+        });
     };
     return EventZippyComponent;
 }());
@@ -30,7 +58,7 @@ EventZippyComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
         selector: 'event-zippy',
-        template: "\n    <div>\n\n      <div class=\"form-group\"> <!-- *ngFor=\"let comment in comments; i = index\" for <div> element -->\n        <label>\n          Commenter's username\n          <br/>\n          <span class=\"badge\">4 <span class=\"glyphicon glyphicon-star\" aria-hidden=\"true\"></span></span>\n        </label>\n        <input type=\"text\" class=\"form-control\" disabled placeholder=\"User's comments...\" />\n      </div>\n\n      <div class=\"form-group\">\n        <label>Current user's username</label>\n        <input type=\"text\" class=\"form-control\" [(ngModel)]=\"_myComment\" placeholder=\"Type your comments here...\" />\n      </div>\n    </div>\n  "
+        templateUrl: 'event-zippy.component.html'
     }),
     __metadata("design:paramtypes", [index_1.EventService])
 ], EventZippyComponent);

@@ -42,12 +42,10 @@ var EventService = (function () {
         return this.http.post(this.config.apiUrl + '/events/approve/' + _id, approval, this.jwt()).map(function (response) { return response; });
     };
     EventService.prototype.getComments = function (_id) {
-        // return this.http.get(this.config.apiUrl + '/comments/' + _id, this.jwt()).map((response: Response) => response.json());
-        /* Test Data */
-        /* TODO: Do these come back in reverse chronological order? */
-        return [
-            {}
-        ];
+        return this.http.get(this.config.apiUrl + '/comments/' + _id, this.jwt()).map(function (response) { return response.json(); });
+    };
+    EventService.prototype.postComments = function (commentParam) {
+        return this.http.post(this.config.apiUrl + '/comments/create', commentParam, this.jwt()).map(function (response) { return response; });
     };
     EventService.prototype.jwt = function () {
         // create authorization header with jwt token
