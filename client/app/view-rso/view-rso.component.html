@@ -1,8 +1,6 @@
 <div calss="page-container">
-  <h1>View RSO Component</h1>
-
-  <div class="col-md-8 col-md-offset-1" >
-    <h3>RSOs</h3>
+  <div class="col-md-8 col-md-offset-2" >
+    <h2>RSOs</h2>
     <div *ngIf="!isEmptyObject(rsos)"><!-- Begin check for empty obj -->
       <ul class="list-group">
         <li class="list-group-item" *ngFor="let rso of rsos">
@@ -24,5 +22,3 @@
 
 
 </div>
-
-

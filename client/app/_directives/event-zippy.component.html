@@ -1,10 +1,9 @@
 <div>
     <div class="form-group">
-        <ul class="list-group"> 
+        <ul class="list-group">
             <li class="list-group-item" *ngFor="let comment of comments">
             <label>
-                {{comment.username}}
-                <br/>
+                {{comment.username}} :
                 <span class="badge">4 <span class="glyphicon glyphicon-star" aria-hidden="true"></span></span>
             </label>
             <input type="text" class="form-control" disabled value={{comment.body}} />
@@ -13,9 +12,9 @@
     </div>
 
     <div class="form-group">
-        <label>{{userObj.username}}</label>
+        <label> {{userObj.username}}</label>
         <input type="text" class="form-control" name="body" [(ngModel)]="commentParam.body" #body="ngModel" placeholder="Type your comments here..." />
         <br/>
-        <button class="btn btn-primary btn-sm" (click) ="submit()">Submit</button>
+        <button class="btn btn-primary btn-sm" (click) ="submit()">Add comment</button>
     </div>
 </div>

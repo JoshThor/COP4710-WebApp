@@ -1,50 +1,60 @@
 <div class="page-container">
-  <h1 style="text-align:center">Find Events Component</h1>
-
-  <div class="col-md-8 col-md-offset-1" >
-    <h3>Public Events</h3>
+  <div class="col-md-8 col-md-offset-2">
+    <h2>Public Events</h2>
     <ul class="list-group">
       <li class="list-group-item" *ngFor="let event of publicEvents; let i = index">
-        <h4 class="list-group-item-heading">{{event.eventName}}</h4>
-        <p class="list-group-item-text">Location: {{event.latitude}}, {{event.longitude}}</p>       
-        <sebm-google-map [latitude]= "parseString(event.latitude)" [longitude]="parseString(event.longitude)" [mapDraggable] = "false" [zoom] = "15">
-          <sebm-google-map-marker [latitude]="parseString(event.latitude)" [longitude]="parseString(event.longitude)"> </sebm-google-map-marker>
-        </sebm-google-map>
-        <p class="list-group-item-text">{{event.description}}</p>
-        <a class="list-group-item-text" (click)="toggle(i, 0)">View comments...</a>
+        <h3 class="list-group-item-heading form-group">{{event.eventName}}</h3>
+        <div class="form-group" style="border:solid lightgrey 1px">
+          <sebm-google-map style="height:200px;width:100%" [latitude]= "parseString(event.latitude)" [longitude]="parseString(event.longitude)" [mapDraggable] = "false" [zoom] = "15">
+            <sebm-google-map-marker [latitude]="parseString(event.latitude)" [longitude]="parseString(event.longitude)"> </sebm-google-map-marker>
+          </sebm-google-map>
+        </div>
+        <textarea rows="3" class="form-control form-group" disabled value="{{event.description}}"></textarea>
+        <button class="btn btn-default" (click)="toggle(i, 0)">
+          <span [hidden]="togglePublicEventComments[i]">View comments...</span>
+          <span [hidden]="!togglePublicEventComments[i]">Hide comments...</span>
+        </button>
         <event-zippy *ngIf="togglePublicEventComments[i]" [eventId]="event.eid"></event-zippy>
       </li>
     </ul>
   </div> <!-- End Public Event Container -->
 
-  <div class="col-md-8 col-md-offset-1">
-    <h3>Private Events</h3>
+  <div class="col-md-8 col-md-offset-2">
+    <h2>Private Events</h2>
     <ul class="list-group">
       <li class="list-group-item" *ngFor="let event of privateEvents; let i = index">
-        <h4 class="list-group-item-heading">{{event.eventName}}</h4>
-        <p class="list-group-item-text">Location: {{event.latitude}}, {{event.longitude}}</p>
-        <sebm-google-map [latitude]= "parseString(event.latitude)" [longitude]="parseString(event.longitude)" [mapDraggable] = "false" [zoom] = "15">
-          <sebm-google-map-marker [latitude]="parseString(event.latitude)" [longitude]="parseString(event.longitude)"> </sebm-google-map-marker>
-        </sebm-google-map>
-        <p class="list-group-item-text">{{event.description}}</p>
-        <a class="list-group-item-text" (click)="toggle(i, 1)">View comments...</a>
-        <event-zippy *ngIf="togglePrivateEventComments[i]" [eventId]="event.eid"></event-zippy>
+        <h3 class="list-group-item-heading form-group">{{event.eventName}}</h3>
+        <div class="form-group" style="border:solid lightgrey 1px">
+          <sebm-google-map style="height:200px;width:100%" [latitude]= "parseString(event.latitude)" [longitude]="parseString(event.longitude)" [mapDraggable] = "false" [zoom] = "15">
+            <sebm-google-map-marker [latitude]="parseString(event.latitude)" [longitude]="parseString(event.longitude)"> </sebm-google-map-marker>
+          </sebm-google-map>
+        </div>
+        <textarea rows="3" class="form-control form-group" disabled value="{{event.description}}"></textarea>
+        <button class="btn btn-default" (click)="toggle(i, 0)">
+          <span [hidden]="togglePublicEventComments[i]">View comments...</span>
+          <span [hidden]="!togglePublicEventComments[i]">Hide comments...</span>
+        </button>
+        <event-zippy *ngIf="togglePublicEventComments[i]" [eventId]="event.eid"></event-zippy>
       </li>
     </ul>
   </div> <!-- End Private Event Container -->
 
-  <div class="col-md-8 col-md-offset-1">
-    <h3>RSO Events</h3>
+  <div class="col-md-8 col-md-offset-2">
+    <h2>RSO Events</h2>
     <ul class="list-group">
       <li class="list-group-item" *ngFor="let event of rsoEvents; let i = index">
-        <h4 class="list-group-item-heading">{{event.eventName}}</h4>
-        <p class="list-group-item-text">Location: {{event.latitude}}, {{event.longitude}}</p>
-        <sebm-google-map [latitude]= "parseString(event.latitude)" [longitude]="parseString(event.longitude)" [mapDraggable] = "false" [zoom] = "15">
-          <sebm-google-map-marker [latitude]="parseString(event.latitude)" [longitude]="parseString(event.longitude)"> </sebm-google-map-marker>
-        </sebm-google-map>
-        <p class="list-group-item-text">{{event.description}}</p>
-        <a class="list-group-item-text" (click)="toggle(i, 2)">View comments...</a>
-        <event-zippy *ngIf="toggleRSOEventComments[i]" [eventId]="event.eid"></event-zippy>
+        <h3 class="list-group-item-heading form-group">{{event.eventName}}</h3>
+        <div class="form-group" style="border:solid lightgrey 1px">
+          <sebm-google-map style="height:200px;width:100%" [latitude]= "parseString(event.latitude)" [longitude]="parseString(event.longitude)" [mapDraggable] = "false" [zoom] = "15">
+            <sebm-google-map-marker [latitude]="parseString(event.latitude)" [longitude]="parseString(event.longitude)"> </sebm-google-map-marker>
+          </sebm-google-map>
+        </div>
+        <textarea rows="3" class="form-control form-group" disabled value="{{event.description}}"></textarea>
+        <button class="btn btn-default" (click)="toggle(i, 0)">
+          <span [hidden]="togglePublicEventComments[i]">View comments...</span>
+          <span [hidden]="!togglePublicEventComments[i]">Hide comments...</span>
+        </button>
+        <event-zippy *ngIf="togglePublicEventComments[i]" [eventId]="event.eid"></event-zippy>
       </li>
     </ul>
   </div> <!-- End RSO Event Container -->

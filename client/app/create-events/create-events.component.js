@@ -57,6 +57,7 @@ var CreateEventsComponent = (function () {
             dateFormat: 'yyyy-mm-dd',
         };
         /********** End Datepicker **********/
+        this.loading = false;
         this.userObj = JSON.parse(localStorage.getItem("currentUser"));
         this.timeObject = { hr: "0", min: "0", mer: "0" };
         this.formData = {
@@ -114,6 +115,7 @@ var CreateEventsComponent = (function () {
         }
     };
     CreateEventsComponent.prototype.submitForm = function () {
+        var _this = this;
         this.formatDateTime();
         console.log(this.formData);
         /* TODO: Check all fields are filled and valid before sending!! */
@@ -129,13 +131,30 @@ var CreateEventsComponent = (function () {
             rid: this.formData.rso
         };
         console.log(event);
+        this.loading = true;
         this._eventService.createEvent(event).subscribe(function (data) {
             console.log("success ", data);
+            _this.loading = false;
+            _this.resetForm();
         }),
             function (error) {
                 console.log("ERR");
+                _this.loading = false;
             };
         /* TODO: Reset form after submitting */
+    };
+    CreateEventsComponent.prototype.resetForm = function () {
+        this.formData = {
+            id: this.userObj._id,
+            eventName: "",
+            eventDescription: "",
+            eventType: "",
+            eventCategory: [],
+            eventDate: "", eventTime: { hr: "0", min: "0" },
+            eventDatetime: "",
+            eventLocation: { lat: 28.538336, lng: -81.379234 },
+            rso: ""
+        };
     };
     /* AUXILIARY FUNCTIONS */
     CreateEventsComponent.prototype.onDateChanged = function (event) {

@@ -1,23 +1,23 @@
 <div class="page-container">
-  <h1>Create RSO Component</h1>
-
-  <form name="form" (ngSubmit)="f.form.valid && submitForm()" #f="ngForm" novalidate>
-    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !rsoName.valid}">
-      <label for="rsoName">Name of RSO</label>
-      <input type="text" class="form-control" name="rsoName" [(ngModel)]="formData.rsoName" #rsoName="ngModel" required />
-      <div *ngIf="f.submitted && !rsoName.valid" class="help-block">Name for RSO is required</div>
-    </div>
-    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !unid.valid}">
-      <label for="unid">University</label>
-      <select type="select" class="form-control"  name="unid" [(ngModel)]="formData.unid" #unid="ngModel" (ngModelChange)="onChange($event)" required>
-        <option *ngFor="let u of universityList" value="{{u.unid}} ">{{u.unName}}</option>
-      </select>
-      <div *ngIf="f.submitted && !unid.valid" class="help-block">University is required</div>
-    </div>
-    <div class="form-group">
-        <button [disabled]="loading" class="btn btn-primary">Create RSO</button>
-        <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-    </div>
-  </form>
-
+  <div class="col-md-8 col-md-offset-2">
+    <h1>Propose an RSO</h1>
+    <form name="form" (ngSubmit)="f.form.valid && submitForm()" #f="ngForm" novalidate>
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !rsoName.valid}">
+        <label for="rsoName">Name of RSO</label>
+        <input type="text" class="form-control" name="rsoName" [(ngModel)]="formData.rsoName" #rsoName="ngModel" required />
+        <div *ngIf="f.submitted && !rsoName.valid" class="help-block">Name for RSO is required</div>
+      </div>
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !unid.valid}">
+        <label for="unid">University</label>
+        <select type="select" class="form-control"  name="unid" [(ngModel)]="formData.unid" #unid="ngModel" (ngModelChange)="onChange($event)" required>
+          <option *ngFor="let u of universityList" value="{{u.unid}} ">{{u.unName}}</option>
+        </select>
+        <div *ngIf="f.submitted && !unid.valid" class="help-block">University is required</div>
+      </div>
+      <div class="form-group">
+          <button [disabled]="loading" class="btn btn-primary">Create RSO</button>
+          <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+      </div>
+    </form>
+  </div>
 </div>

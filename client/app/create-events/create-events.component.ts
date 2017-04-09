@@ -61,6 +61,7 @@ export class CreateEventsComponent {
 
   /********** End Datepicker **********/
 
+  private loading: boolean = false;
   private userObj: any = JSON.parse( localStorage.getItem("currentUser") );
   private timeObject: any = {hr: "0", min: "0", mer: "0"};
   private formData: any = {
@@ -91,13 +92,13 @@ export class CreateEventsComponent {
       this.zoom = 4;
       this.formData.eventLocation.lat = 28.538336;
       this.formData.eventLocation.lng = -81.379234;
-      
+
       //create search FormControl
       this.searchControl = new FormControl();
-      
+
       //set current position
       this.setCurrentPosition();
-      
+
       //load Places Autocomplete
       this.mapsAPILoader.load().then(() => {
         let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
@@ -107,12 +108,12 @@ export class CreateEventsComponent {
           this.ngZone.run(() => {
             //get the place result
             let place: google.maps.places.PlaceResult = autocomplete.getPlace();
-    
+
             //verify result
             if (place.geometry === undefined || place.geometry === null) {
               return;
             }
-            
+
             //set latitude, longitude and zoom
             this.formData.eventLocation.lat = place.geometry.location.lat();
             this.formData.eventLocation.lng = place.geometry.location.lng();
@@ -121,7 +122,7 @@ export class CreateEventsComponent {
         });
       });
     }
-  
+
   private setCurrentPosition() {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -150,15 +151,33 @@ export class CreateEventsComponent {
     }
 
     console.log(event);
+    this.loading = true;
     this._eventService.createEvent(event).subscribe(
       data => {
-        console.log("success ", data)}
-      ),
+        console.log("success ", data);
+        this.loading = false;
+        this.resetForm();
+      }),
       error => {
         console.log("ERR");
+        this.loading = false;
       };
 
       /* TODO: Reset form after submitting */
+  }
+
+  private resetForm() {
+    this.formData = {
+      id: this.userObj._id,
+      eventName: "",
+      eventDescription: "",
+      eventType: "",
+      eventCategory: [],
+      eventDate: "", eventTime: {hr: "0", min: "0"},
+      eventDatetime: "",
+      eventLocation: {lat: 28.538336, lng: -81.379234},
+      rso: ""
+    }
   }
 
   /* AUXILIARY FUNCTIONS */
@@ -235,7 +254,7 @@ export class CreateEventsComponent {
 }
 
 @NgModule({
-  imports: [ 
+  imports: [
     AgmCoreModule.forRoot({
       libraries: ["places"]
     }),

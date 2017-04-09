@@ -1,5 +1,5 @@
 ﻿<div [ngSwitch]="currentTab">
-  <ul class="jumbotron nav nav-pills nav-justified">
+  <ul class="nav nav-pills nav-justified">
     <li role="presentation" [ngClass]="{'active': currentTab == 'home'}">
       <a (click)="switchTab('home')">Home</a>
     </li>
@@ -18,23 +18,30 @@
     <li role="presentation" [ngClass]="{'active': currentTab == 'view-rso'}">
       <a (click)="switchTab('view-rso')">View/Join RSOs</a>
     </li>
+    <li>
+      <a style="color:red" [routerLink]="['/login']">Logout</a>
+    </li>
   </ul>
-
-  <template [ngSwitchCase]="'find-events'"><find-events></find-events></template>
-  <template [ngSwitchCase]="'create-events'"><create-events></create-events></template>
-  <template [ngSwitchCase]="'approve-events'"><approve-events></approve-events></template>
-  <template [ngSwitchCase]="'create-rso'"><create-rso></create-rso></template>
-  <template [ngSwitchCase]="'view-rso'"><view-rso></view-rso></template>
-  <template [ngSwitchCase]="'home'" ngSwitchDefault>
-    <!-- <h1>Hi {{currentUser.firstName}}!</h1> -->
-    <p>You're logged in with Angular 2!!</p>
-    <h3>All registered users:</h3>
-    <!-- <ul>
-        <li *ngFor="let user of users">
-            {{user.username}} ({{user.firstName}} {{user.lastName}}) - {{user.email}}
-            - <a (click)="deleteUser(user.id)">Delete</a>
-        </li>
-    </ul> -->
-    <p><a [routerLink]="['/login']">Logout</a></p>
-  </template>
+  <div>
+    <template [ngSwitchCase]="'find-events'"><find-events></find-events></template>
+    <template [ngSwitchCase]="'create-events'"><create-events></create-events></template>
+    <template [ngSwitchCase]="'approve-events'"><approve-events></approve-events></template>
+    <template [ngSwitchCase]="'create-rso'"><create-rso></create-rso></template>
+    <template [ngSwitchCase]="'view-rso'"><view-rso></view-rso></template>
+    <template [ngSwitchCase]="'home'" ngSwitchDefault>
+      <!-- <h1>Hi {{currentUser.firstName}}!</h1> -->
+      <div class="jumbotron" style="text-align:center">
+        <h1>Welcome, {{currentUser.firstName}}!</h1>
+      </div>
+      <!--
+      <h3>All registered users:</h3>
+      <!-- <ul>
+          <li *ngFor="let user of users">
+              {{user.username}} ({{user.firstName}} {{user.lastName}}) - {{user.email}}
+              - <a (click)="deleteUser(user.id)">Delete</a>
+          </li>
+      </ul> --
+      <p><a [routerLink]="['/login']">Logout</a></p> -->
+    </template>
+  </div>
 </div>

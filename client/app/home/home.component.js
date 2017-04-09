@@ -15,6 +15,7 @@ var HomeComponent = (function () {
     function HomeComponent(userService) {
         this.userService = userService;
         this.users = [];
+        this.currentTab = 'home';
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     }
     HomeComponent.prototype.ngOnInit = function () {
