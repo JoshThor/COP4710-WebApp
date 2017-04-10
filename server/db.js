@@ -6,7 +6,8 @@ var pool = mysql.createPool({
     user:'joshthorson',
     password: 'joshthorson',
     database: 'cop4710', //Replace this to fit DB name
-    port: 3306
+    port: 3306,
+    dateStrings: true
 });
 
 exports.pool = pool;
