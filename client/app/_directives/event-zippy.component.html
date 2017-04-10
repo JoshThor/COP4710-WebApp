@@ -1,13 +1,17 @@
 <div>
     <div class="form-group">
         <ul class="list-group">
-            <li class="list-group-item" *ngFor="let comment of comments">
+            <li class="list-group-item" *ngFor="let comment of comments | sortBy : 'timedate'">
             <label>
                 {{comment.username}} :
                 <!--<span class="badge">4 <span class="glyphicon glyphicon-star" aria-hidden="true"></span></span>-->
                 <rating rate = {{comment.rating}} readOnly = "true"></rating>
             </label>
             <input type="text" class="form-control" disabled value={{comment.body}} />
+            <div *ngIf="comment.uid == userObj._id">
+                <br/>
+                <button class="btn btn-danger btn-sm" (click) ="onDelete(comment.eid, comment.timedate)">Delete</button>
+            </div>
             </li>
         </ul>
     </div>

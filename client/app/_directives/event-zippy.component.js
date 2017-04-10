@@ -39,6 +39,14 @@ var EventZippyComponent = (function () {
         this.commentParam.rating = value;
         //console.log(this.commentParam);
     };
+    EventZippyComponent.prototype.onDelete = function (eid, time) {
+        var _this = this;
+        this._eventService.deleteComment(eid, time, this.userObj._id).subscribe(function (data) {
+            _this.ngOnInit();
+        }, function (error) {
+            console.log("Error: " + error);
+        });
+    };
     EventZippyComponent.prototype.submit = function () {
         var _this = this;
         var comment = {

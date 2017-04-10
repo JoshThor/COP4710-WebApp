@@ -24,7 +24,7 @@ router.get('/:id', getAll);
 //needs the event id and user id
 //URI: http://localhost:4000/comments/:id
 //Example: http://localhost:4000/comments/3 deletes a comment for the event with eid = 3 and user id would be in the body of the request
-router.delete('/:id', _delete);
+router.delete('/:eid/:uid/:time', _delete);
 
 module.exports = router;
 
@@ -66,7 +66,7 @@ commentService.getComments(req.params.id)
 }
 
 function _delete(req, res) {
-    commentService._delete(req.params.id, req.body.uid)
+    commentService._delete(req.params.eid, req.params.uid, req.params.time)
         .then(function() {
             res.sendStatus(200);
         })

@@ -47,6 +47,9 @@ var EventService = (function () {
     EventService.prototype.postComments = function (commentParam) {
         return this.http.post(this.config.apiUrl + '/comments/create', commentParam, this.jwt()).map(function (response) { return response; });
     };
+    EventService.prototype.deleteComment = function (eid, time, uid) {
+        return this.http.delete(this.config.apiUrl + '/comments/' + eid + '/' + uid + '/' + time, this.jwt()).map(function (response) { return response; });
+    };
     EventService.prototype.jwt = function () {
         // create authorization header with jwt token
         var currentUser = JSON.parse(localStorage.getItem('currentUser'));

@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { routing } from './app.routing';
 import { AppConfig } from './app.config';
 
+import { SortPipe } from './_pipes/index';
 import { AlertComponent, EventZippyComponent, Rating } from './_directives/index';
 import { AuthGuard } from './_guards/index';
 import { AlertService, AuthenticationService, UserService, RSOService, EventService, UniversityService } from './_services/index';
@@ -43,6 +44,7 @@ import { AgmCoreModule } from 'angular2-google-maps/core';
         AlertComponent,
         EventZippyComponent,
         Rating,
+        SortPipe,
         HomeComponent,
         LoginComponent,
         RegisterComponent,

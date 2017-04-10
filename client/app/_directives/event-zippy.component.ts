@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { EventService } from '../_services/index';
 import { User } from '../_models/index';
 import {Rating} from './rating.component';
+import { SortPipe } from '../_pipes/index';
+
 declare var module: { id: string; }
 
 @Component({
@@ -49,6 +51,17 @@ export class EventZippyComponent {
     this.rate = value;
     this.commentParam.rating = value;
     //console.log(this.commentParam);
+  }
+
+  onDelete(eid, time) {
+    this._eventService.deleteComment( eid, time, this.userObj._id).subscribe(
+      data => {
+        this.ngOnInit();
+      },
+      error => {
+        console.log("Error: " + error);
+      }
+    );
   }
 
   submit(){

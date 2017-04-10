@@ -13,12 +13,13 @@ var http_1 = require("@angular/http");
 var app_component_1 = require("./app.component");
 var app_routing_1 = require("./app.routing");
 var app_config_1 = require("./app.config");
-var index_1 = require("./_directives/index");
-var index_2 = require("./_guards/index");
-var index_3 = require("./_services/index");
-var index_4 = require("./home/index");
-var index_5 = require("./login/index");
-var index_6 = require("./register/index");
+var index_1 = require("./_pipes/index");
+var index_2 = require("./_directives/index");
+var index_3 = require("./_guards/index");
+var index_4 = require("./_services/index");
+var index_5 = require("./home/index");
+var index_6 = require("./login/index");
+var index_7 = require("./register/index");
 /* Pages */
 var find_events_component_1 = require("./find-events/find-events.component");
 var create_events_component_1 = require("./create-events/create-events.component");
@@ -49,12 +50,13 @@ AppModule = __decorate([
         ],
         declarations: [
             app_component_1.AppComponent,
-            index_1.AlertComponent,
-            index_1.EventZippyComponent,
-            index_1.Rating,
-            index_4.HomeComponent,
-            index_5.LoginComponent,
-            index_6.RegisterComponent,
+            index_2.AlertComponent,
+            index_2.EventZippyComponent,
+            index_2.Rating,
+            index_1.SortPipe,
+            index_5.HomeComponent,
+            index_6.LoginComponent,
+            index_7.RegisterComponent,
             find_events_component_1.FindEventsComponent,
             create_events_component_1.CreateEventsComponent,
             approve_events_component_1.ApproveEventsComponent,
@@ -63,13 +65,13 @@ AppModule = __decorate([
         ],
         providers: [
             app_config_1.AppConfig,
-            index_2.AuthGuard,
-            index_3.AlertService,
-            index_3.AuthenticationService,
-            index_3.UserService,
-            index_3.RSOService,
-            index_3.EventService,
-            index_3.UniversityService
+            index_3.AuthGuard,
+            index_4.AlertService,
+            index_4.AuthenticationService,
+            index_4.UserService,
+            index_4.RSOService,
+            index_4.EventService,
+            index_4.UniversityService
         ],
         bootstrap: [app_component_1.AppComponent]
     })

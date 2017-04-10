@@ -72,7 +72,7 @@ function getComments(eventId) {
     return deferred.promise;
 }
 
-function _delete(eid, uid) {
+function _delete(eid, uid, time) {
     var deferred = Q.defer();
 
     pool.getConnection(function(err, connection) {
@@ -81,7 +81,9 @@ function _delete(eid, uid) {
             deferred.reject(err.name + ': ' + err.message);
         }
 
-        connection.query("DELETE FROM comments WHERE eid = ? AND uid = ?", [eid, uid], function(err, rows) {
+        console.log(uid + " " + eid + " " + time);
+
+        connection.query("DELETE FROM comments WHERE eid = ? AND uid = ? AND timedate = ?", [eid, uid, time], function(err, rows) {
             connection.release();
 
             if(err){

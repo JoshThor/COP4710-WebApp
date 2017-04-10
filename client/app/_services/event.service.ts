@@ -48,6 +48,10 @@ export class EventService {
         return this.http.post(this.config.apiUrl + '/comments/create', commentParam, this.jwt()).map((response: Response) => response);
 
     }
+    public deleteComment(eid, time, uid) {
+        return this.http.delete(this.config.apiUrl + '/comments/'+eid+'/'+uid+'/'+time, this.jwt()).map((response: Response) => response);
+
+    }
 
     private jwt() {
         // create authorization header with jwt token
