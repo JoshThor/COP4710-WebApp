@@ -51,6 +51,7 @@ AppModule = __decorate([
             app_component_1.AppComponent,
             index_1.AlertComponent,
             index_1.EventZippyComponent,
+            index_1.Rating,
             index_4.HomeComponent,
             index_5.LoginComponent,
             index_6.RegisterComponent,

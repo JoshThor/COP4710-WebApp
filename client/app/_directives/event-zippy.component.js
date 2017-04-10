@@ -16,11 +16,12 @@ var EventZippyComponent = (function () {
         this._eventService = _eventService;
         this._myComment = "";
         this.comments = [];
+        this.rate = 0;
         this.commentParam = {
             uid: "",
             eid: "",
             body: "",
-            rating: ""
+            rating: "1"
         };
     }
     EventZippyComponent.prototype.ngOnInit = function () {
@@ -33,13 +34,18 @@ var EventZippyComponent = (function () {
             console.log("Error: " + error);
         });
     };
+    EventZippyComponent.prototype.onRatingUpdate = function (value) {
+        this.rate = value;
+        this.commentParam.rating = value;
+        //console.log(this.commentParam);
+    };
     EventZippyComponent.prototype.submit = function () {
         var _this = this;
         var comment = {
             uid: this.userObj._id,
             eid: this._eventId,
             body: this.commentParam.body,
-            rating: '4'
+            rating: this.commentParam.rating
         };
         console.log(comment);
         this._eventService.postComments(comment).subscribe(function (data) {

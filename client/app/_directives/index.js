@@ -5,4 +5,5 @@ function __export(m) {
 Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./alert.component"));
 __export(require("./event-zippy.component"));
+__export(require("./rating.component"));
 //# sourceMappingURL=index.js.map

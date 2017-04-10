@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { EventService } from '../_services/index';
 import { User } from '../_models/index';
+import {Rating} from './rating.component';
 declare var module: { id: string; }
 
 @Component({
@@ -18,11 +19,13 @@ export class EventZippyComponent {
 
   private userObj;
 
+  private rate:number = 0;
+
   private commentParam = {
     uid: "",
     eid: "",
     body: "",
-    rating: ""
+    rating: "1"
   };
 
 
@@ -42,12 +45,18 @@ export class EventZippyComponent {
     );
   }
 
+  onRatingUpdate(value) {
+    this.rate = value;
+    this.commentParam.rating = value;
+    //console.log(this.commentParam);
+  }
+
   submit(){
     let comment = {
       uid: this.userObj._id,
       eid: this._eventId,
       body: this.commentParam.body,
-      rating: '4'
+      rating: this.commentParam.rating
     }
 
     console.log(comment);

@@ -4,7 +4,8 @@
             <li class="list-group-item" *ngFor="let comment of comments">
             <label>
                 {{comment.username}} :
-                <span class="badge">4 <span class="glyphicon glyphicon-star" aria-hidden="true"></span></span>
+                <!--<span class="badge">4 <span class="glyphicon glyphicon-star" aria-hidden="true"></span></span>-->
+                <rating rate = {{comment.rating}} readOnly = "true"></rating>
             </label>
             <input type="text" class="form-control" disabled value={{comment.body}} />
             </li>
@@ -13,6 +14,8 @@
 
     <div class="form-group">
         <label> {{userObj.username}}</label>
+        <br/>
+        <label> Rating: </label><rating [(rate)] = "commentParam.rating" (rateChange)="onRatingUpdate($event)"></rating>
         <input type="text" class="form-control" name="body" [(ngModel)]="commentParam.body" #body="ngModel" placeholder="Type your comments here..." />
         <br/>
         <button class="btn btn-primary btn-sm" (click) ="submit()">Add comment</button>
