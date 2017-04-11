@@ -10,12 +10,13 @@ declare var module: { id: string; }
 })
 
 export class HomeComponent implements OnInit {
-    currentUser: User;
-    users: User[] = [];
-    currentTab: string = 'home';
+    private currentUser: User;
+    private users: User[] = [];
+    private currentTab: string = 'home';
 
     constructor(private userService: UserService) {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        console.log("user: ", this.currentUser);
     }
 
     ngOnInit() {

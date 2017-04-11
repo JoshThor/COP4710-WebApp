@@ -17,6 +17,7 @@ var HomeComponent = (function () {
         this.users = [];
         this.currentTab = 'home';
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        console.log("user: ", this.currentUser);
     }
     HomeComponent.prototype.ngOnInit = function () {
         //this.loadAllUsers();

@@ -6,10 +6,10 @@
     <li role="presentation" [ngClass]="{'active': currentTab == 'find-events'}">
       <a (click)="switchTab('find-events')">Find Events</a>
     </li>
-    <li role="presentation" [ngClass]="{'active': currentTab == 'create-events'}">
+    <li *ngIf="currentUser.userRole === 'admin' || currentUser.userRole === 'superadmin' " role="presentation" [ngClass]="{'active': currentTab == 'create-events'}">
       <a (click)="switchTab('create-events')">Create Events</a>
     </li>
-    <li role="presentation" [ngClass]="{'active': currentTab == 'approve-events'}">
+    <li *ngIf="currentUser.userRole === 'superadmin'" role="presentation" [ngClass]="{'active': currentTab == 'approve-events'}">
       <a (click)="switchTab('approve-events')">Approve Events</a>
     </li>
     <li role="presentation" [ngClass]="{'active': currentTab == 'create-rso'}">
