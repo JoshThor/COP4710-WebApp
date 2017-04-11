@@ -5,6 +5,9 @@
       <li class="list-group-item" *ngFor="let event of publicEvents; let i = index">
         <h3 class="list-group-item-heading form-group">{{event.eventName}}</h3>
         <br/>
+        <h4 class="list-group-item-heading form-group">Time:</h4>
+        <p> {{stringToDate(event.timedate)}}</p>
+        <br/>
         <h4 class="list-group-item-heading form-group">Location:</h4>
         <div class="form-group" style="border:solid lightgrey 1px">
           <sebm-google-map style="height:200px;width:100%" [latitude]= "parseString(event.latitude)" [longitude]="parseString(event.longitude)" [mapDraggable] = "false" [zoom] = "15">
@@ -26,7 +29,10 @@
     <ul class="list-group">
       <li class="list-group-item" *ngFor="let event of privateEvents; let i = index">
         <h3 class="list-group-item-heading form-group">{{event.eventName}}</h3>
-         <br/>
+        <br/>
+        <h4 class="list-group-item-heading form-group">Time:</h4>
+        <p> {{stringToDate(event.timedate)}}</p>
+        <br/>
         <h4 class="list-group-item-heading form-group">Location:</h4>
         <div class="form-group" style="border:solid lightgrey 1px">
           <sebm-google-map style="height:200px;width:100%" [latitude]= "parseString(event.latitude)" [longitude]="parseString(event.longitude)" [mapDraggable] = "false" [zoom] = "15">
@@ -48,6 +54,9 @@
     <ul class="list-group">
       <li class="list-group-item" *ngFor="let event of rsoEvents; let i = index">
         <h3 class="list-group-item-heading form-group">{{event.eventName}}</h3>
+        <br/>
+        <h4 class="list-group-item-heading form-group">Time:</h4>
+        <p> {{stringToDate(event.timedate)}}</p>
         <br/>
         <h4 class="list-group-item-heading form-group">Location:</h4>        
         <div class="form-group" style="border:solid lightgrey 1px">

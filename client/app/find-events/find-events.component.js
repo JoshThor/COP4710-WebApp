@@ -54,6 +54,9 @@ var FindEventsComponent = (function () {
         this._eventService.getPrivateEvents(userObj._id).subscribe(function (data) {
             console.log(data);
             _this.privateEvents = data;
+            for (var _i = 0, _a = _this.privateEvents; _i < _a.length; _i++) {
+                var event_1 = _a[_i];
+            }
         }, function (error) {
             console.log("ERR");
         });
@@ -72,6 +75,9 @@ var FindEventsComponent = (function () {
     };
     FindEventsComponent.prototype.parseString = function (value) {
         return parseFloat(value);
+    };
+    FindEventsComponent.prototype.stringToDate = function (string) {
+        return new Date(string);
     };
     return FindEventsComponent;
 }());

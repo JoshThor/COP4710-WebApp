@@ -11,15 +11,21 @@
             <input type="text" class="form-control" name="lastName" [(ngModel)]="model.lastName" #lastName="ngModel" required />
             <div *ngIf="f.submitted && !lastName.valid" class="help-block">Last Name is required</div>
         </div>
-        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
             <label for="email">Email</label>
-            <input type="text" class="form-control" name="email" [(ngModel)]="model.email" #email="ngModel" required />
+            <input type="text" class="form-control" name="email" [(ngModel)]="model.email" #email="ngModel" required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"/>
             <div *ngIf="f.submitted && !email.valid" class="help-block">Email is required</div>
+            <div class="help-block" *ngIf="email.errors && email.errors.pattern">
+                Email is invalid
+            </div>
         </div>
-        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
-            <label for="phone">Phone</label>
-            <input type="text" class="form-control" name="phone" [(ngModel)]="model.phone" #phone="ngModel" required />
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !phone.valid }">
+            <label for="phone">Phone (format: xxx-xxx-xxxx):</label>
+            <input type="text" class="form-control" name="phone" [(ngModel)]="model.phone" #phone="ngModel" required pattern="^\d{3}-\d{3}-\d{4}$" />
             <div *ngIf="f.submitted && !phone.valid" class="help-block">Phone is required</div>
+            <div class="help-block" *ngIf="phone.errors && phone.errors.pattern">
+                Please use the specified format
+            </div>
         </div>
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
             <label for="username">Username</label>

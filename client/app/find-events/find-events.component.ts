@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from '../_services/index';
-import { SebmGoogleMap } from 'angular2-google-maps/core';
+import { AgmCoreModule, MapsAPILoader, SebmGoogleMap} from 'angular2-google-maps/core';
 declare var module: { id: string; }
 
 @Component({
@@ -64,6 +64,10 @@ export class FindEventsComponent {
       data => {
         console.log(data);
         this.privateEvents = data;
+        for(let event of this.privateEvents)
+        {
+
+        }
       }, error => {
         console.log("ERR");
       });
@@ -89,4 +93,10 @@ export class FindEventsComponent {
 
   }
 
+  private stringToDate(string: string)
+  {
+    return new Date(string);
+  }  
 }
+
+

@@ -5,7 +5,10 @@ select * from users;
 
 #select * from superadmin;
 
-#insert into university set uid = 2, unName = 'UCF', location = 'Orlando', description = 'this is just a test', numStudents = 50;
+#insert into university set uid = 2, unName = 'UCF', location = 'Orlando', description = 'University of Central Florida', numStudents = 50;
+#insert into university set uid = 2, unName = 'USF', location = 'Tampa', description = 'University of South Florida', numStudents = 50;
+#insert into university set uid = 2, unName = 'FSU', location = 'tallahassee', description = 'Florida State University', numStudents = 50;
+#insert into university set uid = 2, unName = 'UF', location = 'Gainesville', description = 'University of Florida', numStudents = 50;
 
 #select * from university;
 
