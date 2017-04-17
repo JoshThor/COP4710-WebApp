@@ -123,15 +123,6 @@ UPDATE rso r1
     ) r2
     ON r1.rid = r2.rid
     SET r1.rsoStatus = 'Active';
-UPDATE users u1
-	JOIN
-    (
-		SELECT uid
-        FROM rso
-        WHERE rsoStatus = 'Active'
-	) r1
-    ON u1.uid = r1.uid
-    SET u1.role = 'admin';
 END;
 
 
