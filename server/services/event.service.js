@@ -186,7 +186,7 @@ function getAll() {
 
 function getPrivateEvents(uid) {
     var deferred = Q.defer();
-    //console.log(uid);
+    console.log(uid);
 
     pool.getConnection(function(err, connection) {
         if(err) {
@@ -195,22 +195,21 @@ function getPrivateEvents(uid) {
         }
 
         connection.query(`SELECT e.eid, e.eventName, e.description, e.category, e.latitude, e.longitude, e.timedate FROM _events e, privateEvent p, student s
-            WHERE p.eid = e.eid AND e.eventStatus = 'Approved' AND (p.unid = s.unid AND s.uid = ?)`, [uid], function(err, rows) {
+            WHERE p.eid = e.eid AND e.eventStatus = 'Approved' AND (p.unid = s.unid AND s.uid = ?)`, uid, function(err, rows) {
 
                 if(err){
                     deferred.reject(err.name +": "+ err.message);
-                } else if(rows > 0){
+                } else if(rows.length > 0){
                      deferred.resolve(rows);
                 }else{
                     connection.query(`SELECT e.eid, e.eventName, e.description, e.category, e.latitude, e.longitude, e.timedate FROM _events e, privateEvent p, admin a 
-                        WHERE p.eid = e.eid AND e.eventStatus = 'Approved' AND (p.unid = a.unid AND a.uid = ?)`, [uid], function(err, rows) {
+                        WHERE p.eid = e.eid AND e.eventStatus = 'Approved' AND (p.unid = a.unid AND a.uid = ?)`, uid, function(err, rows) {
 
                     connection.release();
 
                     if(err){
                         deferred.reject(err.name +": "+ err.message);
                     }
-
                     deferred.resolve(rows);
 
                     });

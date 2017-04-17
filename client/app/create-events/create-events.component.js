@@ -36,10 +36,12 @@ var CreateEventsComponent = (function () {
             "fake RSO 4"
         ];
         this.categoryList = [
-            "Category 0",
-            "Category 1",
-            "Category 2",
-            "Category 3"
+            "Academic",
+            "Career/Jobs",
+            "Entertainment",
+            "Service/Volunteer",
+            "Sports",
+            "Fraternities and sororities"
         ];
         this.timeKeeper = {
             hr: ["12", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"],

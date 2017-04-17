@@ -31,10 +31,12 @@ export class CreateEventsComponent {
   ]
 
   private categoryList = [
-    "Category 0",
-    "Category 1",
-    "Category 2",
-    "Category 3"
+    "Academic",
+    "Career/Jobs",
+    "Entertainment",
+    "Service/Volunteer",
+    "Sports",
+    "Fraternities and sororities"
   ];
 
   private timeKeeper = {
